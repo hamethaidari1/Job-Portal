@@ -72,6 +72,9 @@ app.get('/support', (req, res) => {
 
 // 404 Sayfası Yönetimi
 app.use((req, res) => {
+    if (req.headers['content-type'] === 'application/json' || req.headers['accept']?.includes('application/json')) {
+        return res.status(404).json({ error: 'Not Found' });
+    }
     res.status(404).render('404', { 
         pageTitle: 'Page Not Found',
         errorMessage: 'The path you are looking for does not exist.' 
@@ -82,6 +85,9 @@ app.use((req, res) => {
 // Bu bölüm, dahili bir hata durumunda beyaz ekran oluşmasını engeller
 app.use((error, req, res, next) => {
     console.error("🔥 Server Error:", error);
+    if (req.headers['content-type'] === 'application/json' || req.headers['accept']?.includes('application/json')) {
+        return res.status(500).json({ error: error.message || 'Internal Server Error' });
+    }
     res.status(500).send(`
         <h1>500 Internal Server Error</h1>
         <p>Something went wrong on the server.</p>

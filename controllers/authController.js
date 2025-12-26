@@ -138,6 +138,7 @@ exports.postLogin = async (req, res) => {
 
 // Google ile giriş/kayıt işlemini gerçekleştir
 exports.postGoogleAuth = async (req, res) => {
+    console.log('🔵 Google Auth Request:', req.body);
     try {
         const { email, firebaseUid, firstName, lastName } = req.body;
 

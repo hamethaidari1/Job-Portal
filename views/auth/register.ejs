@@ -80,7 +80,8 @@
                                     const response = await fetch('/auth/google', {
                                         method: 'POST',
                                         headers: {
-                                            'Content-Type': 'application/json'
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json'
                                         },
                                         body: JSON.stringify({
                                             email: user.email,
