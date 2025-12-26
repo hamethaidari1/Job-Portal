@@ -20,7 +20,7 @@ const Job = sequelize.define('Job', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    // ستون جدید که باعث ارور شده بود
+    // Hataya neden olan yeni sütun
     companyLogo: {
         type: DataTypes.STRING,
         allowNull: true

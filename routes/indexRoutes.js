@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-// صفحه اصلی
+// Ana Sayfa
 router.get('/', (req, res) => {
     try {
-        // گرفتن اطلاعات کاربر از سشن (اگر لاگین کرده باشد)
+        // Kullanıcı bilgilerini oturumdan al (eğer giriş yapmışsa)
         const user = req.session.user || null;
 
         res.render('home', { 
             title: 'Home - Job Portal',
-            user: user // فرستادن اطلاعات کاربر به صفحه برای نمایش در منو
+            user: user // Kullanıcı bilgilerini menüde göstermek için sayfaya gönder
         });
     } catch (error) {
         console.error("Home Page Error:", error);

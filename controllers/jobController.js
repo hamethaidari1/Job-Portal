@@ -3,10 +3,10 @@ const { Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
-// ۱. نمایش صفحه اصلی (Home Page)
+// 1. Ana sayfayı (Home Page) göster
 exports.getHome = async (req, res) => {
     try {
-        // اگر کاربر لاگین نکرده باشد، صفحه لندینگ را نشان بده
+        // Kullanıcı giriş yapmamışsa açılış (landing) sayfasını göster
         if (!req.session.user) {
             return res.render('landing', {
                 pageTitle: 'JobPortal - Find the best freelance services',
@@ -17,7 +17,7 @@ exports.getHome = async (req, res) => {
 
         const jobs = await Job.findAll({ 
             order: [['createdAt', 'DESC']],
-            limit: 8 // فقط ۸ تا برای صفحه اصلی
+            limit: 8 // Ana sayfa için sadece 8 kayıt
         });
         
         res.render('index', { 
@@ -35,7 +35,7 @@ exports.getHome = async (req, res) => {
     }
 };
 
-// ۲. نمایش لیست شغل‌ها و نتایج جستجو (Search Results)
+// 2. İş listesini ve arama sonuçlarını (Search Results) göster
 exports.getJobs = async (req, res) => {
     try {
         const searchTerm = req.query.search || '';
@@ -68,7 +68,7 @@ exports.getJobs = async (req, res) => {
     }
 };
 
-// ۲. نمایش جزئیات کامل یک شغل
+// 3. Bir işin tüm detaylarını göster
 exports.getJobDetails = async (req, res) => {
     try {
         const jobId = req.params.id;
@@ -91,7 +91,7 @@ exports.getJobDetails = async (req, res) => {
     }
 };
 
-// ۳. نمایش داشبورد شخصی
+// 4. Kişisel paneli (Dashboard) göster
 exports.getUserJobs = async (req, res) => {
     try {
         const jobs = await Job.findAll({
@@ -109,7 +109,7 @@ exports.getUserJobs = async (req, res) => {
     }
 };
 
-// ۴. نمایش فرم ثبت شغل جدید
+// 5. Yeni iş ilanı formunu göster
 exports.getCreateJob = (req, res) => {
     res.render('jobs/create', { 
         pageTitle: 'Post a New Job', 
@@ -118,7 +118,7 @@ exports.getCreateJob = (req, res) => {
     });
 };
 
-// ۵. ثبت شغل جدید (با مدیریت بهتر تصویر)
+// 6. Yeni iş kaydet (Görsel yönetimi ile)
 exports.postCreateJob = async (req, res) => {
     const { title, companyName, location, jobType, salary, description } = req.body;
     const companyLogo = req.file ? req.file.filename : null;
@@ -145,7 +145,7 @@ exports.postCreateJob = async (req, res) => {
     }
 };
 
-// ۶. نمایش فرم ویرایش
+// 7. Düzenleme formunu göster
 exports.getEditJob = async (req, res) => {
     try {
         const job = await Job.findByPk(req.params.id);
@@ -164,7 +164,7 @@ exports.getEditJob = async (req, res) => {
     }
 };
 
-// ۷. اعمال تغییرات ویرایش شده
+// 8. Düzenlenen değişiklikleri uygula
 exports.postEditJob = async (req, res) => {
     const jobId = req.params.id;
     const { title, companyName, location, jobType, salary, description } = req.body;
@@ -199,7 +199,7 @@ exports.postEditJob = async (req, res) => {
     }
 };
 
-// ۸. حذف کامل شغل
+// 9. İşi tamamen sil
 exports.postDeleteJob = async (req, res) => {
     try {
         const job = await Job.findByPk(req.params.id);

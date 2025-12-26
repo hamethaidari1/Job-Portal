@@ -8,7 +8,7 @@ exports.getSettings = async (req, res) => {
 
         const userId = req.session.user.id;
         
-        // Fetch user with profile
+        // Kullanıcıyı profiliyle birlikte getir
         const user = await User.findByPk(userId, {
             include: [{ model: Profile }]
         });
@@ -17,16 +17,32 @@ exports.getSettings = async (req, res) => {
             return res.redirect('/auth/logout');
         }
 
-        // Ensure profile exists
+        // Profilin var olduğundan emin ol
         let profile = user.Profile;
         if (!profile) {
             profile = await Profile.create({ userId: user.id });
         }
 
+        // Tamamlanma Skorunu Hesapla
+        let completionScore = 0;
+        // 1. Name (10%)
+        if (profile.firstName && profile.lastName) completionScore += 10;
+        // 2. Email (10%)
+        if (user.email) completionScore += 10;
+        // 3. Profile Picture (15%)
+        if (profile.profilePicture) completionScore += 15;
+        // 4. Skills (20%)
+        if (profile.skills && profile.skills.length > 0) completionScore += 20;
+        // 5. Experience (20%)
+        if (profile.experience && profile.experience.length > 0) completionScore += 20;
+        // 6. CV (25%)
+        if (profile.cvPath) completionScore += 25;
+
         res.render('settings', {
             pageTitle: res.locals.t('settings.title'),
             user: user,
             profile: profile,
+            completionScore: completionScore,
             activeTab: 'personal',
             successMessage: req.query.success ? 'Profile updated successfully' : null,
             errorMessage: req.query.error ? 'Error updating profile' : null
@@ -44,22 +60,35 @@ exports.updateProfile = async (req, res) => {
         }
 
         const userId = req.session.user.id;
-        const { firstName, lastName, location, birthDate } = req.body;
+        const { firstName, lastName, location, birthDate, skills, experience } = req.body;
 
         let profile = await Profile.findOne({ where: { userId } });
         if (!profile) {
             profile = await Profile.create({ userId });
         }
 
-        await profile.update({
+        const updateData = {
             firstName,
             lastName,
             location,
-            birthDate: birthDate || null
-        });
+            birthDate: birthDate || null,
+            skills,
+            experience
+        };
 
-        // Update session user name for immediate reflection if we were using it
-        // For now, just redirect
+        if (req.files) {
+            if (req.files.profilePicture) {
+                updateData.profilePicture = '/uploads/profiles/' + req.files.profilePicture[0].filename;
+            }
+            if (req.files.cv) {
+                updateData.cvPath = '/uploads/cvs/' + req.files.cv[0].filename;
+            }
+        }
+
+        await profile.update(updateData);
+
+        // Kullanıcı adını oturumda güncelle (eğer kullanılıyorsa anlık yansıtmak için)
+        // Şimdilik sadece yönlendir
         res.redirect('/settings?success=true');
     } catch (error) {
         console.error('Update Profile Error:', error);

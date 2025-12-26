@@ -8,6 +8,11 @@ const requireAuth = async (req, res, next) => {
 
     const user = await User.findByPk(req.session.user.id);
     
+    if (!user) {
+        req.session.destroy();
+        return res.redirect('/auth/login');
+    }
+
     // E-posta doğrulama kontrolü
     if (!user.isVerified) {
         return res.redirect('/auth/verify');

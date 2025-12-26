@@ -3,7 +3,7 @@ const User = require('./User');
 const Job = require('./Job');
 const Category = require('./Category');
 const Application = require('./Application');
-const Profile = require('./Profile'); // 👈 مدل پروفایل اضافه شد
+const Profile = require('./Profile'); // 👈 Profil modeli eklendi
 
 // İlişkileri Tanımlama (Defining Associations)
 
@@ -23,7 +23,7 @@ Application.belongsTo(User, { foreignKey: 'userId' });
 Job.hasMany(Application, { foreignKey: 'jobId', onDelete: 'CASCADE' });
 Application.belongsTo(Job, { foreignKey: 'jobId' });
 
-// User -> hasOne Profile (هر کاربر یک پروفایل دارد)
+// User -> hasOne Profile (Her kullanıcının bir profili vardır)
 User.hasOne(Profile, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Profile.belongsTo(User, { foreignKey: 'userId' });
 

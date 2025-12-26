@@ -145,6 +145,28 @@
         "location": "Yaşadığın yer",
         "select_location": "Konum Seçiniz",
         "birthdate": "Doğum tarihi",
-        "save": "Kaydet"
+        "save": "Kaydet",
+        "completed": "Tamamlandı",
+        "change_photo_hint": "Değiştirmek için kamera ikonuna tıklayın"
+    }
+    ,
+    "profile": {
+        "verified": "Hesabınız doğrulandı",
+        "incomplete": "Hesabınız tamamlanmadı",
+        "completion_title": "Profil tamamlama",
+        "edit_info": "Bilgileri Düzenle",
+        "not_complete_title": "Profiliniz tamamlanmadı!",
+        "not_complete_desc": "Daha hızlı iş bulmak için lütfen profilinizi tamamlayın. Her bölümü tamamladıkça puan kazanacaksınız.",
+        "completed_label": "Tamamlanan:",
+        "complete_profile_button": "Profili Tamamla"
+        ,
+        "breakdown": {
+            "name": "Tam İsim",
+            "email": "E-posta",
+            "picture": "Profil Fotoğrafı",
+            "skills": "Yetenekler",
+            "experience": "İş Deneyimi",
+            "cv": "CV (PDF)"
+        }
     }
 }

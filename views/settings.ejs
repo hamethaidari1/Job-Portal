@@ -54,12 +54,45 @@
                         </div>
                     <% } %>
 
-                    <h5 class="fw-bold mb-2"><%= t('settings.personal_info') %></h5>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="fw-bold mb-0"><%= t('settings.personal_info') %></h5>
+                         <% if (typeof completionScore !== 'undefined') { %>
+                             <span class="badge <%= completionScore === 100 ? 'bg-success' : 'bg-warning text-dark' %> rounded-pill">
+                                 <%= completionScore %>% <%= t('settings.completed') %>
+                             </span>
+                         <% } %>
+                    </div>
+                    
+                    <% if (typeof completionScore !== 'undefined') { %>
+                     <div class="progress mb-4" style="height: 8px;">
+                         <div class="progress-bar <%= completionScore === 100 ? 'bg-success' : 'bg-warning' %>" role="progressbar" style="width: <%= completionScore %>%"></div>
+                     </div>
+                    <% } %>
+
                     <p class="text-muted small mb-4"><%= t('settings.personal_desc') %></p>
 
-                    <form action="/settings/profile" method="POST">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label fw-bold"><%= t('settings.name') %></label>
+                    <form action="/settings/profile" method="POST" enctype="multipart/form-data">
+                        
+                        <!-- Profile Picture Upload -->
+                        <div class="mb-4 text-center">
+                            <div class="position-relative d-inline-block">
+                                <% if (profile.profilePicture) { %>
+                                    <img src="<%= profile.profilePicture %>" alt="Profile" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #eee;">
+                                <% } else { %>
+                                    <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto" style="width: 120px; height: 120px; border: 3px solid #eee; font-size: 40px; color: #ccc;">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                <% } %>
+                                <label for="profilePicture" class="position-absolute bottom-0 end-0 bg-white rounded-circle shadow p-2" style="cursor: pointer;">
+                                    <i class="bi bi-camera-fill text-primary"></i>
+                                    <input type="file" id="profilePicture" name="profilePicture" class="d-none" accept="image/*" onchange="previewImage(this)">
+                                </label>
+                            </div>
+                             <div class="small text-muted mt-2"><%= t('settings.change_photo_hint') %></div>
+                         </div>
+ 
+                         <div class="mb-3">
+                             <label for="firstName" class="form-label fw-bold"><%= t('settings.name') %></label>
                             <input type="text" class="form-control p-3" id="firstName" name="firstName" value="<%= profile.firstName || '' %>" placeholder="Name">
                         </div>
 
@@ -85,6 +118,27 @@
                         <div class="mb-4">
                             <label for="birthDate" class="form-label fw-bold"><%= t('settings.birthdate') %></label>
                             <input type="date" class="form-control p-3" id="birthDate" name="birthDate" value="<%= profile.birthDate || '' %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="skills" class="form-label fw-bold">Skills</label>
+                            <input type="text" class="form-control p-3" id="skills" name="skills" value="<%= profile.skills || '' %>" placeholder="e.g. JavaScript, Python, Design">
+                            <div class="form-text">Comma separated</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="experience" class="form-label fw-bold">Experience</label>
+                            <textarea class="form-control p-3" id="experience" name="experience" rows="3" placeholder="Describe your work experience..."><%= profile.experience || '' %></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cv" class="form-label fw-bold">CV / Resume (PDF)</label>
+                            <input type="file" class="form-control" id="cv" name="cv" accept=".pdf,.doc,.docx">
+                            <% if (profile.cvPath) { %>
+                                <div class="mt-2">
+                                    <a href="<%= profile.cvPath %>" target="_blank" class="btn btn-sm btn-outline-primary">View Current CV</a>
+                                </div>
+                            <% } %>
                         </div>
 
                         <div class="text-end">
@@ -120,5 +174,88 @@
         color: white;
     }
 </style>
+
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                const container = input.closest('.position-relative');
+                let img = container.querySelector('img');
+                
+                if (!img) {
+                    // Remove placeholder div if it exists
+                    const placeholder = container.querySelector('.rounded-circle.bg-light');
+                    if (placeholder) placeholder.remove();
+                    
+                    // Create new img element
+                    img = document.createElement('img');
+                    img.alt = 'Profile';
+                    img.className = 'rounded-circle';
+                    img.style.width = '120px';
+                    img.style.height = '120px';
+                    img.style.objectFit = 'cover';
+                    img.style.border = '3px solid #eee';
+                    
+                    // Insert before the label (which is at the end)
+                    container.insertBefore(img, container.querySelector('label'));
+                }
+                
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        updateScore();
+    }
+
+    // Real-time score update
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateScore);
+        input.addEventListener('change', updateScore);
+    });
+
+    function updateScore() {
+        let score = 10; // Email is always present
+        
+        // Name (10%)
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        if (firstName && lastName) score += 10;
+
+        // Picture (15%)
+        const hasServerPic = <%= !!profile.profilePicture %>;
+        const picInput = document.getElementById('profilePicture');
+        if (hasServerPic || (picInput.files && picInput.files.length > 0)) score += 15;
+
+        // Skills (20%)
+        const skills = document.getElementById('skills').value.trim();
+        if (skills) score += 20;
+
+        // Experience (20%)
+        const experience = document.getElementById('experience').value.trim();
+        if (experience) score += 20;
+
+        // CV (25%)
+        const hasServerCV = <%= !!profile.cvPath %>;
+        const cvInput = document.getElementById('cv');
+        if (hasServerCV || (cvInput.files && cvInput.files.length > 0)) score += 25;
+
+        // Update UI
+        const progressBar = document.querySelector('.progress-bar');
+        const badge = document.querySelector('.badge.rounded-pill');
+        
+        if (progressBar) {
+            progressBar.style.width = score + '%';
+            progressBar.setAttribute('aria-valuenow', score);
+            progressBar.className = `progress-bar ${score === 100 ? 'bg-success' : 'bg-warning'}`;
+        }
+        
+        if (badge) {
+            badge.textContent = score + '% Completed';
+            badge.className = `badge rounded-pill ${score === 100 ? 'bg-success' : 'bg-warning text-dark'}`;
+        }
+    }
+</script>
 
 <%- include('includes/footer') %>

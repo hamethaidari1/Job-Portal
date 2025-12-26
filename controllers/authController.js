@@ -1,12 +1,12 @@
 const { User } = require('../models');
 const { sendVerificationEmail } = require('../utils/mailer');
-const crypto = require('crypto'); // اضافه کردن ماژول کریپتو
+const crypto = require('crypto'); // Crypto modülünü ekle
 
 /* =========================
    REGISTER
 ========================= */
 
-// نمایش فرم ثبت‌نام
+// Kayıt formunu göster
 exports.getRegister = (req, res) => {
     res.render('auth/register', {
         pageTitle: 'Register',
@@ -14,13 +14,13 @@ exports.getRegister = (req, res) => {
     });
 };
 
-// پردازش ثبت‌نام
+// Kayıt işlemini gerçekleştir
 exports.postRegister = async (req, res) => {
-    console.log('📝 Register Request Body:', req.body); // لاگ کردن اطلاعات دریافتی
+    console.log('📝 Register Request Body:', req.body); // Gelen verileri logla
     const { email, role, password, confirmPassword } = req.body;
 
     try {
-        // اعتبارسنجی ساده
+        // Basit doğrulama
         if (!email || !password) {
             throw new Error('Email and password are required.');
         }
@@ -33,7 +33,7 @@ exports.postRegister = async (req, res) => {
              throw new Error('Passwords do not match.');
         }
 
-        // بررسی وجود کاربر
+        // Kullanıcının varlığını kontrol et
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
             return res.render('auth/register', {
@@ -42,19 +42,19 @@ exports.postRegister = async (req, res) => {
             });
         }
 
-        // نرمال‌سازی role (خیلی مهم)
+        // Rol normalizasyonu (Çok önemli)
         let normalizedRole = 'job_seeker';
         if (role === 'Employer' || role === 'employer') {
             normalizedRole = 'employer';
         }
 
-        // ایجاد یک ID تصادفی به عنوان firebaseUid (چون فایربیس در بک‌اند غیرفعال است)
+        // firebaseUid olarak rastgele bir ID oluştur (Backend'de Firebase devre dışı olduğu için)
         const firebaseUid = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
 
-        // هش کردن رمز عبور (ساده با SHA256)
+        // Şifreyi hashle (Basit SHA256 ile)
         const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-        // ساخت کاربر در دیتابیس
+        // Kullanıcıyı veritabanında oluştur
         const user = await User.create({
             email,
             role: normalizedRole,
@@ -63,7 +63,7 @@ exports.postRegister = async (req, res) => {
             password: hashedPassword
         });
 
-        // ذخیره در سشن
+        // Oturuma kaydet
         req.session.user = user;
         req.session.isLoggedIn = true;
 
@@ -75,7 +75,7 @@ exports.postRegister = async (req, res) => {
         console.error('REGISTER ERROR 👉', error);
         res.render('auth/register', {
             pageTitle: 'Register',
-            errorMessage: 'Database error: ' + error.message // نمایش متن خطا
+            errorMessage: 'Database error: ' + error.message // Hata metnini göster
         });
     }
 };
@@ -84,7 +84,7 @@ exports.postRegister = async (req, res) => {
    LOGIN
 ========================= */
 
-// نمایش فرم ورود
+// Giriş formunu göster
 exports.getLogin = (req, res) => {
     res.render('auth/login', {
         pageTitle: 'Login',
@@ -92,7 +92,7 @@ exports.getLogin = (req, res) => {
     });
 };
 
-// پردازش ورود
+// Giriş işlemini gerçekleştir
 exports.postLogin = async (req, res) => {
     const { email, password } = req.body;
 
@@ -105,7 +105,7 @@ exports.postLogin = async (req, res) => {
             });
         }
 
-        // بررسی رمز عبور
+        // Şifreyi kontrol et
         if (password) {
              const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
              if (user.password && user.password !== hashedPassword) {
@@ -147,7 +147,7 @@ exports.logout = (req, res) => {
    VERIFY EMAIL
 ========================= */
 
-// نمایش صفحه Verify
+// Doğrulama sayfasını göster
 exports.getVerify = (req, res) => {
     if (!req.session.user) {
         return res.redirect('/auth/login');
@@ -161,7 +161,7 @@ exports.getVerify = (req, res) => {
     });
 };
 
-// ارسال کد تایید
+// Doğrulama kodunu gönder
 exports.sendVerifyCode = async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/auth/login');
@@ -181,7 +181,7 @@ exports.sendVerifyCode = async (req, res) => {
             verificationExpires: expires
         });
 
-        console.log('🔐 VERIFICATION CODE:', code); // لاگ کردن کد برای دیباگ
+        console.log('🔐 VERIFICATION CODE:', code); // Hata ayıklama için kodu logla
 
         let emailErrorMsg = null;
         try {
@@ -194,7 +194,7 @@ exports.sendVerifyCode = async (req, res) => {
         res.render('auth/verify', {
             pageTitle: 'Verify Account',
             email: user.email,
-            sent: true, // فرم را همیشه نشان بده حتی اگر ایمیل فیل شد
+            sent: true, // E-posta başarısız olsa bile formu her zaman göster
             errorMessage: emailErrorMsg,
             successMessage: emailErrorMsg ? null : 'Verification code sent to your email.'
         });
@@ -205,12 +205,12 @@ exports.sendVerifyCode = async (req, res) => {
             pageTitle: 'Verify Account',
             email: req.session.user.email,
             sent: false,
-            errorMessage: 'Email Error: ' + error.message // نمایش دقیق خطا به کاربر
+            errorMessage: 'Email Error: ' + error.message // Kullanıcıya detaylı hatayı göster
         });
     }
 };
 
-// تایید کد
+// Kodu doğrula
 exports.confirmVerifyCode = async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/auth/login');
@@ -256,7 +256,7 @@ exports.confirmVerifyCode = async (req, res) => {
         req.session.user = user;
 
         req.session.save(() => {
-            res.redirect('/settings');
+            res.redirect('/profile');
         });
 
     } catch (error) {

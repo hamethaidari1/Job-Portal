@@ -145,6 +145,28 @@
         "location": "Location",
         "select_location": "Select Location",
         "birthdate": "Date of Birth",
-        "save": "Save"
+        "save": "Save",
+        "completed": "Completed",
+        "change_photo_hint": "Click the camera icon to change"
+    }
+    ,
+    "profile": {
+        "verified": "Your account is verified",
+        "incomplete": "Your account is not complete",
+        "completion_title": "Profile completion",
+        "edit_info": "Edit Information",
+        "not_complete_title": "Your profile is not complete!",
+        "not_complete_desc": "To find jobs faster, please complete your profile. You will earn points as you complete each section.",
+        "completed_label": "Completed:",
+        "complete_profile_button": "Complete Profile"
+        ,
+        "breakdown": {
+            "name": "Full Name",
+            "email": "Email",
+            "picture": "Profile Picture",
+            "skills": "Skills",
+            "experience": "Work Experience",
+            "cv": "CV (PDF)"
+        }
     }
 }

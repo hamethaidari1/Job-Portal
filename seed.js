@@ -1,11 +1,11 @@
-// seed.js - فایل مخصوص ساخت دسته‌بندی‌ها
+// seed.js - Kategorileri oluşturmak için özel dosya
 const { sequelize, Category } = require('./models');
 
 const seedDatabase = async () => {
     try {
-        await sequelize.sync(); // اتصال به دیتابیس
+        await sequelize.sync(); // Veritabanına bağlan
 
-        // بررسی می‌کنیم اگر دسته‌بندی وجود ندارد، بسازیم
+        // Kategori yoksa, oluşturulup oluşturulmadığını kontrol et
         const count = await Category.count();
         if (count === 0) {
             await Category.bulkCreate([
@@ -20,7 +20,7 @@ const seedDatabase = async () => {
             console.log('ℹ️ Categories already exist. (Zaten var)');
         }
 
-        process.exit(); // پایان برنامه
+        process.exit(); // Programı sonlandır
     } catch (error) {
         console.error('❌ Error seeding database:', error);
         process.exit(1);

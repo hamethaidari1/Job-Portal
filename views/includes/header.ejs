@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= typeof lang !== 'undefined' ? lang : 'tr' %>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -310,15 +310,15 @@
                     <!-- Language Selector -->
                     <li class="nav-item dropdown me-2">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-globe"></i> <%= locals.lang === 'tr' ? 'TR' : 'EN' %>
+                            <i class="bi bi-globe"></i> <%= (typeof lang !== 'undefined' ? lang : 'tr') === 'tr' ? 'TR' : 'EN' %>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" style="min-width: 80px;">
-                            <li><a class="dropdown-item <%= locals.lang === 'tr' ? 'active' : '' %>" href="?lang=tr">Türkçe</a></li>
-                            <li><a class="dropdown-item <%= locals.lang === 'en' ? 'active' : '' %>" href="?lang=en">English</a></li>
+                            <li><a class="dropdown-item <%= (typeof lang !== 'undefined' ? lang : 'tr') === 'tr' ? 'active' : '' %>" href="?lang=tr">Türkçe</a></li>
+                            <li><a class="dropdown-item <%= (typeof lang !== 'undefined' ? lang : 'tr') === 'en' ? 'active' : '' %>" href="?lang=en">English</a></li>
                         </ul>
                     </li>
                     
-                    <% if (locals.isAuthenticated && locals.user) { %>
+                    <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated && typeof user !== 'undefined' && user) { %>
                         
                         <li class="nav-item dropdown ms-2">
                             <a class="nav-link p-0 d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown" aria-expanded="false">

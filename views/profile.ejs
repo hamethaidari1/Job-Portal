@@ -57,90 +57,170 @@
 
 <div class="container py-5">
     <div class="row g-4">
+        <% 
+        // 500 hatasını önlemek için değişkenleri güvenli hale getir
+        const safeUser = typeof user !== 'undefined' ? user : {};
+        const safeProfile = typeof profile !== 'undefined' ? profile : {};
+        const safeScore = typeof completionScore !== 'undefined' ? completionScore : 0;
+        const translate = typeof t === 'function' ? t : (key) => key;
+        %>
 
-        <!-- USER CARD -->
         <div class="col-lg-4">
             <div class="profile-card p-4 text-center h-100">
-                <div class="avatar-circle mb-3">
-                    <%= (user.name || user.email || 'U').charAt(0).toUpperCase() %>
+                <div class="position-relative d-inline-block mb-3">
+                    <% if (safeProfile.profilePicture) { %>
+                        <img src="<%= safeProfile.profilePicture %>" alt="Profile" class="avatar-circle" style="object-fit: cover; border: 4px solid <%= safeScore === 100 ? '#198754' : '#e9ecef' %>;">
+                    <% } else { %>
+                        <div class="avatar-circle" style="border: 4px solid <%= safeScore === 100 ? '#198754' : '#e9ecef' %>;">
+                            <%= (safeUser.name || safeUser.email || 'U').charAt(0).toUpperCase() %>
+                        </div>
+                    <% } %>
+                    
+                    <a href="/settings" class="position-absolute bottom-0 end-0 bg-white rounded-circle p-1 shadow-sm border" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                        <i class="bi bi-camera-fill text-muted" style="font-size: 14px;"></i>
+                    </a>
                 </div>
 
                 <h5 class="fw-bold mb-1">
-                    <%= user.name || 'Kullanıcı' %>
+                    <%= (safeUser.name || safeUser.email || 'User') %>
+                    <% if (safeScore === 100) { %>
+                        <i class="bi bi-patch-check-fill text-primary" title="<%= translate('profile.verified') %>"></i>
+                    <% } %>
                 </h5>
 
-                <p class="text-muted small mb-4">
-                    <%= user.email %>
+                <p class="text-muted small mb-3">
+                    <%= safeUser.email || '' %>
                 </p>
+
+                <% if (safeScore === 100) { %>
+                    <div class="badge bg-success-subtle text-success mb-4 px-3 py-2 rounded-pill">
+                        <i class="bi bi-shield-check me-1"></i> <%= translate('profile.verified') %>
+                    </div>
+                <% } else { %>
+                    <div class="badge bg-danger-subtle text-danger mb-4 px-3 py-2 rounded-pill">
+                        <i class="bi bi-exclamation-circle me-1"></i> <%= translate('profile.incomplete') %>
+                    </div>
+                <% } %>
 
                 <div class="d-flex justify-content-center gap-2 flex-wrap">
                     <a href="/settings" class="btn btn-outline-secondary btn-sm">
-                        Ayarlar
+                        <%= translate('header.settings') %>
                     </a>
                     <a href="/jobs/dashboard" class="btn btn-success btn-sm">
-                        Kontrol Paneli
+                        <%= translate('header.dashboard') %>
                     </a>
+                </div>
+
+                <hr class="my-4">
+                <div class="text-start">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold small text-dark"><%= translate('profile.completion_title') %></span>
+                        <span class="fw-bold small <%= safeScore === 100 ? 'text-success' : 'text-warning' %>"><%= safeScore %>%</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 12px; border-radius: 6px; background-color: #e9ecef;">
+                        <div class="progress-bar <%= safeScore === 100 ? 'bg-success' : 'bg-warning' %>" role="progressbar" 
+                             style="width: <%= safeScore %>%; transition: width 1s ease-in-out;" 
+                             aria-valuenow="<%= safeScore %>" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    
+                    <div class="small">
+                        <% if (typeof breakdown !== 'undefined' && Array.isArray(breakdown)) { %>
+                        <% breakdown.forEach(function(item){ %>
+                            <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded <%= item.achieved ? 'bg-success-subtle' : 'bg-light' %>">
+                                <span class="<%= item.achieved ? 'text-success' : 'text-muted' %> fw-medium">
+                                    <i class="bi <%= item.achieved ? 'bi-check-circle-fill' : 'bi-circle' %> me-2"></i>
+                                    <%= translate(item.labelKey) %>
+                                </span>
+                                <span class="badge <%= item.achieved ? 'bg-success' : 'bg-secondary' %> rounded-pill">
+                                    <%= item.score %>%
+                                </span>
+                            </div>
+                        <% }) %>
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- PERSONAL INFO -->
         <div class="col-lg-8">
             <div class="profile-card p-4 h-100">
                 <div class="d-flex align-items-center mb-4">
                     <i class="bi bi-person-lines-fill fs-4 text-primary me-2"></i>
                     <h5 class="fw-bold mb-0">
-                        Kişisel Bilgiler
+                        <%= translate('settings.personal_info') %>
                     </h5>
                 </div>
 
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">Ad</div>
-                            <div class="info-value">
-                                <%= (profile && profile.firstName) || '-' %>
-                            </div>
+                            <div class="info-label"><%= translate('settings.name') %></div>
+                            <div class="info-value"><%= safeProfile.firstName || '-' %></div>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">Soyad</div>
-                            <div class="info-value">
-                                <%= (profile && profile.lastName) || '-' %>
-                            </div>
+                            <div class="info-label"><%= translate('settings.surname') %></div>
+                            <div class="info-value"><%= safeProfile.lastName || '-' %></div>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">Konum</div>
-                            <div class="info-value">
-                                <%= (profile && profile.location) || '-' %>
-                            </div>
+                            <div class="info-label"><%= translate('settings.location') %></div>
+                            <div class="info-value"><%= safeProfile.location || '-' %></div>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="info-box">
-                            <div class="info-label">Doğum Tarihi</div>
-                            <div class="info-value">
-                                <%= (profile && profile.birthDate) || '-' %>
-                            </div>
+                            <div class="info-label"><%= translate('settings.birthdate') %></div>
+                            <div class="info-value"><%= safeProfile.birthDate || '-' %></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-4 text-end">
                     <a href="/settings" class="btn btn-purple fw-bold">
-                        Bilgileri Düzenle
+                        <%= translate('profile.edit_info') %>
                     </a>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
+<% if (safeScore < 100) { %>
+    <div class="modal fade" id="completionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <div class="modal-body">
+                    <div class="mb-3 text-warning">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3"><%= translate('profile.not_complete_title') %></h4>
+                    <p class="text-muted mb-4"><%= translate('profile.not_complete_desc') %></p>
+                    <div class="progress mb-3" style="height: 10px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: <%= safeScore %>%"></div>
+                    </div>
+                    <a href="/settings" class="btn btn-primary w-100 rounded-pill fw-bold">
+                        <%= translate('profile.complete_profile_button') %>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!sessionStorage.getItem('profileModalShown')) {
+                var modalEl = document.getElementById('completionModal');
+                if(modalEl) {
+                    var myModal = new bootstrap.Modal(modalEl);
+                    myModal.show();
+                    sessionStorage.setItem('profileModalShown', 'true');
+                }
+            }
+        });
+    </script>
+<% } %>
 
 <%- include('includes/footer') %>

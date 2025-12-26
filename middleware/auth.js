@@ -1,11 +1,11 @@
 // middleware/auth.js
 
-// این تابع چک می‌کند که آیا کاربر لاگین است یا نه
+// Bu fonksiyon kullanıcının giriş yapıp yapmadığını kontrol eder
 exports.isAuthenticated = (req, res, next) => {
     if (!req.session.user) {
-        // اگر لاگین نبود، پرتش کن به صفحه لاگین
+        // Eğer giriş yapmamışsa, giriş sayfasına yönlendir
         return res.redirect('/auth/login');
     }
-    // اگر لاگین بود، اجازه بده رد شود
+    // Eğer giriş yapmışsa, geçişe izin ver
     next();
 };

@@ -42,6 +42,21 @@ const Profile = sequelize.define('Profile', {
         type: DataTypes.TEXT, // JSON string olarak tutabiliriz veya virgülle ayrılmış
         allowNull: true,
         comment: 'Yetenekler (Skills)'
+    },
+    experience: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        comment: 'İş Deneyimi (Experience)'
+    },
+    profilePicture: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: 'Profil Fotoğrafı Yolu'
+    },
+    cvPath: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: 'CV Dosya Yolu'
     }
 });
 

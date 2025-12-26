@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-require('dotenv').config(); // بارگذاری متغیرهای محیطی در ابتدای برنامه
+require('dotenv').config(); // Ortam değişkenlerini programın başında yükle
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { sequelize } = require('./models'); 
@@ -15,19 +15,19 @@ const jobController = require('./controllers/jobController');
 
 const app = express();
 
-// تنظیمات موتور رندر (EJS)
+// Render motoru ayarları (EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// فایل‌های استاتیک
+// Statik dosyalar
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
-// دسترسی مستقیم به آپلودها (دقت کنید پوشه public/uploads فیزیکی وجود داشته باشد)
+// Yüklemelere doğrudan erişim (public/uploads klasörünün fiziksel olarak mevcut olduğundan emin olun)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json()); 
 
-// تنظیمات دیتابیس برای نشست‌ها (Session)
+// Oturumlar (Session) için veritabanı ayarları
 const sessionStore = new SequelizeStore({ db: sequelize });
 
 app.use(session({
@@ -36,24 +36,24 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: false, // روی HTTP معمولی (localhost) باید false باشد
+        secure: false, // Normal HTTP (localhost) üzerinde false olmalıdır
         maxAge: 24 * 60 * 60 * 1000 
     }
 }));
 
-// متغیرهای سراسری (Locals) - این بخش حیاتی است
+// Global değişkenler (Locals) - Bu bölüm hayati önem taşır
 app.use((req, res, next) => {
-    // استفاده از locals برای اطمینان از اینکه متغیرها همیشه (حتی خالی) تعریف شده‌اند
+    // Değişkenlerin her zaman (boş olsa bile) tanımlandığından emin olmak için locals kullanımı
     res.locals.user = req.session.user || null;
-    res.locals.isAuthenticated = !!req.session.isLoggedIn; // تبدیل به boolean
-    res.locals.path = req.path; // برای فعال کردن منوها بر اساس آدرس
+    res.locals.isAuthenticated = !!req.session.isLoggedIn; // Boolean'a dönüştür
+    res.locals.path = req.path; // Adrese göre menüleri etkinleştirmek için
     next();
 });
 
 // i18n Middleware (Must be after session)
 app.use(i18n);
 
-// مسیرهای اصلی (Routes)
+// Ana Rotalar (Routes)
 // Updated routes
 app.get('/', jobController.getHome); 
 app.use('/auth', authRoutes);          
@@ -70,7 +70,7 @@ app.get('/support', (req, res) => {
     res.render('help', { pageTitle: 'Help & Support' });
 });
 
-// مدیریت صفحه 404
+// 404 Sayfası Yönetimi
 app.use((req, res) => {
     res.status(404).render('404', { 
         pageTitle: 'Page Not Found',
@@ -78,11 +78,15 @@ app.use((req, res) => {
     });
 });
 
-// مدیریت خطاهای کلی (Global Error Handler)
-// این بخش از پرده سفید شدن در صورت بروز خطای داخلی جلوگیری می‌کند
+// Genel Hata Yönetimi (Global Error Handler)
+// Bu bölüm, dahili bir hata durumunda beyaz ekran oluşmasını engeller
 app.use((error, req, res, next) => {
     console.error("🔥 Server Error:", error);
-    res.status(500).send("Something went wrong on the server.");
+    res.status(500).send(`
+        <h1>500 Internal Server Error</h1>
+        <p>Something went wrong on the server.</p>
+        <pre style="background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto;">${error.stack}</pre>
+    `);
 });
 
 const PORT = process.env.PORT || 3050;
@@ -92,7 +96,7 @@ module.exports = app;
 
 // Only start server if run directly
 if (require.main === module) {
-    // هماهنگ‌سازی دیتابیس و اجرای سرور
+    // Veritabanı senkronizasyonu ve sunucuyu başlatma
     sequelize.sync({ alter: false })
         .then(() => {
             console.log('✅ Database Synced');

@@ -25,7 +25,7 @@ const User = sequelize.define('User', {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: true, // برای کاربرانی که با گوگل وارد می‌شوند ممکن است نال باشد
+        allowNull: true, // Google ile giriş yapan kullanıcılar için null olabilir
         comment: 'Hashed password'
     },
     role: {
