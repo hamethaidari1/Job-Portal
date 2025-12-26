@@ -1,0 +1,96 @@
+<%- include('../includes/header') %>
+
+<div class="container py-5" style="min-height: 80vh;">
+    <div class="mb-4">
+        <a href="/" class="btn btn-link text-decoration-none text-muted p-0">
+            <i class="bi bi-arrow-left-circle me-1"></i> Back to All Jobs
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">
+                <i class="bi bi-speedometer2 me-2 text-primary"></i>My Job Dashboard
+            </h2>
+            <p class="text-muted mb-0">You have posted <span class="fw-bold text-primary"><%= jobs.length %></span> active job listings.</p>
+        </div>
+        <a href="/jobs/create" class="btn btn-success shadow-sm px-4 py-2">
+            <i class="bi bi-plus-circle me-1"></i> Post a New Job
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0" style="border-radius: 15px; overflow: hidden;">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr class="text-uppercase small fw-bold text-muted">
+                        <th class="ps-4 py-3">Job Position</th>
+                        <th class="py-3">Location</th>
+                        <th class="py-3">Job Type</th>
+                        <th class="py-3">Posted Date</th>
+                        <th class="text-center pe-4 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (jobs.length > 0) { %>
+                        <% jobs.forEach(job => { %>
+                            <tr>
+                                <td class="ps-4 py-4">
+                                    <div class="d-flex align-items-center">
+                                        <% if (job.companyLogo) { %>
+                                            <img src="/uploads/<%= job.companyLogo %>" class="rounded me-3 border" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <% } else { %>
+                                            <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                                <i class="bi bi-building text-secondary"></i>
+                                            </div>
+                                        <% } %>
+                                        <div>
+                                            <div class="fw-bold text-dark"><%= job.title %></div>
+                                            <div class="text-muted small"><%= job.companyName %></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="text-muted small"><i class="bi bi-geo-alt text-danger me-1"></i><%= job.location %></span>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 fw-normal">
+                                        <%= job.jobType %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-muted small">
+                                        <%= new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                                    </span>
+                                </td>
+                                <td class="text-center pe-4">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a href="/jobs/<%= job.id %>" class="btn btn-sm btn-outline-primary" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="/jobs/edit/<%= job.id %>" class="btn btn-sm btn-outline-warning" title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form action="/jobs/delete/<%= job.id %>" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this job?')">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <p class="text-muted mb-0">No jobs posted yet.</p>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

@@ -1,0 +1,45 @@
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold mb-4">Welcome to JobPortal 🚀</h1>
+            <p class="lead mb-4">
+                The best place to find your dream job or hire top talent.
+            </p>
+
+            <% if (user) { %>
+                <div class="card shadow-sm p-4 mt-4 bg-light">
+                    <h3 class="text-success">Hello, <%= user.email %>!</h3>
+                    <p>You are successfully logged in.</p>
+                    <div class="mt-3">
+                        <button class="btn btn-outline-light" type="button">Search Jobs</button>
+
+<a href="/jobs" class="btn btn-outline-light">Search Jobs</a>
+                        <a href="/auth/logout" class="btn btn-danger">Logout</a>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4">
+                    <a href="/auth/register" class="btn btn-primary btn-lg px-4 gap-3">Register Now</a>
+                    <a href="/auth/login" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+            <h2>For Job Seekers</h2>
+            <p>Browse thousands of job listings from top companies. Create your profile and apply easily.</p>
+            <button class="btn btn-outline-light" type="button">Search Jobs</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+            <h2>For Employers</h2>
+            <p>Post job openings and find the perfect candidates for your company quickly and efficiently.</p>
+            <button class="btn btn-outline-secondary" type="button">Post a Job</button>
+        </div>
+    </div>
+</div>

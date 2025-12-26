@@ -1,0 +1,173 @@
+<%- include('includes/header') %>
+
+<style>
+    .landing-hero {
+        background-color: #0c6329; 
+        color: white; 
+        /* درازی خورد شده: پدینگ از 80px به 50px و از 120px به 70px کاهش یافت */
+        padding: 40px 0 25px; 
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        min-height: 400px; /* حداقل ارتفاع برای حفظ زیبایی */
+    }
+    
+    .landing-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://placehold.co/1920x600/023a15/055220?text=İŞBUL+ONLINE') center/cover;
+        opacity: 0.1;
+    }
+
+    .landing-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* کوچک کردن اندازه متن تیتر برای هماهنگی با ارتفاع جدید */
+    .landing-hero h1 {
+        font-size: 2.8rem; 
+        margin-bottom: 20px;
+    }
+
+    .feature-icon-box {
+        width: 70px; /* اندکی کوچکتر */
+        height: 70px;
+        background-color: #f4fdf7;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        color: #1dbf73;
+        font-size: 1.8rem;
+        transition: transform 0.3s;
+    }
+
+    .feature-card:hover .feature-icon-box {
+        transform: scale(1.1);
+        background-color: #1dbf73;
+        color: white;
+    }
+</style>
+
+<div class="landing-hero">
+    <div class="container landing-content text-center">
+        <h1 class="display-3 fw-bold mb-4"><%- t('landing.hero_title') %></h1>
+        <p class="lead mb-5 opacity-75" style="max-width: 700px; margin: 0 auto;">
+            <%= t('landing.hero_subtitle') %>
+        </p>
+        
+        <div class="search-bar-container mb-5">
+            <form action="/jobs/search" method="GET" class="d-flex justify-content-center gap-2">
+                <input type="text" name="q" class="form-control form-control-lg" style="max-width: 400px;" placeholder="<%= t('Bugün hangi hizmeti arıyorsunuz?') %>">
+                <button type="submit" class="btn btn-success btn-lg"><%= t('common.search') %></button>
+            </form>
+        </div>
+        
+        <div class="d-flex justify-content-center gap-3 mb-5">
+            <a href="/auth/register" class="btn btn-success btn-lg px-5 py-3 fw-bold shadow-sm"><%= t('landing.join_button') %></a>
+            <a href="/auth/login" class="btn btn-outline-light btn-lg px-5 py-3 fw-bold"><%= t('common.login') %></a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5 my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold"><%= t('landing.why_choose_title') %></h2>
+        <p class="text-muted"><%= t('landing.why_choose_subtitle') %></p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3 text-center feature-card">
+            <div class="feature-icon-box">
+                <i class="bi bi-search"></i>
+            </div>
+            <h5 class="fw-bold"><%= t('landing.feature_browse_title') %></h5>
+            <p class="text-muted small"><%= t('landing.feature_browse_desc') %></p>
+        </div>
+        <div class="col-md-3 text-center feature-card">
+            <div class="feature-icon-box">
+                <i class="bi bi-file-earmark-text"></i>
+            </div>
+            <h5 class="fw-bold"><%= t('landing.feature_bids_title') %></h5>
+            <p class="text-muted small"><%= t('landing.feature_bids_desc') %></p>
+        </div>
+        <div class="col-md-3 text-center feature-card">
+            <div class="feature-icon-box">
+                <i class="bi bi-award"></i>
+            </div>
+            <h5 class="fw-bold"><%= t('landing.feature_quality_title') %></h5>
+            <p class="text-muted small"><%= t('landing.feature_quality_desc') %></p>
+        </div>
+        <div class="col-md-3 text-center feature-card">
+            <div class="feature-icon-box">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <h5 class="fw-bold"><%= t('landing.feature_safe_title') %></h5>
+            <p class="text-muted small"><%= t('landing.feature_safe_desc') %></p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-4"><%= t('landing.bottom_title') %></h2>
+
+                <ul class="list-unstyled">
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1"><%= t('landing.benefit_budget_title') %></h6>
+                            <p class="text-muted small"><%= t('landing.benefit_budget_desc') %></p>
+                        </div>
+                    </li>
+
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1"><%= t('landing.benefit_quality_title') %></h6>
+                            <p class="text-muted small"><%= t('landing.benefit_quality_desc') %></p>
+                        </div>
+                    </li>
+
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1"><%= t('landing.benefit_payment_title') %></h6>
+                            <p class="text-muted small"><%= t('landing.benefit_payment_desc') %></p>
+                        </div>
+                    </li>
+
+                    <li class="mb-3 d-flex align-items-start">
+                        <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1"><%= t('landing.benefit_support_title') %></h6>
+                            <p class="text-muted small"><%= t('landing.benefit_support_desc') %></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 mx-auto text-center border border-2 rounded p-4">
+
+                <img 
+                    src="/img/isbul.png"
+                    class="img-fluid rounded shadow"
+                    alt="Job Portal Features"
+                    loading="lazy"
+                >
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include('includes/footer') %>

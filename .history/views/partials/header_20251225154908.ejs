@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* یک استایل قرمز موقت فقط برای اینکه بفهمیم نوار کجاست */
+        .test-nav {
+            background-color: white !important;
+            border-bottom: 5px solid red !important; /* خط قرمز ضخیم زیر نوار */
+            height: 80px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 99999;
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="test-nav shadow">
+    <div class="container d-flex justify-content-between align-items-center h-100">
+        <h2 style="color: #404145; margin: 0;">jobportal<span style="color: #1dbf73;">.</span></h2>
+        <div style="color: black; font-weight: bold;">
+            TEST NAVBAR - IF YOU SEE THIS, BOOTSTRAP IS WORKING
+        </div>
+    </div>
+</nav>
+
+<div style="margin-top: 100px;"> ```
+
+### ۲. اگر با کد بالا باز هم چیزی ندیدید:
+اگر حتی با لینک مستقیم (CDN) هم چیزی ندیدید، مشکل از یکی از موارد زیر است:
+
+* **تداخل در فایل App.js:** چک کنید که در فایل اصلی سرور (مثلاً `app.js` یا `server.js`)، پوشه پابلیک را به درستی معرفی کرده باشید:
+    `app.use(express.static('public'));`
+* **کش (Cache) مرورگر:** کلیدهای `Ctrl + F5` را بزنید تا صفحه کاملاً از نو بارگذاری شود.
+* **بلاک شدن توسط محتوای دیگر:** ممکن است در فایل `index.ejs` کدی داشته باشید که کل صفحه را می‌پوشاند. 
+
+---
+
+### چطور بفهمیم بوت‌استرپ لود شده؟
+در مرورگر روی صفحه راست‌کلیک کنید و **Inspect** را بزنید. به تب **Console** بروید. اگر با خطاهای قرمز رنگ مواجه شدید، متن خطا را برای من بفرستید.
+
+
+
+### پیشنهاد نهایی:
+یک بار فایل `index.ejs` خود را کاملاً خالی کنید و فقط بنویسید:
+`<h1>Hello World</h1>`
+اگر کلمه Hello World را دیدید ولی نوار را ندیدید، یعنی مشکل ۱۰۰٪ در فایل `header.ejs` است.
+
+**آیا الان آن خط قرمز ضخیم را بالای صفحه می‌بینید؟**

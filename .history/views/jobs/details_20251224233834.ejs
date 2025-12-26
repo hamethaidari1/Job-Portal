@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h3 class="mb-0 text-success fw-bold"><%= job.title %></h3>
+                <a href="/" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back</a>
+            </div>
+            
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Company</p>
+                        <h5 class="fw-bold"><i class="bi bi-building"></i> <%= job.companyName %></h5>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-muted mb-1">Location</p>
+                        <h5 class="fw-bold"><i class="bi bi-geo-alt"></i> <%= job.location %></h5>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <span class="badge bg-success p-2 me-2"><%= job.jobType %></span>
+                    <span class="badge bg-secondary p-2">$<%= job.salary %> / Year</span>
+                </div>
+
+                <hr>
+
+                <h5 class="mb-3">Job Description</h5>
+                <p class="text-secondary" style="white-space: pre-line; line-height: 1.6;">
+                    <%= job.description %>
+                </p>
+
+                <div class="mt-5 d-grid gap-2">
+                    <button class="btn btn-success btn-lg">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

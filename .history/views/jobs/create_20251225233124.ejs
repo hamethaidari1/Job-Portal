@@ -1,0 +1,138 @@
+<%- include('../includes/header') %>
+
+<div class="container mt-4">
+    <a href="/jobs/dashboard" class="btn btn-link text-decoration-none text-muted p-0">
+        <i class="bi bi-arrow-left"></i> Panele Geri Dön
+    </a>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow border-0" style="border-radius: 20px;">
+                <div class="card-body p-5">
+
+                    <!-- Header -->
+                    <div class="text-center mb-5">
+                        <h2 class="fw-bold">Yeni İş İlanı Oluştur</h2>
+                        <p class="text-muted">
+                            Doğru adayı bulmak için ilan detaylarını doldurun
+                        </p>
+                    </div>
+
+                    <!-- Error -->
+                    <% if (errorMessage) { %>
+                        <div class="alert alert-danger border-0 shadow-sm" style="border-radius: 10px;">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <%= errorMessage %>
+                        </div>
+                    <% } %>
+
+                    <!-- Form -->
+                    <form action="/jobs/create" method="POST" enctype="multipart/form-data">
+
+                        <!-- Logo Upload -->
+                        <div class="mb-4 text-center">
+                            <label class="form-label d-block fw-bold text-start mb-3">
+                                Şirket Logosu
+                            </label>
+
+                            <div class="upload-preview mb-3 mx-auto"
+                                 style="width:120px;height:120px;border:2px dashed #ddd;border-radius:15px;
+                                 overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
+                                <img id="logo-preview" src="#" alt="Logo Önizleme"
+                                     style="display:none;width:100%;height:100%;object-fit:cover;">
+                                <i id="upload-icon" class="bi bi-camera text-muted fs-1"></i>
+                            </div>
+
+                            <input type="file" name="logo" id="logo-input"
+                                   class="form-control form-control-sm" accept="image/*">
+
+                            <small class="text-muted mt-1 d-block">
+                                Önerilen: Kare görsel, PNG veya JPG
+                            </small>
+                        </div>
+
+                        <!-- Job Title -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Pozisyon Adı</label>
+                            <input type="text" name="title" class="form-control py-2"
+                                   placeholder="Örn: Kıdemli Backend Developer"
+                                   value="<%= oldInput.title %>" required>
+                        </div>
+
+                        <!-- Company & Location -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Şirket Adı</label>
+                                <input type="text" name="companyName" class="form-control py-2"
+                                       placeholder="Şirketiniz"
+                                       value="<%= oldInput.companyName %>" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Konum</label>
+                                <input type="text" name="location" class="form-control py-2"
+                                       placeholder="Örn: İstanbul, Uzaktan"
+                                       value="<%= oldInput.location %>" required>
+                            </div>
+                        </div>
+
+                        <!-- Salary & Job Type -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Maaş ($)</label>
+                                <input type="number" name="salary" class="form-control py-2"
+                                       placeholder="Aylık veya Yıllık"
+                                       value="<%= oldInput.salary %>">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Çalışma Türü</label>
+                                <select name="jobType" class="form-select py-2">
+                                    <option value="Full-time">Tam Zamanlı</option>
+                                    <option value="Part-time">Yarı Zamanlı</option>
+                                    <option value="Remote">Uzaktan</option>
+                                    <option value="Contract">Sözleşmeli</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">İş Açıklaması</label>
+                            <textarea name="description" class="form-control" rows="6"
+                                      placeholder="Sorumluluklar, gereksinimler vb..."
+                                      required><%= oldInput.description %></textarea>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="d-grid mt-4">
+                            <button type="submit"
+                                    class="btn btn-success btn-lg fw-bold py-3 shadow-sm"
+                                    style="border-radius: 12px;">
+                                <i class="bi bi-check-circle me-2"></i> İlanı Yayınla
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('logo-input').onchange = () => {
+        const file = document.getElementById('logo-input').files[0];
+        if (file) {
+            const preview = document.getElementById('logo-preview');
+            const icon = document.getElementById('upload-icon');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+            icon.style.display = 'none';
+        }
+    }
+</script>
+
+<%- include('../includes/footer') %>

@@ -1,0 +1,18 @@
+{
+    "home": "Ana Sayfa",
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap",
+    "register": "Kayıt Ol",
+    "register_title": "Hesap Oluştur",
+    "search_jobs": "İş Ara",
+    "post_job": "İlan Ver",
+    "profile": "Profilim",
+    "applications": "Başvurularım",
+    "job_title": "İş Başlığı",
+    "company": "Şirket",
+    "location": "Konum",
+    "view_details": "Detayları Gör",
+    "apply": "Başvur",
+    "email_placeholder": "E-posta adresiniz",
+    "password_placeholder": "Şifreniz"
+}

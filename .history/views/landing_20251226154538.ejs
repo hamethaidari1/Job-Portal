@@ -1,0 +1,197 @@
+<section class="how-it-works py-5" style="background-color: #ffffff;">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
+            <h2 class="fw-bold mb-4 mb-md-0" style="color: #404145; font-size: 2rem;">Nasıl Çalışır?</h2>
+            
+            <div class="toggle-pill-wrapper">
+                <button class="pill-btn active" id="btn-hiring" onclick="switchWorkTab('hiring')">İşveren İçin</button>
+                <button class="pill-btn" id="btn-finding" onclick="switchWorkTab('finding')">Çalışan İçin</button>
+            </div>
+        </div>
+
+        <div class="row g-4" id="work-content-area">
+            <div id="hiring-steps" class="row g-4 w-100 m-0">
+                <div class="col-md-4">
+                    <div class="modern-video-card">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline>
+                                <source src="/video/hiring1.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-body-custom">
+                            <h6>İş İlanı Yayınlayın</h6>
+                            <p>İhtiyacınızı detaylandırın ve en iyi yeteneklerden teklif almaya başlayın.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="modern-video-card">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline>
+                                <source src="/video/hiring2.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-body-custom">
+                            <h6>Teklifleri İnceleyin</h6>
+                            <p>Freelancer profillerini، puanlarını ve portfolyolarını karşılaştırarak seçiminizi yapın.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="modern-video-card">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline>
+                                <source src="/video/hiring3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-body-custom">
+                            <h6>Güvenle Tamamlayın</h6>
+                            <p>Sadece işten memnun kaldığınızda ödemeyi onaylayın ve serbest bırakın.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="finding-steps" class="row g-4 w-100 m-0 d-none">
+                <div class="col-md-4">
+                    <div class="modern-video-card">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline>
+                                <source src="/video/finding1.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-body-custom">
+                            <h6>Profilinizi Oluşturun</h6>
+                            <p>Yeteneklerinizi sergileyen profesyonel bir profil ile dikkat çekin.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="modern-video-card">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline>
+                                <source src="/video/finding2.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-body-custom">
+                            <h6>İşlere Teklif Verin</h6>
+                            <p>Uzmanlığınıza uygun projeleri bulun ve rekabetçi teklifler sunun.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="modern-video-card">
+                        <div class="video-container">
+                            <video autoplay muted loop playsinline>
+                                <source src="/video/finding3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="card-body-custom">
+                            <h6>Güvenli Kazanç Sağlayın</h6>
+                            <p>İşi zamanında teslim edin ve ödemenizi sistem üzerinden güvenle alın.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* دکمه سوئیچ کپسولی مشابه تصویر */
+    .toggle-pill-wrapper {
+        background: #fff;
+        border: 1px solid #e4e5e7;
+        border-radius: 50px;
+        padding: 5px;
+        display: inline-flex;
+    }
+    .pill-btn {
+        border: none;
+        background: none;
+        padding: 8px 24px;
+        border-radius: 50px;
+        font-weight: 700;
+        color: #74767e;
+        transition: all 0.3s ease;
+        font-size: 15px;
+    }
+    .pill-btn.active {
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    /* استایل کارت‌های ویدیو */
+    .modern-video-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #efeff0;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .modern-video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .video-container {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        overflow: hidden;
+    }
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .card-body-custom {
+        padding: 20px;
+    }
+    .card-body-custom h6 {
+        font-weight: 700;
+        color: #404145;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .card-body-custom p {
+        color: #62646a;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* انیمیشن محو شدن */
+    .fade-in-custom {
+        animation: fadeIn 0.5s forwards;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+    function switchWorkTab(type) {
+        const hiringSteps = document.getElementById('hiring-steps');
+        const findingSteps = document.getElementById('finding-steps');
+        const btnHiring = document.getElementById('btn-hiring');
+        const btnFinding = document.getElementById('btn-finding');
+
+        if (type === 'hiring') {
+            hiringSteps.classList.remove('d-none');
+            hiringSteps.classList.add('fade-in-custom');
+            findingSteps.classList.add('d-none');
+            
+            btnHiring.classList.add('active');
+            btnFinding.classList.remove('active');
+        } else {
+            findingSteps.classList.remove('d-none');
+            findingSteps.classList.add('fade-in-custom');
+            hiringSteps.classList.add('d-none');
+            
+            btnFinding.classList.add('active');
+            btnHiring.classList.remove('active');
+        }
+    }
+</script>

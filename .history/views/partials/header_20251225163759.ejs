@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm" style="height:75px; z-index:10000;">
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-4" href="/">
+      jobportal<span class="text-success">.</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <form action="/" method="GET" class="ms-lg-4 d-flex border rounded bg-light p-1">
+        <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none" placeholder="Find Services...">
+        <button class="btn border-0" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </form>
+
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="/">Explore</a>
+        </li>
+
+        <% if (isAuthenticated) { %>
+          <li class="nav-item">
+            <a class="nav-link text-success fw-bold" href="/jobs/create">Post a Job</a>
+          </li>
+          <li class="nav-item ms-3">
+            <a class="btn btn-outline-danger btn-sm" href="/auth/logout">Logout</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth/login">Sign In</a>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="btn btn-outline-success fw-bold" href="/auth/register">Join</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

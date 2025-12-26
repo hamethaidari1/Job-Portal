@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'JobPortal' %></title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        body { margin: 0; padding: 0; background-color: #f7f7f7; }
+        .navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid #e4e5e7 !important;
+            position: fixed !important;
+            top: 0; width: 100%; height: 75px;
+            z-index: 10000 !important;
+            display: flex; align-items: center;
+        }
+        .navbar-brand { font-weight: 900; font-size: 26px; color: #404145 !important; text-decoration: none; }
+        .navbar-brand span { color: #1dbf73 !important; }
+        .nav-link { color: #62646a !important; font-weight: 600; }
+        
+        /* این پدینگ باعث می‌شود محتوا زیر نوار ناوبری نرود */
+        .content-wrapper { padding-top: 75px !important; min-height: 80vh; }
+        
+        .user-avatar {
+            width: 38px; height: 38px; border-radius: 50%;
+            background-color: #1dbf73; color: white;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        }
+        .user-avatar-img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid #1dbf73; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/">jobportal<span>.</span></a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <form action="/" method="GET" class="ms-lg-4 d-flex border rounded bg-light p-1">
+                <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none" placeholder="Find Services...">
+                <button class="btn border-0" type="submit"><i class="bi bi-search text-dark"></i></button>
+            </form>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/">Explore</a></li>
+                
+                <% if (isAuthenticated) { %>
+                    <li class="nav-item"><a class="nav-link text-success" href="/jobs/create">Post a Job</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link p-0 ms-lg-3 dropdown-toggle" href="#" id="userDrop" data-bs-toggle="dropdown">
+                            <% if (user && user.profileImage) { %>
+                                <img src="/uploads/<%= user.profileImage %>" class="user-avatar-img">
+                            <% } else { %>
+                                <div class="user-avatar"><%= (user && user.username) ? user.username.charAt(0).toUpperCase() : 'U' %></div>
+                            <% } %>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                            <li class="p-2 text-center border-bottom fw-bold"><%= user.username %></li>
+                            <li><a class="dropdown-item mt-2 text-danger" href="/auth/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item"><a class="nav-link" href="/auth/login">Sign In</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-success ms-lg-2 fw-bold" href="/auth/register">Join</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrapper"> ```
+
+---
+
+### ۲. اصلاح فایل `app.js` (بخش متغیرهای سراسری)
+مطمئن شوید که بخش `res.locals` دقیقاً بعد از تنظیمات سشن باشد. من کد شما را کمی ایمن‌تر کردم:
+
+```javascript
+// ... کدهای قبلی سشن ...
+
+app.use((req, res, next) => {
+    // استفاده از مقادیر سشن برای در دسترس بودن در تمام فایل‌های EJS
+    res.locals.user = req.session.user || null;
+    res.locals.isAuthenticated = req.session.isLoggedIn || false;
+    
+    // اضافه کردن متغیر pageTitle برای جلوگیری از ارور "undefined"
+    res.locals.pageTitle = 'Job Portal'; 
+    next();
+});

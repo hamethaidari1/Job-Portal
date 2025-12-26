@@ -1,0 +1,100 @@
+<%- include('../includes/header') %>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <a href="/" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+            <h2 class="fw-bold text-dark m-0">Available Jobs</h2>
+        </div>
+        <% if (typeof user !== 'undefined' && user) { %>
+            <a href="/jobs/create" class="btn btn-success shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Post New Job
+            </a>
+        <% } %>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4 bg-white" style="border-radius: 15px;">
+        <div class="card-body p-4">
+            <form action="/jobs/search" method="GET" class="row g-2">
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="search" class="form-control border-start-0 ps-0" 
+                               placeholder="Search by job title, company, or location..." 
+                               value="<%= typeof searchTerm !== 'undefined' ? searchTerm : '' %>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success w-100 fw-bold">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        <% if (jobs && jobs.length > 0) { %>
+            <% jobs.forEach(job => { %>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0" style="border-radius: 12px; transition: 0.3s;">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-success fw-bold mb-0"><%= job.title %></h5>
+                                <span class="badge bg-light text-success border border-success small"><%= job.jobType %></span>
+                            </div>
+                            <h6 class="card-subtitle mb-3 text-muted small">
+                                <i class="bi bi-building me-1"></i><%= job.companyName %>
+                            </h6>
+                            
+                            <div class="mb-3">
+                                <p class="card-text text-secondary mb-1 small">
+                                    <i class="bi bi-geo-alt text-danger me-1"></i><%= job.location %>
+                                </p>
+                                <p class="card-text text-secondary small">
+                                    <i class="bi bi-cash-stack text-muted me-1"></i><%= job.salary || 'Negotiable' %>
+                                </p>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <span class="text-muted" style="font-size: 0.75rem;">
+                                    Posted: <%= new Date(job.createdAt).toLocaleDateString() %>
+                                </span>
+                                <a href="/jobs/<%= job.id %>" class="btn btn-sm btn-outline-success px-3 fw-bold">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="col-12 text-center py-5">
+                <% if (typeof searchTerm !== 'undefined' && searchTerm) { %>
+                    <div class="alert alert-light border shadow-sm py-4">
+                        <i class="bi bi-search display-4 text-muted d-block mb-3"></i>
+                        No jobs found matching "<strong><%= searchTerm %></strong>" <br>
+                        <a href="/" class="btn btn-link text-success mt-2">View all jobs</a>
+                    </div>
+                <% } else { %>
+                    <div class="text-muted">
+                        <i class="bi bi-folder-x display-1 d-block mb-3"></i>
+                        <h4 class="fw-bold">No jobs posted yet</h4>
+                        <p>Be the first one to share an opportunity!</p>
+                        <% if (typeof user !== 'undefined' && user) { %>
+                            <a href="/jobs/create" class="btn btn-success mt-2">Post a Job Now</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-success mt-2">Login to Post a Job</a>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<style>
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
+</style>

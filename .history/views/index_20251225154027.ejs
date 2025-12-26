@@ -1,0 +1,64 @@
+<%- include('includes/header') %>
+
+<style>
+    /* ایجاد فاصله اجباری از بالای صفحه */
+    body {
+        padding-top: 85px !important;
+    }
+    .navbar {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 0 !important;
+        width: 100% !important;
+        background-color: white !important;
+        z-index: 9999 !important;
+        border-bottom: 2px solid #1dbf73 !important; /* یک خط سبز زیر نوار برای تست */
+    }
+</style>
+
+<main>
+    <header style="background-color: #0a4226; padding: 100px 0; position: relative; z-index: 1;">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold text-white mb-3">
+                Connect with the best <span style="color: #1dbf73;">opportunities</span>
+            </h1>
+            <p class="fs-5 text-white opacity-75 mb-5">
+                Find the perfect job service for your business or career growth.
+            </p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <form action="/" method="GET" class="d-flex shadow-lg bg-white p-1 rounded-2">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" name="search" class="form-control border-0 py-3 shadow-none" placeholder="What service are you looking for today?">
+                            <button type="submit" class="btn btn-success px-5 fw-bold" style="background-color: #1dbf73; border: none;">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <h4 class="fw-bold mb-4">Popular Services</h4>
+        <div class="row g-4">
+            <% if (jobs && jobs.length > 0) { %>
+                <% jobs.forEach(job => { %>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="fw-bold"><%= job.title %></h6>
+                                <p class="text-success fw-bold">$<%= job.salary %></p>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('includes/footer') %>

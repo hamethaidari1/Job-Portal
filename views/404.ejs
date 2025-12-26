@@ -1,0 +1,108 @@
+<%- include('includes/header') %>
+
+<style>
+    .error-page-wrapper {
+        padding: 80px 0;
+        background-color: #fff;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+    }
+    .error-content h1 {
+        font-size: 120px;
+        font-weight: 800;
+        color: #e4e5e7; /* خاکستری ملایم مشابه فایور */
+        margin-bottom: 0;
+        line-height: 1;
+    }
+    .error-content h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #404145;
+        margin-top: 10px;
+    }
+    .error-content p {
+        font-size: 18px;
+        color: #62646a;
+        margin-bottom: 30px;
+    }
+    .btn-fiverr-main {
+        background-color: #1dbf73;
+        color: white !important;
+        font-weight: 700;
+        padding: 12px 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+        border: none;
+    }
+    .btn-fiverr-main:hover {
+        background-color: #19a463;
+    }
+    .btn-outline-fiverr {
+        color: #1dbf73;
+        border: 1px solid #1dbf73;
+        font-weight: 700;
+        padding: 12px 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        margin-left: 10px;
+        transition: 0.3s;
+    }
+    .btn-outline-fiverr:hover {
+        background-color: #f7f7f7;
+    }
+    .suggestion-section {
+        border-top: 1px solid #e4e5e7;
+        padding-top: 50px;
+        margin-top: 50px;
+    }
+    .category-tag {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 24px;
+        margin: 5px;
+        color: #404145;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+    .category-tag:hover {
+        border-color: #1dbf73;
+        color: #1dbf73;
+        background-color: #f0fff4;
+    }
+</style>
+
+<div class="error-page-wrapper">
+    <div class="container text-center">
+        <div class="error-content">
+            <h1>404</h1>
+            <h2>Maalesef Aradığınız Sayfa Bulunamadı!</h2>
+            <p>Aradığınız sayfa mevcut değil veya taşınmış olabilir. İhtiyacınız olan hizmeti bulmak için ana sayfaya dönebilirsiniz.</p>
+            
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <a href="/" class="btn-fiverr-main">Ana Sayfaya Dön</a>
+                <a href="/jobs" class="btn-outline-fiverr">İş İlanlarını Gör</a>
+            </div>
+        </div>
+
+        <div class="suggestion-section">
+            <h5 class="fw-bold mb-4" style="color: #404145;">Popüler Kategorilere Göz Atın:</h5>
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="/jobs?search=Web+Tasarım" class="category-tag">Web Tasarımı</a>
+                <a href="/jobs?search=Logo" class="category-tag">Logo Tasarımı</a>
+                <a href="/jobs?search=Yazılım" class="category-tag">Yazılım & Teknoloji</a>
+                <a href="/jobs?search=Pazarlama" class="category-tag">Dijital Pazarlama</a>
+                <a href="/jobs?search=Çeviri" class="category-tag">Yazı & Çeviri</a>
+                <a href="/jobs?search=Video" class="category-tag">Video & Animasyon</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('includes/footer') %>

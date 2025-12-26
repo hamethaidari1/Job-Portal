@@ -1,0 +1,159 @@
+<%- include('includes/header') %>
+
+<style>
+    /* این بخش تضمین می‌کند که محتوا زیر نوار ناوبری نمی‌رود */
+    :root {
+        --navbar-height: 80px; /* ارتفاع تقریبی نوار ناوبری شما */
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-wrapper {
+        padding-top: var(--navbar-height) !important; /* ایجاد فاصله اجباری از بالا */
+    }
+
+    /* استایل‌های کارت‌ها و بخش هیرو */
+    .hero-section {
+        background-color: #0a4226;
+        padding: 100px 0;
+        position: relative;
+    }
+
+    .job-card-hover { 
+        transition: all 0.3s ease; 
+        border: 1px solid #efeff0 !important;
+    }
+
+    .job-card-hover:hover { 
+        transform: translateY(-8px); 
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+    }
+    
+    .category-card { 
+        transition: all 0.2s ease; 
+        border: 1px solid #e4e5e7 !important;
+        background-color: white;
+    }
+
+    .category-card:hover { 
+        border-color: #1dbf73 !important; 
+        color: #1dbf73; 
+        box-shadow: 0 4px 12px rgba(29, 191, 115, 0.1);
+    }
+
+    .line-clamp-2 { 
+        display: -webkit-box; 
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden; 
+    }
+</style>
+
+<main class="main-wrapper">
+    
+    <header class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold text-white mb-3">
+                Connect with the best <span style="color: #1dbf73;">opportunities</span>
+            </h1>
+            <p class="fs-5 text-white opacity-75 mb-5">
+                Find the perfect job service for your business or career growth.
+            </p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <form action="/" method="GET" class="d-flex shadow-lg bg-white p-1 rounded-2 overflow-hidden">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" name="search" class="form-control border-0 py-3 shadow-none" placeholder="What service are you looking for today?">
+                            <button type="submit" class="btn btn-success px-5 fw-bold" style="background-color: #1dbf73; border: none;">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <div class="mb-5">
+            <h4 class="fw-bold mb-4 text-dark">Popular Services</h4>
+            <div class="row g-3 text-center">
+                <% 
+                const categories = [
+                    { name: 'Development', icon: 'bi-code-slash' },
+                    { name: 'Design', icon: 'bi-palette' },
+                    { name: 'Marketing', icon: 'bi-megaphone' },
+                    { name: 'Writing', icon: 'bi-translate' },
+                    { name: 'Video', icon: 'bi-camera-reels' },
+                    { name: 'Data', icon: 'bi-database-check' }
+                ];
+                categories.forEach(cat => { 
+                %>
+                <div class="col-6 col-md-2">
+                    <div class="category-card p-3 border rounded shadow-sm h-100">
+                        <i class="bi <%= cat.icon %> fs-2 text-success mb-2 d-block"></i>
+                        <span class="small fw-bold"><%= cat.name %></span>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <h3 class="fw-bold text-dark m-0">Recent Job Opportunities</h3>
+            <a href="/" class="text-success text-decoration-none fw-bold small">Explore more <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="row g-4">
+            <% if (jobs && jobs.length > 0) { %>
+                <% jobs.forEach(job => { %>
+                    <div class="col-md-3">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden job-card-hover bg-white">
+                            <div class="position-relative">
+                                <img src="<%= job.companyLogo ? '/uploads/' + job.companyLogo : 'https://placehold.co/400x250/f8f9fa/1dbf73?text=Job+Service' %>" 
+                                     class="card-img-top" 
+                                     style="height: 180px; object-fit: cover;" 
+                                     alt="<%= job.title %>">
+                            </div>
+                            
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 24px; height: 24px;">
+                                        <i class="bi bi-person-circle text-muted small"></i>
+                                    </div>
+                                    <span class="fw-bold small text-dark"><%= job.companyName %></span>
+                                    <span class="ms-auto badge bg-light text-muted border-0 fw-normal small">Level 2</span>
+                                </div>
+                                <a href="/jobs/<%= job.id %>" class="text-decoration-none">
+                                    <h6 class="card-title text-dark mb-3 line-clamp-2" style="min-height: 44px; line-height: 1.4;"><%= job.title %></h6>
+                                </a>
+                                <div class="text-warning small mb-3">
+                                    <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
+                                    <span class="text-muted ms-1">(1k+)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer bg-white border-top-0 d-flex justify-content-between align-items-center p-3">
+                                <i class="bi bi-heart-fill text-muted"></i>
+                                <div class="text-end">
+                                    <small class="text-muted d-block" style="font-size: 10px; text-transform: uppercase;">Starting at</small>
+                                    <span class="fw-bold text-dark fs-5">$<%= job.salary %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12 text-center py-5 bg-white rounded shadow-sm">
+                    <i class="bi bi-search fs-1 text-muted d-block mb-3"></i>
+                    <p class="text-muted">No services found for your search.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('includes/footer') %>

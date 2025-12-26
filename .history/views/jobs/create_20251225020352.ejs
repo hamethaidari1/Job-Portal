@@ -1,0 +1,96 @@
+<%- include('../includes/header') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow border-0" style="border-radius: 20px;">
+                <div class="card-body p-5">
+                    <div class="text-center mb-5">
+                        <div class="bg-success bg-opacity-10 d-inline-block p-3 rounded-circle mb-3">
+                            <i class="bi bi-megaphone text-success fs-1"></i>
+                        </div>
+                        <h2 class="fw-bold">Post a New Job</h2>
+                        <p class="text-muted">Fill in the details to find your next great hire</p>
+                    </div>
+
+                    <% if (errorMessage) { %>
+                        <div class="alert alert-danger border-0 shadow-sm" style="border-radius: 10px;">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> <%= errorMessage %>
+                        </div>
+                    <% } %>
+
+                    <form action="/jobs/create" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-4 text-center">
+                            <label class="form-label d-block fw-bold text-start mb-3">Company Logo</label>
+                            <div class="upload-preview mb-3 mx-auto" style="width: 120px; height: 120px; border: 2px dashed #ddd; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                                <img id="logo-preview" src="#" alt="Logo Preview" style="display: none; width: 100%; height: 100%; object-fit: cover;">
+                                <i id="upload-icon" class="bi bi-camera text-muted fs-1"></i>
+                            </div>
+                            <input type="file" name="logo" id="logo-input" class="form-control form-control-sm" accept="image/*">
+                            <small class="text-muted mt-1 d-block">Recommended: Square image, PNG or JPG</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Job Title</label>
+                            <input type="text" name="title" class="form-control py-2" placeholder="e.g. Senior Backend Developer" value="<%= oldInput.title %>" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Company Name</label>
+                                <input type="text" name="companyName" class="form-control py-2" placeholder="Your Company" value="<%= oldInput.companyName %>" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Location</label>
+                                <input type="text" name="location" class="form-control py-2" placeholder="e.g. Tehran, Remote" value="<%= oldInput.location %>" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Salary ($)</label>
+                                <input type="number" name="salary" class="form-control py-2" placeholder="Annual or Monthly Salary" value="<%= oldInput.salary %>">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Job Type</label>
+                                <select name="jobType" class="form-select py-2">
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Remote">Remote</option>
+                                    <option value="Contract">Contract</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Job Description</label>
+                            <textarea name="description" class="form-control" rows="6" placeholder="Describe responsibilities, requirements, etc..." required><%= oldInput.description %></textarea>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold py-3 shadow-sm" style="border-radius: 12px;">
+                                <i class="bi bi-check-circle me-2"></i> Publish Job Post
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('logo-input').onchange = evt => {
+        const [file] = document.getElementById('logo-input').files;
+        if (file) {
+            const preview = document.getElementById('logo-preview');
+            const icon = document.getElementById('upload-icon');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+            icon.style.display = 'none';
+        }
+    }
+</script>
+
+<%- include('../includes/footer') %>

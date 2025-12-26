@@ -1,0 +1,68 @@
+<h2><%= t.register_title %></h2>
+<form id="registerForm" class="mt-4">
+    <div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4">Register</h3>
+                
+                <form action="/auth/register" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">I am a:</label>
+                        <select name="role" class="form-select">
+                            <option value="seeker">Job Seeker</option>
+                            <option value="employer">Employer (Company)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <small>Already have an account? <a href="/auth/login">Login</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <button type="submit" class="btn btn-success w-100">Kayıt Ol</button>
+</form>
+
+<script type="module">
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const role = document.getElementById('role').value;
+
+        try {
+            // 1. Firebase'de kullanıcı oluştur
+            const userCredential = await window.createUser(window.firebaseAuth, email, password);
+            const user = userCredential.user;
+
+            // 2. Kendi backendimize UID ve Rol gönder
+            const response = await fetch('/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, uid: user.uid, role })
+            });
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                window.location.href = result.redirect; // Doğrulama sayfasına git
+            }
+        } catch (error) {
+            alert("Error: " + error.message);
+        }
+    });
+</script>

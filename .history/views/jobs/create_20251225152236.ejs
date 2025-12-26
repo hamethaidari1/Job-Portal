@@ -1,0 +1,69 @@
+<%- include('../includes/header') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold mb-4" style="color: #0a4226;">Post a Service</h2>
+                    <p class="text-muted mb-5">Fill in the details below to list your job opportunity on the platform.</p>
+
+                    <% if (errorMessage) { %>
+                        <div class="alert alert-danger border-0 small"><%= errorMessage %></div>
+                    <% } %>
+
+                    <form action="/jobs/create" method="POST" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small">Job Title</label>
+                            <input type="text" name="title" class="form-control form-control-lg border-2" placeholder="e.g. Senior Web Developer" value="<%= oldInput.title %>" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold small">Company Name</label>
+                                <input type="text" name="companyName" class="form-control border-2" placeholder="Company Name" value="<%= oldInput.companyName %>" required>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold small">Location</label>
+                                <input type="text" name="location" class="form-control border-2" placeholder="e.g. Istanbul or Remote" value="<%= oldInput.location %>" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold small">Job Type</label>
+                                <select name="jobType" class="form-select border-2">
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Freelance">Freelance</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold small">Salary ($)</label>
+                                <input type="number" name="salary" class="form-control border-2" placeholder="Starting at" value="<%= oldInput.salary %>">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small">Company Logo</label>
+                            <input type="file" name="companyLogo" class="form-control border-2" accept="image/*" required>
+                            <div class="form-text mt-2 small text-muted">A professional logo increases trust. (Required)</div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label fw-bold small">Description</label>
+                            <textarea name="description" rows="5" class="form-control border-2" placeholder="Describe the job requirements and responsibilities..." required><%= oldInput.description %></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold" style="background-color: #1dbf73; border: none; padding: 15px;">Publish Service</button>
+                            <a href="/jobs/dashboard" class="btn btn-link text-muted text-decoration-none">Cancel and Return</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

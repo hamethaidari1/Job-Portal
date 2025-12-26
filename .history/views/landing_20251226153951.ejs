@@ -1,0 +1,164 @@
+<section class="how-it-works-section py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
+            <h2 class="fw-bold m-0" style="color: #404145;">Nasıl Çalışır?</h2>
+            
+            <div class="role-switcher-wrapper">
+                <input type="radio" class="btn-check" name="roleToggle" id="btnHiring" checked>
+                <label class="btn btn-role-toggle" for="btnHiring">İşveren İçin</label>
+
+                <input type="radio" class="btn-check" name="roleToggle" id="btnWork">
+                <label class="btn btn-role-toggle" for="btnWork">Çalışan İçin</label>
+            </div>
+        </div>
+
+        <div id="hiringContainer" class="row g-4 transition-fade">
+            <div class="col-md-4">
+                <div class="how-card">
+                    <div class="video-wrapper">
+                        <video autoplay muted loop playsinline>
+                            <source src="/video/hiring_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h5 class="fw-bold mt-3">İş İlanı Yayınlayın</h5>
+                    <p class="text-muted small">İhtiyacınızı detaylandırın. İlan vermek her zaman ücretsizdir.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-card">
+                    <div class="video-wrapper">
+                        <video autoplay muted loop playsinline>
+                            <source src="/video/hiring_2.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h5 class="fw-bold mt-3">Teklif Alın ve İnceleyin</h5>
+                    <p class="text-muted small">Freelancer'lardan gelen teklifleri karşılaştırın ve en iyisini seçin.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-card">
+                    <div class="video-wrapper">
+                        <video autoplay muted loop playsinline>
+                            <source src="/video/hiring_3.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h5 class="fw-bold mt-3">Güvenle Ödeyin</h5>
+                    <p class="text-muted small">Sadece iş tamamlandığında و onay verdiğinizde ödeme yapın.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="workContainer" class="row g-4 transition-fade d-none">
+            <div class="col-md-4">
+                <div class="how-card">
+                    <div class="video-wrapper">
+                        <video autoplay muted loop playsinline>
+                            <source src="/video/work_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h5 class="fw-bold mt-3">Profilinizi Oluşturun</h5>
+                    <p class="text-muted small">Yeteneklerinizi sergileyin و mükemmel bir profil oluşturun.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-card">
+                    <div class="video-wrapper">
+                        <video autoplay muted loop playsinline>
+                            <source src="/video/work_2.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h5 class="fw-bold mt-3">Teklif Verin</h5>
+                    <p class="text-muted small">Yeteneklerinize uygun projeleri bulun و teklifinizi iletin.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-card">
+                    <div class="video-wrapper">
+                        <video autoplay muted loop playsinline>
+                            <source src="/video/work_3.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h5 class="fw-bold mt-3">Kazanç Sağlayın</h5>
+                    <p class="text-muted small">İşi zamanında teslim edin و güvenli bir şekilde ödemenizi alın.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Switcher Design */
+    .role-switcher-wrapper {
+        border: 1px solid #e4e5e7;
+        border-radius: 50px;
+        padding: 4px;
+        display: inline-flex;
+        background-color: #fff;
+    }
+    .btn-role-toggle {
+        border-radius: 40px !important;
+        border: none !important;
+        padding: 8px 25px !important;
+        font-size: 14px;
+        font-weight: 700;
+        color: #62646a;
+        transition: 0.3s;
+    }
+    .btn-check:checked + .btn-role-toggle {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+
+    /* Video Cards */
+    .video-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: #000;
+        aspect-ratio: 16 / 9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .video-wrapper video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .how-card h5 {
+        color: #404145;
+        font-size: 1.1rem;
+    }
+
+    /* Animation */
+    .transition-fade {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnHiring = document.getElementById('btnHiring');
+        const btnWork = document.getElementById('btnWork');
+        const hiringBox = document.getElementById('hiringContainer');
+        const workBox = document.getElementById('workContainer');
+
+        btnHiring.addEventListener('change', function() {
+            if (this.checked) {
+                hiringBox.classList.remove('d-none');
+                workBox.classList.add('d-none');
+            }
+        });
+
+        btnWork.addEventListener('change', function() {
+            if (this.checked) {
+                workBox.classList.remove('d-none');
+                hiringBox.classList.add('d-none');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,37 @@
+/* Upwork Green Theme */
+:root {
+    --primary-green: #14a800;
+    --hover-green: #108a00;
+}
+
+.bg-success { background-color: var(--primary-green) !important; }
+.btn-success { background-color: var(--primary-green); border: none; }
+.btn-success:hover { background-color: var(--hover-green); }
+.text-success { color: var(--primary-green) !important; }
+
+body { background-color: #f9f9f9; font-family: 'Segoe UI', sans-serif; }
+.card { border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+/* Body padding is handled in header.ejs for responsiveness */
+
+.navbar {
+  /* height removed to allow auto height on mobile */
+  z-index: 10000;
+}
+
+.content-wrapper {
+  min-height: 80vh;
+}
+
+    footer {
+        background-color: #414141; /* خاکستری */
+        color: #181717;
+    }
+
+    footer a {
+        color: #272727;
+    }
+
+    footer a:hover {
+        color: #080808;
+    }
+

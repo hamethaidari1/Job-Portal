@@ -1,0 +1,60 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0">Edit Job: <%= job.title %></h3>
+                </div>
+                <div class="card-body">
+                    <% if (errorMessage) { %>
+                        <div class="alert alert-danger"><%= errorMessage %></div>
+                    <% } %>
+
+                    <form action="/jobs/<%= job.id %>/edit" method="POST">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Job Title *</label>
+                                <input type="text" name="title" class="form-control" value="<%= job.title %>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Company Name *</label>
+                                <input type="text" name="companyName" class="form-control" value="<%= job.companyName %>" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Location *</label>
+                                <input type="text" name="location" class="form-control" value="<%= job.location %>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Salary</label>
+                                <input type="text" name="salary" class="form-control" value="<%= job.salary %>">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Job Type</label>
+                            <select name="jobType" class="form-select">
+                                <option value="Full-time" <%= job.jobType === 'Full-time' ? 'selected' : '' %>>Full-time</option>
+                                <option value="Part-time" <%= job.jobType === 'Part-time' ? 'selected' : '' %>>Part-time</option>
+                                <option value="Contract" <%= job.jobType === 'Contract' ? 'selected' : '' %>>Contract</option>
+                                <option value="Remote" <%= job.jobType === 'Remote' ? 'selected' : '' %>>Remote</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Job Description *</label>
+                            <textarea name="description" class="form-control" rows="5" required><%= job.description %></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning btn-lg">Update Job</button>
+                            <a href="/jobs/<%= job.id %>" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

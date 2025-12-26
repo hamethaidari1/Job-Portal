@@ -1,0 +1,43 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><%= t.login %></h3>
+                </div>
+                <div class="card-body">
+                    <form action="/auth/login" method="POST">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100"><%= t.login %></button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/auth/register"><%= t.register %></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            await window.signInUser(window.firebaseAuth, email, password);
+            // Başarılı olursa ana sayfaya yönlendir (Session yönetimi için backend'e de istek atılabilir)
+            window.location.href = '/'; 
+        } catch (error) {
+            alert('Login Failed: ' + error.message);
+        }
+    });
+</script>

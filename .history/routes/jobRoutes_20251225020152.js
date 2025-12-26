@@ -1,0 +1,16 @@
+const express = require('express');
+const router = express.Router();
+const jobController = require('../controllers/jobController');
+const multer = require('multer');
+const upload = multer({ dest: 'public/uploads/' }); // تنظیم مسیر ذخیره فایل
+router.post('/delete/:id', jobController.postDeleteJob);
+// روت‌های ثابت (Static)
+router.get('/create', jobController.getCreateJob);
+router.post('/create', jobController.postCreateJob);
+router.get('/edit/:id', jobController.getEditJob);
+router.post('/edit/:id', jobController.postEditJob);
+// روت‌های داینامیک (Dynamic) - همیشه در انتها باشند
+router.get('/:id', jobController.getJobDetails);
+router.post('/create', upload.single('logo'), jobController.postCreateJob);
+
+module.exports = router;

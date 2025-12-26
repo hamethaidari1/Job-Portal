@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --fiverr-green: #1dbf73;
+            --fiverr-text: #404145;
+            --fiverr-border: #e4e5e7;
+        }
+
+        body { font-family: 'Macan', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+        /* نوار ناوبری اصلی */
+        .fiverr-navbar {
+            background-color: #ffffff !important;
+            border-bottom: 1px solid var(--fiverr-border);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 28px;
+            color: #000000 !important;
+            letter-spacing: -1px;
+        }
+
+        .navbar-brand span { color: var(--fiverr-green); }
+
+        /* فیلد جستجو مشابه فایور */
+        .fiverr-search-container {
+            flex-grow: 1;
+            max-width: 450px;
+            margin-left: 20px;
+        }
+
+        .fiverr-search-input {
+            border: 1px solid var(--fiverr-border);
+            border-radius: 4px 0 0 4px !important;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .fiverr-search-btn {
+            background-color: #222325;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0 !important;
+            padding: 0 20px;
+        }
+
+        .fiverr-search-btn:hover { background-color: #000000; color: white; }
+
+        /* لینک‌های منو */
+        .nav-link {
+            color: var(--fiverr-text) !important;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 0 15px !important;
+        }
+
+        .nav-link:hover { color: var(--fiverr-green) !important; }
+
+        /* دکمه Join */
+        .btn-fiverr-join {
+            border: 1px solid var(--fiverr-green) !important;
+            color: var(--fiverr-green) !important;
+            font-weight: 600;
+            padding: 6px 20px !important;
+            border-radius: 4px;
+            margin-left: 15px;
+        }
+
+        .btn-fiverr-join:hover {
+            background-color: var(--fiverr-green);
+            color: white !important;
+        }
+
+        .main-content { margin-top: 80px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fiverr-navbar fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">fiverr<span>.</span></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <form action="/" method="GET" class="fiverr-search-container d-none d-lg-flex shadow-sm">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control fiverr-search-input shadow-none" placeholder="What service are you looking for today?">
+                    <button class="btn fiverr-search-btn" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="#">Fiverr Pro</a></li>
+                <li class="nav-item d-none d-xl-block"><a class="nav-link" href="#">Explore</a></li>
+                
+                <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+                    <li class="nav-item"><a class="nav-link text-success" href="/jobs/create">Post a Job</a></li>
+                    <li class="nav-item ms-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" 
+                             style="width: 35px; height: 35px; background-color: #1dbf73; cursor: pointer;">
+                            <%= user ? user.username.charAt(0).toUpperCase() : 'U' %>
+                        </div>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item"><a class="nav-link" href="/auth/login">Sign In</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-fiverr-join" href="/auth/register">Join</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="main-content">

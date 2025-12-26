@@ -1,0 +1,52 @@
+<%- include('../includes/header') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold text-success mb-4">Edit Job Post</h2>
+                    <form action="/jobs/edit/<%= job.id %>" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Job Title</label>
+                            <input type="text" name="title" class="form-control" value="<%= job.title %>" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label fw-bold">Company</label>
+                                <input type="text" name="companyName" class="form-control" value="<%= job.companyName %>" required>
+                            </div>
+                            <div class="col">
+                                <label class="form-label fw-bold">Location</label>
+                                <input type="text" name="location" class="form-control" value="<%= job.location %>" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label fw-bold">Salary ($)</label>
+                                <input type="number" name="salary" class="form-control" value="<%= job.salary %>">
+                            </div>
+                            <div class="col">
+                                <label class="form-label fw-bold">Job Type</label>
+                                <select name="jobType" class="form-select">
+                                    <option value="Full-time" <%= job.jobType === 'Full-time' ? 'selected' : '' %>>Full-time</option>
+                                    <option value="Part-time" <%= job.jobType === 'Part-time' ? 'selected' : '' %>>Part-time</option>
+                                    <option value="Remote" <%= job.jobType === 'Remote' ? 'selected' : '' %>>Remote</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea name="description" class="form-control" rows="5" required><%= job.description %></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold">Update Job Information</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

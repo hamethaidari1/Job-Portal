@@ -1,0 +1,49 @@
+<%- include('includes/header') %>
+
+<main>
+    <header style="background-color: #0a4226; padding: 100px 0; width: 100%; position: relative; z-index: 10;">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold text-white mb-3">Connect with the best <span style="color: #1dbf73;">opportunities</span></h1>
+            <p class="fs-5 text-white opacity-75 mb-5">Find the perfect job service for your business or career growth.</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <form action="/" method="GET" class="d-flex shadow-lg bg-white p-1 rounded-2 overflow-hidden">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" name="search" class="form-control border-0 py-3 shadow-none" placeholder="Search for jobs...">
+                            <button type="submit" class="btn btn-success px-5 fw-bold" style="background-color: #1dbf73; border: none;">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container py-5">
+        <h3 class="fw-bold mb-4">Recent Opportunities</h3>
+        <div class="row g-4">
+            <% if (jobs && jobs.length > 0) { %>
+                <% jobs.forEach(job => { %>
+                    <div class="col-md-3">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="<%= job.companyLogo ? '/uploads/' + job.companyLogo : 'https://placehold.co/400x250' %>" class="card-img-top" style="height: 150px; object-fit: cover;">
+                            <div class="card-body">
+                                <h6 class="fw-bold"><%= job.title %></h6>
+                                <p class="small text-muted mb-0"><%= job.companyName %></p>
+                            </div>
+                            <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-success">$<%= job.salary %></span>
+                                <a href="/jobs/<%= job.id %>" class="btn btn-sm btn-light">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p class="text-center">No jobs found.</p>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include('includes/footer') %>

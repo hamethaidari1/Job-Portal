@@ -1,0 +1,150 @@
+{
+    "common": {
+        "login": "Giriş Yap",
+        "join": "Katıl",
+        "register": "Kayıt Ol",
+        "logout": "Çıkış Yap",
+        "email": "E-posta",
+        "password": "Şifre",
+        "search": "Ara",
+        "home": "Ana Sayfa"
+    },
+    "header": {
+        "search_placeholder": "Bugün hangi hizmeti arıyorsunuz?",
+        "dashboard": "Panel",
+        "profile": "Profil",
+        "settings": "Ayarlar",
+        "help": "Yardım ve Destek",
+        "go_to_profile": "Profile Git"
+    },
+    "landing": {
+        "hero_title": "İşiniz için mükemmel <i>freelance</i><br>hizmetleri bulun",
+        "hero_subtitle": "Zaman ve maliyetten tasarruf etmek için yetenekli insanlarla en uygun fiyatlarla çalışın",
+        "join_button": "JobPortal'a Katıl",
+        "why_choose_title": "Neden JobPortal'ı Seçmelisiniz?",
+        "why_choose_subtitle": "Dünya çapında freelance yetenekler parmaklarınızın ucunda",
+        "feature_browse_title": "Portfolyolara Göz Atın",
+        "feature_browse_desc": "Önceki çalışmalarına göz atarak güvendiğiniz profesyonelleri bulun.",
+        "feature_bids_title": "Hızlı Teklifler",
+        "feature_bids_desc": "Yetenekli freelancerlarımızdan hızlı ve kolayca teklif alın.",
+        "feature_quality_title": "Kaliteli İş",
+        "feature_quality_desc": "JobPortal, küresel olarak en büyük kaliteli freelancer havuzuna sahiptir.",
+        "feature_safe_title": "Güvenli ve Emniyetli",
+        "feature_safe_desc": "Her zaman ne ödeyeceğinizi önceden bilin. Siz onaylayana kadar ödemeniz serbest bırakılmaz.",
+        "bottom_title": "Dünya çapında freelance yetenekler parmaklarınızın ucunda",
+        "benefit_budget_title": "Her bütçe için en iyisi",
+        "benefit_budget_desc": "Her fiyat noktasında yüksek kaliteli hizmetler bulun. Saatlik ücret yok, sadece proje bazlı fiyatlandırma.",
+        "benefit_quality_title": "Hızlı yapılan kaliteli iş",
+        "benefit_quality_desc": "Projeniz üzerinde dakikalar içinde çalışmaya başlayacak doğru freelancerı bulun.",
+        "benefit_payment_title": "Her zaman korumalı ödemeler",
+        "benefit_payment_desc": "Her zaman ne ödeyeceğinizi önceden bilin. İşi onaylayana kadar ödemeniz serbest bırakılmaz.",
+        "benefit_support_title": "7/24 destek",
+        "benefit_support_desc": "Sorularınız mı var? 7/24 destek ekibimiz her zaman, her yerde yardıma hazırdır."
+    },
+    "home": {
+        "hero_title": "İşiniz için mükemmel <i>freelance</i><br>hizmetleri bulun",
+        "search_placeholder": "\"mobil uygulama geliştirme\" deneyin",
+        "popular": "Popüler:",
+        "tags": {
+            "website_design": "Web Sitesi Tasarımı",
+            "wordpress": "WordPress",
+            "logo_design": "Logo Tasarımı",
+            "video_editing": "Video Düzenleme"
+        },
+        "comparison": {
+            "upwork": "Upwork",
+            "fiverr": "Fiverr",
+            "featured_freelancers": "Öne çıkan freelancerlar",
+            "search_options": "Arama seçenekleri",
+            "pricing_model": "Fiyatlandırma modeli",
+            "customer_support": "Müşteri desteği",
+            "business_solutions": "İş çözümleri",
+            "upwork_features": {
+                "verticals": "12 endüstri dikey",
+                "countries": "180'den fazla ülkede",
+                "post_job": "İş ilanı yayınla ve teklif al",
+                "catalog": "Proje kataloğuna göz at",
+                "hourly": "Saatlik ücretler",
+                "project_fees": "Proje bazlı ücretler",
+                "ticket_support": "Bilet tabanlı destek sistemi",
+                "top_talent": "En yüksek puanlı yetenek",
+                "plus_program": "En yüksek puanlı plus programı"
+            },
+            "fiverr_features": {
+                "categories": "700'den fazla kategoride çeşitli hizmetler",
+                "countries": "160'tan fazla ülkede",
+                "skill_search": "Yetenek ile ara",
+                "service_search": "Hizmet ile ara",
+                "mix_match": "Karıştır ve eşleştir",
+                "neo": "Neo, yapay zeka tabanlı eşleştirme aracı",
+                "fixed_price": "Sabit fiyat teklifi",
+                "custom_offers": "Özel teklifler",
+                "subscriptions": "Abonelikler",
+                "hourly": "Saatlik ücretler",
+                "availability": "7/24 erişilebilirlik",
+                "user_friendly": "Son derece erişilebilir ve kullanıcı dostu deneyim",
+                "resolution": "Çözüm merkezi",
+                "pro": "Fiverr Pro",
+                "certified": "Fiverr Onaylı",
+                "enterprise": "Fiverr Kurumsal"
+            }
+        },
+        "recent_gigs": {
+            "title": "Son İşler",
+            "explore": "Daha fazlasını keşfet",
+            "starting_at": "BAŞLANGIÇ FİYATI",
+            "no_services": "Hizmet bulunamadı."
+        },
+        "guides": {
+            "title": "Fiverr rehberleri",
+            "guide1_title": "Fiverr vs. Upwork: iş için hangisi en iyisi?",
+            "guide1_desc": "İhtiyaçlarınız için doğru freelance pazar yerini seçmek için tam bir rehber",
+            "guide2_title": "Online bir iş kurun ve evden çalışın",
+            "guide2_desc": "Online küçük bir iş kurmak için tam bir rehber",
+            "guide3_title": "İşiniz için bir logo oluşturun",
+            "guide3_desc": "Unutulmaz bir iş logosu oluşturmak için mükemmel rehber"
+        },
+        "skills": {
+            "title": "İhtiyacınız olan herhangi bir yetenekle başlayın",
+            "subtitle": "500'den fazla hizmet kategorisinde çeşitli yeteneklere erişerek bir sonraki projenizi harekete geçirin.",
+            "website_dev": "Web Sitesi Geliştirme",
+            "logo_design": "Logo Tasarımı",
+            "seo": "SEO",
+            "architecture": "Mimari & İç Tasarım",
+            "social_media": "Sosyal Medya Pazarlaması",
+            "voice_over": "Seslendirme",
+            "explore_more": "Daha fazla hizmet keşfet"
+        },
+        "cta": {
+            "title": "Başarıya evet demeye hazır mısınız?",
+            "button": "Şimdi Fiverr'da işe al"
+        }
+    },
+    "footer": {
+        "brand_desc": "İşiniz için mükemmel freelance hizmetleri bulun.",
+        "links_title": "Bağlantılar",
+        "about": "Hakkımızda",
+        "contact": "İletişim",
+        "support_title": "Destek",
+        "help": "Yardım ve Destek",
+        "trust": "Güven ve Güvenlik",
+        "copyright": "© 2025 İŞBUL.ONLINE"
+    },
+    "settings": {
+        "title": "Hesap Ayarları",
+        "personal_info": "Kişisel Bilgiler",
+        "contact_info": "İletişim Bilgileri",
+        "change_password": "Şifreyi Değiştir",
+        "email_notifications": "E-posta Bildirimleri",
+        "sms_notifications": "SMS Bildirimleri",
+        "ad_visibility": "Reklam Görünürlüğü",
+        "delete_account": "Hesap Silme ve Dondurma",
+        "personal_desc": "Bilgilerini düzenleyerek hesabını güncel tutabilirsin.",
+        "name": "İsim",
+        "surname": "Soy isim",
+        "location": "Yaşadığın yer",
+        "select_location": "Konum Seçiniz",
+        "birthdate": "Doğum tarihi",
+        "save": "Kaydet"
+    }
+}

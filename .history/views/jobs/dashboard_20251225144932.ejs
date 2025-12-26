@@ -1,0 +1,100 @@
+<%- include('../includes/header') %>
+
+<div class="container py-5" style="min-height: 80vh;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">
+                <i class="bi bi-speedometer2 me-2 text-primary"></i>My Job Dashboard
+            </h2>
+            <p class="text-muted mb-0">You have posted <span class="fw-bold text-primary"><%= jobs.length %></span> active job listings.</p>
+        </div>
+        <a href="/jobs/create" class="btn btn-success btn-lg shadow-sm px-4">
+            <i class="bi bi-plus-circle me-2"></i>Post a New Job
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0" style="border-radius: 16px; overflow: hidden;">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light text-secondary">
+                    <tr>
+                        <th class="ps-4 py-3 border-0">JOB POSITION</th>
+                        <th class="py-3 border-0">LOCATION</th>
+                        <th class="py-3 border-0">JOB TYPE</th>
+                        <th class="py-3 border-0">POSTED DATE</th>
+                        <th class="text-center pe-4 py-3 border-0">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    <% if (jobs.length > 0) { %>
+                        <% jobs.forEach(job => { %>
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3 position-relative">
+                                            <% if (job.companyLogo) { %>
+                                                <img src="/uploads/<%= job.companyLogo %>" 
+                                                     class="rounded-3 shadow-sm border" 
+                                                     style="width: 50px; height: 50px; object-fit: cover;"
+                                                     onerror="this.src='https://placehold.co/50x50?text=Logo'">
+                                            <% } else { %>
+                                                <div class="bg-primary bg-opacity-10 rounded-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                                    <i class="bi bi-building text-primary fs-4"></i>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark fs-6"><%= job.title %></div>
+                                            <div class="text-muted small"><%= job.companyName %></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="text-dark"><i class="bi bi-geo-alt text-danger me-1"></i><%= job.location %></span>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill bg-light text-primary border border-primary border-opacity-25 px-3">
+                                        <%= job.jobType %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="text-muted small"><%= new Date(job.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) %></span>
+                                </td>
+                                <td class="text-center pe-4">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a href="/jobs/<%= job.id %>" class="btn btn-sm btn-outline-primary" title="View Details" style="border-radius: 8px;">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="/jobs/edit/<%= job.id %>" class="btn btn-sm btn-outline-warning" title="Edit Job" style="border-radius: 8px;">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form action="/jobs/delete/<%= job.id %>" method="POST" class="d-inline" onsubmit="return confirm('Attention! Are you sure you want to permanently delete this job listing?')">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Listing" style="border-radius: 8px;">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <div class="py-4">
+                                    <i class="bi bi-folder2-open display-1 text-light mb-3 d-block"></i>
+                                    <h4 class="text-muted fw-light">No jobs found in your account</h4>
+                                    <p class="text-secondary mb-4 small">Start by posting your first job opportunity today!</p>
+                                    <a href="/jobs/create" class="btn btn-success px-4" style="border-radius: 10px;">
+                                        <i class="bi bi-plus-lg me-2"></i>Create New Job
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

@@ -1,0 +1,90 @@
+<style>
+    /* تنظیمات اختصاصی برای دیده شدن نوار ناوبری روی تمام لایه‌ها */
+    .navbar {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e4e5e7 !important;
+        height: 80px;
+        z-index: 1050 !important; /* بالاتر از لایه‌های Hero */
+        transition: all 0.3s ease;
+    }
+
+    .navbar-brand {
+        font-weight: 900;
+        font-size: 26px;
+        color: #404145 !important;
+        text-decoration: none;
+    }
+
+    .navbar-brand span {
+        color: #1dbf73 !important;
+    }
+
+    .nav-link {
+        color: #62646a !important;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .nav-link:hover {
+        color: #1dbf73 !important;
+    }
+
+    /* این کلاس را به کانتینر اصلی در فایل index اضافه کن */
+    .content-wrapper {
+        margin-top: 80px !important; /* به اندازه ارتفاع نوار ناوبری محتوا را پایین می‌کشد */
+    }
+
+    /* استایل دکمه Join */
+    .btn-join-outline {
+        border: 1px solid #1dbf73 !important;
+        color: #1dbf73 !important;
+        transition: 0.3s;
+    }
+
+    .btn-join-outline:hover {
+        background-color: #1dbf73 !important;
+        color: white !important;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">jobportal<span>.</span></a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <form action="/" method="GET" class="ms-lg-4 d-flex border rounded bg-light p-1" style="max-width: 300px;">
+        <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none" placeholder="Find Services...">
+        <button class="btn border-0" type="submit">
+          <i class="bi bi-search text-muted"></i>
+        </button>
+      </form>
+
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/">Explore</a></li>
+
+        <% if (isAuthenticated) { %>
+          <li class="nav-item"><a class="nav-link text-success fw-bold" href="/jobs/create">Post a Job</a></li>
+          <li class="nav-item dropdown ms-lg-3">
+            <a class="nav-link p-0" href="#" id="userDrop" data-bs-toggle="dropdown">
+               <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                  <%= user.username.charAt(0).toUpperCase() %>
+               </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                <li><a class="dropdown-item small" href="/auth/logout">Logout</a></li>
+            </ul>
+          </li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/auth/login">Sign In</a></li>
+          <li class="nav-item">
+            <a class="btn btn-join-outline ms-lg-2 fw-bold px-4" href="/auth/register">Join</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

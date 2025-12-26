@@ -1,0 +1,26 @@
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold"><%= t.search_jobs %></h1>
+        <p class="col-md-8 fs-4">Find your dream job or post a new opportunity today.</p>
+        <a href="/jobs" class="btn btn-success btn-lg" type="button"><%= t.search_jobs %></a>
+    </div>
+</div>
+
+<h3>Recent Jobs</h3>
+<div class="row">
+    <% if(jobs.length > 0) { %>
+        <% jobs.forEach(job => { %>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= job.title %></h5>
+                        <p class="card-text text-muted"><%= job.location %></p>
+                        <a href="/jobs/<%= job.id %>" class="btn btn-outline-success btn-sm"><%= t.view_details %></a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p class="text-muted">No jobs posted yet.</p>
+    <% } %>
+</div>

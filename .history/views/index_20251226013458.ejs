@@ -1,0 +1,202 @@
+<%- include('includes/header') %>
+
+<style>
+    :root {
+        --navbar-height: 80px;
+        --fiverr-green: #1dbf73;
+        --dark-green: #0a4226;
+        --bg-light: #f7f7f7;
+        --light-green-bg: #eefdf3;
+    }
+
+    body { 
+        background-color: white !important;
+        font-family: 'Macan', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background-color: var(--dark-green);
+        padding: 80px 0;
+        color: white;
+    }
+    .hero-title {
+        font-weight: 700;
+        font-size: 3rem;
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .search-bar-container {
+        max-width: 600px;
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .search-input {
+        width: 100%;
+        padding: 12px 20px;
+        padding-right: 50px;
+        border-radius: 4px;
+        border: none;
+        font-size: 1rem;
+    }
+    .search-btn {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        background-color: var(--fiverr-green);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 7px 15px;
+        font-weight: bold;
+    }
+
+    /* Tags */
+    .popular-tag-item {
+        color: white;
+        border: 1px solid white;
+        border-radius: 20px;
+        padding: 2px 12px;
+        margin: 0 0 8px 8px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+    }
+    .popular-tag-item:hover {
+        background-color: white;
+        color: var(--dark-green);
+    }
+
+    /* General Sections */
+    .section-title {
+        color: #404145;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title { font-size: 2rem; }
+        .hero-section { padding: 40px 0; }
+    }
+</style>
+
+<div class="main-wrapper">
+    
+    <% if (!locals.searchTerm) { %>
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title"><%- t('home.hero_title') %></h1>
+                
+                <div class="search-bar-container">
+                    <form action="/jobs" method="GET">
+                        <input type="text" name="search" class="search-input" placeholder="<%= t('home.search_placeholder') %>">
+                        <button type="submit" class="search-btn"><%= t('common.search') %></button>
+                    </form>
+                </div>
+
+                <div class="popular-tags d-flex flex-wrap align-items-center">
+                    <span class="me-2"><%= t('home.popular') %></span>
+                    <a href="/jobs?search=Website Design" class="popular-tag-item"><%= t('home.tags.website_design') %></a>
+                    <a href="/jobs?search=WordPress" class="popular-tag-item"><%= t('home.tags.wordpress') %></a>
+                    <a href="/jobs?search=Logo Design" class="popular-tag-item"><%= t('home.tags.logo_design') %></a>
+                </div>
+            </div>
+        </section>
+    <% } %>
+
+    <div class="container py-5">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="section-title m-0">
+                <%= locals.searchTerm ? `Results for "${searchTerm}"` : t('home.recent_gigs.title') %>
+            </h3>
+            <% if (!locals.searchTerm) { %>
+                <a href="/jobs" class="text-success text-decoration-none fw-bold">
+                    <%= t('home.recent_gigs.explore') %> <i class="bi bi-arrow-right"></i>
+                </a>
+            <% } %>
+        </div>
+
+        <div class="row g-4">
+            <% if (locals.jobs && jobs.length > 0) { %>
+                <% jobs.forEach(job => { %>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <%- include('includes/job-card', {job: job}) %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-emoji-frown fs-1 text-muted"></i>
+                    <p class="text-muted mt-2"><%= t('home.recent_gigs.no_services') %></p>
+                    <% if (locals.searchTerm) { %>
+                        <a href="/jobs" class="btn btn-outline-success mt-3">View All Services</a>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <% if (!locals.searchTerm) { %>
+        
+        <section class="comparison-section bg-light py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="comparison-card bg-white p-4 border rounded shadow-sm h-100">
+                            <h4 class="fw-bold mb-4">Geleneksel İş Bulma</h4>
+                            <ul class="feature-list list-unstyled">
+                                <li class="mb-3 text-muted"><i class="bi bi-dash-circle me-2"></i> Şehir یا منطقه محدود</li>
+                                <li class="mb-3 text-muted"><i class="bi bi-dash-circle me-2"></i> زمان‌بر و خسته‌کننده</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="comparison-card p-4 border rounded shadow-sm h-100" style="background-color: var(--light-green-bg); border-color: var(--fiverr-green) !important;">
+                            <h4 class="fw-bold mb-4" style="color: var(--dark-green)">Online İş Bulma</h4>
+                            <ul class="feature-list list-unstyled">
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> دسترسی کشوری</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> ثبت‌نام سریع و آسان</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section py-5">
+            <div class="container">
+                <h3 class="section-title"><%= t('home.skills.title') %></h3>
+                <div class="row g-3">
+                    <% 
+                    const categories = [
+                        {title: t('home.skills.website_dev'), img: 'Web Sitesi Geliştirme.jpeg', color: '#003912'},
+                        {title: t('home.skills.logo_design'), img: 'Logo Tasarımı.jpeg', color: '#ff7300'},
+                        {title: t('home.skills.seo'), img: 'SEO.jpeg', color: '#00732e'},
+                        {title: t('home.skills.social_media'), img: 'Sosyal Medya Pazarlاماسی.jpeg', color: '#f74040'}
+                    ];
+                    categories.forEach(cat => { %>
+                        <div class="col-6 col-md-3">
+                            <div class="skill-card" style="background-color:<%= cat.color %>;">
+                                <img src="/img/<%= cat.img %>" alt="<%= cat.title %>">
+                                <div class="skill-overlay">
+                                    <div class="skill-title"><%= cat.title %></div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section py-5 text-center">
+            <div class="container border-top pt-5">
+                <h2 class="fw-bold mb-4"><%= t('home.cta.title') %></h2>
+                <a href="/register" class="btn btn-fiverr btn-lg px-5 py-3"><%= t('home.cta.button') %></a>
+            </div>
+        </section>
+
+    <% } %>
+</div>
+
+<%- include('includes/footer') %>

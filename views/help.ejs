@@ -1,0 +1,180 @@
+<%- include('includes/header') %>
+
+<style>
+    .support-hero {
+        background: linear-gradient(135deg, #0f9d58, #34a853);
+        color: #fff;
+        border-radius: 16px;
+        padding: 40px;
+        margin-bottom: 40px;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .icon-circle {
+        width: 45px;
+        height: 45px;
+        background: #0f9d58;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .form-control, .btn {
+        border-radius: 10px;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #0f9d58, #34a853);
+        border: none;
+    }
+
+    .btn-success:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<div class="container py-5">
+
+    <!-- HERO -->
+    <div class="support-hero text-center">
+        <h2 class="fw-bold mb-2">Yardım & Destek Merkezi</h2>
+        <p class="mb-0 opacity-75">
+            Sorularınız, önerileriniz ve geri bildirimleriniz bizim için çok değerli.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- CONTACT INFO -->
+        <div class="col-lg-4">
+            <div class="glass-card p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="icon-circle me-3">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">İletişim Bilgileri</h5>
+                </div>
+
+                <p class="text-muted small mb-3">
+                    Bizimle aşağıdaki bilgiler üzerinden veya form aracılığıyla iletişime geçebilirsiniz.
+                </p>
+
+
+                
+            </div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div class="col-lg-8">
+            <div class="glass-card p-4">
+                <h5 class="fw-bold mb-4">Bize Mesaj Gönderin</h5>
+
+                <form id="contactForm">
+
+                    <!-- SUBJECT -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Konu</label>
+                        <div class="d-flex gap-4 flex-wrap">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="subject_choice" value="Sorun / Soru" checked>
+                                <label class="form-check-label">Sorun / Soru</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="subject_choice" value="Öneri">
+                                <label class="form-check-label">Öneri</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="subject_choice" value="Teşekkür">
+                                <label class="form-check-label">Teşekkür</label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="subject" id="subjectInput" value="Sorun / Soru">
+                    </div>
+
+                    <!-- NAME & EMAIL -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Ad Soyad</label>
+                            <input type="text" name="from_name" class="form-control" placeholder="Adınızı girin" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">E-posta</label>
+                            <input type="email" name="reply_to" class="form-control" placeholder="example@mail.com" required>
+                        </div>
+                    </div>
+
+                    <!-- MESSAGE -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mesaj</label>
+                        <textarea name="message" rows="5" class="form-control" placeholder="Mesajınızı yazın" required></textarea>
+                    </div>
+
+                    <input type="hidden" name="to_email" value="hamedhaidari2023@gmail.com">
+
+                    <!-- ALERTS -->
+                    <div class="alert alert-success d-none" id="alertSuccess">
+                        Mesajınız başarıyla gönderildi.
+                    </div>
+                    <div class="alert alert-danger d-none" id="alertError"></div>
+
+                    <button type="submit" id="sendBtn" class="btn btn-success fw-bold px-5">
+                        Gönder
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- EMAIL JS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    emailjs.init('EhNpTh0vC9k5_PKTM');
+
+    const form = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const alertSuccess = document.getElementById('alertSuccess');
+    const alertError = document.getElementById('alertError');
+    const subjectInput = document.getElementById('subjectInput');
+
+    document.querySelectorAll('input[name="subject_choice"]').forEach(r => {
+        r.addEventListener('change', () => subjectInput.value = r.value);
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        alertSuccess.classList.add('d-none');
+        alertError.classList.add('d-none');
+
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Gönderiliyor...';
+
+        emailjs.sendForm('service_qez1rw2', 'template_j65tprk', this)
+            .then(() => {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Gönder';
+                alertSuccess.classList.remove('d-none');
+                form.reset();
+                subjectInput.value = 'Sorun / Soru';
+            })
+            .catch(err => {
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Gönder';
+                alertError.textContent = 'Gönderim hatası: ' + (err?.text || 'Bilinmeyen hata');
+                alertError.classList.remove('d-none');
+            });
+    });
+</script>
+
+<%- include('includes/footer') %>

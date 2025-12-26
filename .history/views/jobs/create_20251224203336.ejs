@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Post a New Job</h3>
+                </div>
+                <div class="card-body">
+                    
+                    <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                        <div class="alert alert-danger"><%= errorMessage %></div>
+                    <% } %>
+
+                    <form action="/jobs/create" method="POST">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Job Title *</label>
+                                <input type="text" name="title" class="form-control" placeholder="e.g. Senior Developer" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Company Name *</label>
+                                <input type="text" name="companyName" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Location *</label>
+                                <input type="text" name="location" class="form-control" placeholder="e.g. Tehran, Remote" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Salary</label>
+                                <input type="text" name="salary" class="form-control" placeholder="e.g. $5000/month">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Job Type</label>
+                            <select name="jobType" class="form-select">
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Remote">Remote</option>
+                                <option value="Freelance">Freelance</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Job Description *</label>
+                            <textarea name="description" class="form-control" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Post Job</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

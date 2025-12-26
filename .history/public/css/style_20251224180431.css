@@ -1,0 +1,13 @@
+/* Upwork Green Theme */
+:root {
+    --primary-green: #14a800;
+    --hover-green: #108a00;
+}
+
+.bg-success { background-color: var(--primary-green) !important; }
+.btn-success { background-color: var(--primary-green); border: none; }
+.btn-success:hover { background-color: var(--hover-green); }
+.text-success { color: var(--primary-green) !important; }
+
+body { background-color: #f9f9f9; font-family: 'Segoe UI', sans-serif; }
+.card { border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }

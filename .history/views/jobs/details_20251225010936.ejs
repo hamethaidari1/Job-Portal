@@ -1,0 +1,66 @@
+<%- include('../includes/header.ejs') %>
+
+<div class="container-fluid bg-light py-5" style="min-height: 100vh;">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <a href="/" class="btn btn-sm btn-white shadow-sm border text-decoration-none text-dark">
+                <i class="bi bi-arrow-left"></i> Back to Jobs
+            </a>
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 mb-4" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
+                                <i class="bi bi-briefcase-fill text-success fs-1"></i>
+                            </div>
+                            <div>
+                                <h1 class="fw-bold mb-1"><%= job.title %></h1>
+                                <p class="text-muted mb-0">At <%= job.companyName %></p>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 opacity-25">
+
+                        <h4 class="fw-bold mb-3 text-success">Job Description</h4>
+                        <div class="text-dark lh-lg">
+                            <%- job.description.replace(/\n/g, '<br>') %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 sticky-top" style="border-radius: 15px; top: 20px;">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4 border-bottom pb-2">Job Overview</h5>
+                        
+                        <div class="mb-3">
+                            <small class="text-muted d-block">Location</small>
+                            <i class="bi bi-geo-alt text-danger me-2"></i><strong><%= job.location %></strong>
+                        </div>
+
+                        <div class="mb-3">
+                            <small class="text-muted d-block">Job Type</small>
+                            <i class="bi bi-clock text-primary me-2"></i><strong><%= job.jobType %></strong>
+                        </div>
+
+                        <div class="mb-4">
+                            <small class="text-muted d-block">Salary</small>
+                            <i class="bi bi-cash-stack text-success me-2"></i><strong>$<%= job.salary %></strong>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success btn-lg fw-bold shadow-sm">Apply Now</button>
+                            <button class="btn btn-outline-secondary">Save Job</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer.ejs') %>

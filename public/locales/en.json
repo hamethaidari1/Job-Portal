@@ -1,0 +1,150 @@
+{
+    "common": {
+        "login": "Sign In",
+        "join": "Join",
+        "register": "Register",
+        "logout": "Logout",
+        "email": "Email",
+        "password": "Password",
+        "search": "Search",
+        "home": "Home"
+    },
+    "header": {
+        "search_placeholder": "What service are you looking for today?",
+        "dashboard": "Dashboard",
+        "profile": "Profile",
+        "settings": "Settings",
+        "help": "Help & Support",
+        "go_to_profile": "Go to Profile"
+    },
+    "landing": {
+        "hero_title": "Find the perfect freelance services<br>for your business",
+        "hero_subtitle": "Work with talented people at the most affordable price to get the most out of your time and cost",
+        "join_button": "Join JobPortal",
+        "why_choose_title": "Why Choose JobPortal?",
+        "why_choose_subtitle": "A whole world of freelance talent at your fingertips",
+        "feature_browse_title": "Browse Portfolios",
+        "feature_browse_desc": "Find professionals you trust by browsing their samples of previous work.",
+        "feature_bids_title": "Fast Bids",
+        "feature_bids_desc": "Receive quotes from our talented freelancers quickly and easily.",
+        "feature_quality_title": "Quality Work",
+        "feature_quality_desc": "JobPortal has by far the largest pool of quality freelancers globally.",
+        "feature_safe_title": "Safe & Secure",
+        "feature_safe_desc": "Always know what you'll pay upfront. Your payment isn't released until you approve.",
+        "bottom_title": "A whole world of freelance talent at your fingertips",
+        "benefit_budget_title": "The best for every budget",
+        "benefit_budget_desc": "Find high-quality services at every price point. No hourly rates, just project-based pricing.",
+        "benefit_quality_title": "Quality work done quickly",
+        "benefit_quality_desc": "Find the right freelancer to begin working on your project within minutes.",
+        "benefit_payment_title": "Protected payments, every time",
+        "benefit_payment_desc": "Always know what you'll pay upfront. Your payment isn't released until you approve the work.",
+        "benefit_support_title": "24/7 support",
+        "benefit_support_desc": "Questions? Our round-the-clock support team is available to help anytime, anywhere."
+    },
+    "home": {
+        "hero_title": "Find the perfect <i>freelance</i><br>services for your business",
+        "search_placeholder": "Try \"building mobile app\"",
+        "popular": "Popular:",
+        "tags": {
+            "website_design": "Website Design",
+            "wordpress": "WordPress",
+            "logo_design": "Logo Design",
+            "video_editing": "Video Editing"
+        },
+        "comparison": {
+            "upwork": "Upwork",
+            "fiverr": "Fiverr",
+            "featured_freelancers": "Featured freelancers",
+            "search_options": "Search options",
+            "pricing_model": "Pricing model",
+            "customer_support": "Customer support",
+            "business_solutions": "Business solutions",
+            "upwork_features": {
+                "verticals": "12 industry verticals",
+                "countries": "Located in over 180 countries",
+                "post_job": "Post a job and receive a proposal",
+                "catalog": "Browse project catalog",
+                "hourly": "Hourly rates",
+                "project_fees": "Project-based fees",
+                "ticket_support": "Ticket-based support system",
+                "top_talent": "Top-rated talent",
+                "plus_program": "Top-rated plus program"
+            },
+            "fiverr_features": {
+                "categories": "Diverse services across 700+ categories",
+                "countries": "Located in over 160 countries",
+                "skill_search": "Search by skill",
+                "service_search": "Search by service",
+                "mix_match": "Mix and match",
+                "neo": "Neo, an AI-based matching tool",
+                "fixed_price": "Fixed price offer",
+                "custom_offers": "Custom offers",
+                "subscriptions": "Subscriptions",
+                "hourly": "Hourly rates",
+                "availability": "24/7 availability",
+                "user_friendly": "Highly accessible and user-friendly experience",
+                "resolution": "Resolution center",
+                "pro": "Fiverr Pro",
+                "certified": "Fiverr Certified",
+                "enterprise": "Fiverr Enterprise"
+            }
+        },
+        "recent_gigs": {
+            "title": "Recent Gigs",
+            "explore": "Explore more",
+            "starting_at": "STARTING AT",
+            "no_services": "No services found."
+        },
+        "guides": {
+            "title": "Fiverr guides",
+            "guide1_title": "Fiverr vs. Upwork: which is best for business?",
+            "guide1_desc": "A complete guide to choosing the right freelance marketplace for your needs",
+            "guide2_title": "Start an online business and work from home",
+            "guide2_desc": "A complete guide to starting a small business online",
+            "guide3_title": "Create a logo for your business",
+            "guide3_desc": "The perfect guide for creating a memorable business logo"
+        },
+        "skills": {
+            "title": "Get started with any skill you need",
+            "subtitle": "Put your next project in motion with access to diverse talent across 500+ categories of services.",
+            "website_dev": "Website Development",
+            "logo_design": "Logo Design",
+            "seo": "SEO",
+            "architecture": "Architecture & Interior Design",
+            "social_media": "Social Media Marketing",
+            "voice_over": "Voice Over",
+            "explore_more": "Explore more services"
+        },
+        "cta": {
+            "title": "Ready to say yes to success?",
+            "button": "Hire now on Fiverr"
+        }
+    },
+    "footer": {
+        "brand_desc": "Find the perfect freelance services for your business.",
+        "links_title": "Links",
+        "about": "About Us",
+        "contact": "Contact",
+        "support_title": "Support",
+        "help": "Help & Support",
+        "trust": "Trust & Safety",
+        "copyright": "© 2025 İŞBUL.ONLINE"
+    },
+    "settings": {
+        "title": "Account Settings",
+        "personal_info": "Personal Information",
+        "contact_info": "Contact Information",
+        "change_password": "Change Password",
+        "email_notifications": "Email Notifications",
+        "sms_notifications": "SMS Notifications",
+        "ad_visibility": "Ad Visibility",
+        "delete_account": "Account Deletion and Freezing",
+        "personal_desc": "Update your information to keep your account current.",
+        "name": "First Name",
+        "surname": "Last Name",
+        "location": "Location",
+        "select_location": "Select Location",
+        "birthdate": "Date of Birth",
+        "save": "Save"
+    }
+}

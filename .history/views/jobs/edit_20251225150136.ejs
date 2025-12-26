@@ -1,0 +1,85 @@
+<%- include('../includes/header') %>
+<div class="container mt-4">
+    <a href="/jobs/dashboard" class="btn btn-link text-decoration-none text-muted p-0">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="fw-bold text-dark mb-0">Edit Job Posting</h2>
+                        <a href="/jobs/<%= job.id %>" class="btn btn-outline-secondary btn-sm">Cancel</a>
+                    </div>
+
+                    <% if (errorMessage) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= errorMessage %>
+                        </div>
+                    <% } %>
+
+                    <form action="/jobs/edit/<%= job.id %>" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Job Title</label>
+                                <input type="text" name="title" class="form-control form-control-lg" value="<%= job.title %>" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Company Name</label>
+                                <input type="text" name="companyName" class="form-control" value="<%= job.companyName %>" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Location</label>
+                                <input type="text" name="location" class="form-control" value="<%= job.location %>" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Job Type</label>
+                                <select name="jobType" class="form-select">
+                                    <option value="Full-time" <%= job.jobType === 'Full-time' ? 'selected' : '' %>>Full-time</option>
+                                    <option value="Part-time" <%= job.jobType === 'Part-time' ? 'selected' : '' %>>Part-time</option>
+                                    <option value="Remote" <%= job.jobType === 'Remote' ? 'selected' : '' %>>Remote</option>
+                                    <option value="Contract" <%= job.jobType === 'Contract' ? 'selected' : '' %>>Contract</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Monthly Salary ($)</label>
+                                <input type="number" name="salary" class="form-control" value="<%= job.salary %>">
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <label class="form-label fw-bold">Company Logo</label>
+                                <div class="d-flex align-items-center mb-2">
+                                    <% if (job.companyLogo) { %>
+                                        <img src="/uploads/<%= job.companyLogo %>" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover; border: 1px solid #ddd;">
+                                        <small class="text-muted">Current Logo</small>
+                                    <% } %>
+                                </div>
+                                <input type="file" name="logo" class="form-control" accept="image/*">
+                                <div class="form-text">Leave empty to keep the current logo.</div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <label class="form-label fw-bold">Job Description</label>
+                                <textarea name="description" class="form-control" rows="6" required><%= job.description %></textarea>
+                            </div>
+
+                            <div class="col-md-12 d-grid">
+                                <button type="submit" class="btn btn-warning btn-lg fw-bold py-3 shadow-sm">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

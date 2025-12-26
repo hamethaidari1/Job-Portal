@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <h3 class="text-center mb-4"><%= t.login %></h3>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" id="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100"><%= t.login %></button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="/auth/google" class="btn btn-danger btn-sm">Sign in with Google</a>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            await window.signInUser(window.firebaseAuth, email, password);
+            // Başarılı olursa ana sayfaya yönlendir (Session yönetimi için backend'e de istek atılabilir)
+            window.location.href = '/'; 
+        } catch (error) {
+            alert('Login Failed: ' + error.message);
+        }
+    });
+</script>

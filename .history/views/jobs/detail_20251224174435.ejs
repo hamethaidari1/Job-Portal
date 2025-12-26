@@ -1,0 +1,33 @@
+<div class="card p-5 border-0 shadow-sm">
+    <div class="d-flex justify-content-between align-items-start">
+        <div>
+            <h2 class="fw-bold text-success"><%= job.title %></h2>
+            <h5 class="text-muted"><%= job.companyName %></h5>
+            <p class="text-secondary"><i class="bi bi-geo-alt"></i> <%= job.location %> • <%= job.type %></p>
+        </div>
+        <% if (user && user.role === 'seeker') { %>
+            <a href="#" class="btn btn-success btn-lg"><%= t.apply %></a>
+        <% } else if (!user) { %>
+            <a href="/auth/login" class="btn btn-secondary"><%= t.login %> to Apply</a>
+        <% } %>
+    </div>
+
+    <hr>
+
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <h4>Job Description</h4>
+            <p class="fs-5"><%= job.description %></p>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light p-3 border-0">
+                <h6>Salary</h6>
+                <p><%= job.salary || 'Not specified' %></p>
+                <h6>Category</h6>
+                <p><%= job.Category ? job.Category.name : 'General' %></p>
+                <h6>Posted on</h6>
+                <p><%= new Date(job.createdAt).toDateString() %></p>
+            </div>
+        </div>
+    </div>
+</div>

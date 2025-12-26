@@ -1,0 +1,124 @@
+<%- include('includes/header') %>
+
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted"><%= t('common.home') %></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= t('settings.title') %></li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="list-group shadow-sm border-0">
+                <a href="/settings" class="list-group-item list-group-item-action <%= activeTab === 'personal' ? 'active' : '' %> py-3" style="<%= activeTab === 'personal' ? 'background-color: #fff; color: #6f42c1; border-left: 4px solid #6f42c1; font-weight: bold;' : 'color: #333;' %>">
+                    <%= t('settings.personal_info') %>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 text-muted">
+                    <%= t('settings.contact_info') %>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 text-muted">
+                    <%= t('settings.change_password') %>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 text-muted">
+                    <%= t('settings.email_notifications') %>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 text-muted">
+                    <%= t('settings.sms_notifications') %>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 text-muted">
+                    <%= t('settings.ad_visibility') %>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action py-3 text-muted">
+                    <%= t('settings.delete_account') %>
+                </a>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-md-9">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <% if (successMessage) { %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <%= successMessage %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+                    <% if (errorMessage) { %>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <%= errorMessage %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+
+                    <h5 class="fw-bold mb-2"><%= t('settings.personal_info') %></h5>
+                    <p class="text-muted small mb-4"><%= t('settings.personal_desc') %></p>
+
+                    <form action="/settings/profile" method="POST">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label fw-bold"><%= t('settings.name') %></label>
+                            <input type="text" class="form-control p-3" id="firstName" name="firstName" value="<%= profile.firstName || '' %>" placeholder="Name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label fw-bold"><%= t('settings.surname') %></label>
+                            <input type="text" class="form-control p-3" id="lastName" name="lastName" value="<%= profile.lastName || '' %>" placeholder="Surname">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="location" class="form-label fw-bold"><%= t('settings.location') %></label>
+                            <select class="form-select p-3" id="location" name="location">
+                                <option value="" disabled <%= !profile.location ? 'selected' : '' %>><%= t('settings.select_location') %></option>
+                                <option value="Istanbul" <%= profile.location === 'Istanbul' ? 'selected' : '' %>>Istanbul</option>
+                                <option value="Ankara" <%= profile.location === 'Ankara' ? 'selected' : '' %>>Ankara</option>
+                                <option value="Izmir" <%= profile.location === 'Izmir' ? 'selected' : '' %>>Izmir</option>
+                                <option value="Kırşehir" <%= profile.location === 'Kırşehir' ? 'selected' : '' %>>Kırşehir</option>
+                                <option value="Antalya" <%= profile.location === 'Antalya' ? 'selected' : '' %>>Antalya</option>
+                                <option value="Bursa" <%= profile.location === 'Bursa' ? 'selected' : '' %>>Bursa</option>
+                                <!-- Add more as needed or convert to text input if preferred -->
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="birthDate" class="form-label fw-bold"><%= t('settings.birthdate') %></label>
+                            <input type="date" class="form-control p-3" id="birthDate" name="birthDate" value="<%= profile.birthDate || '' %>">
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-purple px-5 py-2 fw-bold"><%= t('settings.save') %></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group-item {
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .list-group-item:last-child {
+        border-bottom: none;
+    }
+    .list-group-item.active {
+        background-color: transparent;
+        color: #6f42c1; /* Purple color from screenshot */
+        border-color: #f0f0f0;
+    }
+    
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+    }
+    .btn-purple:hover {
+        background-color: #5a32a3;
+        color: white;
+    }
+</style>
+
+<%- include('includes/footer') %>

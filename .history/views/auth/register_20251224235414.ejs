@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Job Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
+
+    <div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-success">Create Account</h2>
+                    <p class="text-muted">Join JobPortal and find your dream job</p>
+                </div>
+                
+                <form action="/auth/register" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email Address</label>
+                        <input type="email" name="email" class="form-control bg-light" placeholder="email@example.com" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Password</label>
+                        <input type="password" name="password" class="form-control bg-light" placeholder="Minimum 6 characters" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Confirm Password</label>
+                        <input type="password" name="confirmPassword" class="form-control bg-light" placeholder="Repeat your password" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg fw-bold shadow-sm">Create Account</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="mb-0 text-muted">Already have an account? <a href="/auth/login" class="text-success fw-bold text-decoration-none">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="module">
+        import { auth, createUserWithEmailAndPassword } from '/js/firebase-config.js';
+
+        const registerBtn = document.getElementById('registerBtn');
+        const errorMsg = document.getElementById('errorMsg');
+
+        registerBtn.addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            try {
+                // 1. ایجاد کاربر در Firebase
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 2. ارسال اطلاعات به Backend خودمان (MySQL)
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email: user.email, 
+                        firebaseUid: user.uid,
+                        role: role
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                errorMsg.textContent = error.message;
+                errorMsg.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>
