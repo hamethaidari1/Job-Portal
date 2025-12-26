@@ -47,10 +47,64 @@
                             </select>
                         </div>
 
-                        <div class="d-grid">
+                        <div class="d-grid mb-3">
                             <button type="submit" class="btn btn-success btn-lg fw-bold shadow-sm">Create Account</button>
                         </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="button" id="google-btn" class="btn btn-outline-dark btn-lg fw-bold shadow-sm d-flex align-items-center justify-content-center">
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 20px; height: 20px; margin-right: 10px;">
+                                Sign up with Google
+                            </button>
+                        </div>
                     </form>
+
+                    <script type="module">
+                        import { auth, googleProvider, signInWithPopup } from '/js/firebase-config.js';
+
+                        const googleBtn = document.getElementById('google-btn');
+
+                        if (googleBtn) {
+                            googleBtn.addEventListener('click', async () => {
+                                try {
+                                    const result = await signInWithPopup(auth, googleProvider);
+                                    const user = result.user;
+                                    
+                                    // Ad soyad ayrıştırma
+                                    const displayName = user.displayName || '';
+                                    const nameParts = displayName.split(' ');
+                                    const firstName = nameParts[0] || '';
+                                    const lastName = nameParts.slice(1).join(' ') || '';
+
+                                    // Backend'e gönder
+                                    const response = await fetch('/auth/google', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            email: user.email,
+                                            firebaseUid: user.uid,
+                                            firstName: firstName,
+                                            lastName: lastName
+                                        })
+                                    });
+
+                                    const data = await response.json();
+
+                                    if (data.success) {
+                                        window.location.href = data.redirect;
+                                    } else {
+                                        alert('Error: ' + (data.error || 'Login failed'));
+                                    }
+
+                                } catch (error) {
+                                    console.error('Google Sign-In Error:', error);
+                                    alert('Google Sign-In Failed: ' + error.message);
+                                }
+                            });
+                        }
+                    </script>
 
                     <div class="text-center mt-4">
                         <p class="small text-muted">Already have an account? <a href="/auth/login" class="text-success fw-bold text-decoration-none">Login here</a></p>

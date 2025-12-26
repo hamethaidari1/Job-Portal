@@ -9,6 +9,9 @@ router.post('/login', authController.postLogin);     // postLogin adının doğr
 router.get('/register', authController.getRegister); 
 router.post('/register', authController.postRegister);
 
+// Google Auth Route
+router.post('/google', authController.postGoogleAuth);
+
 router.get('/logout', authController.logout);
 router.get('/verify', authController.getVerify);
 router.post('/verify/send', authController.sendVerifyCode);

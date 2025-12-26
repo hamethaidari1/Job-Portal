@@ -133,6 +133,64 @@ exports.postLogin = async (req, res) => {
 };
 
 /* =========================
+   GOOGLE AUTH
+========================= */
+
+// Google ile giriş/kayıt işlemini gerçekleştir
+exports.postGoogleAuth = async (req, res) => {
+    try {
+        const { email, firebaseUid, firstName, lastName } = req.body;
+
+        if (!email || !firebaseUid) {
+            return res.status(400).json({ error: 'Email and Firebase UID are required.' });
+        }
+
+        // Kullanıcıyı bul veya oluştur
+        let user = await User.findOne({ where: { email } });
+
+        if (!user) {
+            // Yeni kullanıcı oluştur
+            user = await User.create({
+                email,
+                role: 'job_seeker', // Varsayılan rol
+                isVerified: true, // Google ile geldiği için doğrulanmış sayalım
+                firebaseUid: firebaseUid,
+                password: null // Şifre yok
+            });
+            
+            // Profil oluştur (İsteğe bağlı)
+            try {
+                const Profile = require('../models/Profile'); // Lazy load
+                await Profile.create({
+                    userId: user.id,
+                    firstName: firstName || '',
+                    lastName: lastName || ''
+                });
+            } catch (err) {
+                console.error("Profile creation error:", err);
+            }
+        } else {
+            // Mevcut kullanıcı ise firebaseUid güncelle (gerekirse)
+            if (user.firebaseUid !== firebaseUid) {
+                await user.update({ firebaseUid: firebaseUid });
+            }
+        }
+
+        // Oturuma kaydet
+        req.session.user = user;
+        req.session.isLoggedIn = true;
+
+        req.session.save(() => {
+            return res.status(200).json({ success: true, redirect: '/profile' });
+        });
+
+    } catch (error) {
+        console.error('GOOGLE AUTH ERROR 👉', error);
+        return res.status(500).json({ error: 'Server error: ' + error.message });
+    }
+};
+
+/* =========================
    LOGOUT
 ========================= */
 
