@@ -17,6 +17,9 @@
   ],
   "author": "Khalil",
   "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "body-parser": "^2.2.1",
     "bootstrap": "^5.3.8",

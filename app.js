@@ -87,17 +87,23 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT || 3050;
 
-// هماهنگ‌سازی دیتابیس و اجرای سرور
-sequelize.sync({ alter: false })
-    .then(() => {
-        console.log('✅ Database Synced');
-        return sessionStore.sync(); 
-    })
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`✅ Server: http://localhost:${PORT}`);
+// Export app for Vercel
+module.exports = app;
+
+// Only start server if run directly
+if (require.main === module) {
+    // هماهنگ‌سازی دیتابیس و اجرای سرور
+    sequelize.sync({ alter: false })
+        .then(() => {
+            console.log('✅ Database Synced');
+            return sessionStore.sync(); 
+        })
+        .then(() => {
+            app.listen(PORT, () => {
+                console.log(`✅ Server: http://localhost:${PORT}`);
+            });
+        })
+        .catch(err => {
+            console.error("❌ Database Error:", err);
         });
-    })
-    .catch(err => {
-        console.error("❌ Database Error:", err);
-    });
+}
