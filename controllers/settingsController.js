@@ -38,14 +38,18 @@ exports.getSettings = async (req, res) => {
         // 6. CV (25%)
         if (profile.cvPath) completionScore += 25;
 
+        const t = typeof res.locals.t === 'function' ? res.locals.t : (key) => key;
+        const lang = res.locals.lang || 'tr';
         res.render('settings', {
-            pageTitle: res.locals.t('settings.title'),
+            pageTitle: t('settings.title'),
             user: user,
             profile: profile,
             completionScore: completionScore,
             activeTab: 'personal',
             successMessage: req.query.success ? 'Profile updated successfully' : null,
-            errorMessage: req.query.error ? 'Error updating profile' : null
+            errorMessage: req.query.error ? 'Error updating profile' : null,
+            t,
+            lang
         });
     } catch (error) {
         console.error('Get Settings Error:', error);
@@ -77,11 +81,14 @@ exports.updateProfile = async (req, res) => {
         };
 
         if (req.files) {
-            if (req.files.profilePicture) {
-                updateData.profilePicture = '/uploads/profiles/' + req.files.profilePicture[0].filename;
-            }
-            if (req.files.cv) {
-                updateData.cvPath = '/uploads/cvs/' + req.files.cv[0].filename;
+            const isVercel = !!process.env.VERCEL;
+            if (!isVercel) {
+                if (req.files.profilePicture && req.files.profilePicture[0]?.filename) {
+                    updateData.profilePicture = '/uploads/profiles/' + req.files.profilePicture[0].filename;
+                }
+                if (req.files.cv && req.files.cv[0]?.filename) {
+                    updateData.cvPath = '/uploads/cvs/' + req.files.cv[0].filename;
+                }
             }
         }
 

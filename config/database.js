@@ -19,11 +19,7 @@ const sequelize = new Sequelize(
             idle: 10000
         },
         dialectOptions: {
-            // This is important for some cloud databases (like Azure, AWS, etc.) if they require SSL
-            // ssl: {
-            //     require: true,
-            //     rejectUnauthorized: false
-            // }
+           
         }
     }
 );
