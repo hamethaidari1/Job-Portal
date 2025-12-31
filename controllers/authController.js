@@ -1,5 +1,4 @@
 const { User } = require('../models');
-const { sendVerificationEmail, isEmailConfigured, isResendConfigured } = require('../utils/mailer');
 const crypto = require('crypto'); // Crypto modülünü ekle
 
 /* =========================
@@ -58,7 +57,7 @@ exports.postRegister = async (req, res) => {
         const user = await User.create({
             email,
             role: normalizedRole,
-            isVerified: false,
+            isVerified: true,
             firebaseUid: firebaseUid,
             password: hashedPassword
         });
@@ -68,7 +67,7 @@ exports.postRegister = async (req, res) => {
         req.session.isLoggedIn = true;
 
         req.session.save(() => {
-            res.redirect('/auth/verify');
+            res.redirect('/profile');
         });
 
     } catch (error) {
@@ -202,135 +201,4 @@ exports.logout = (req, res) => {
     });
 };
 
-/* =========================
-   VERIFY EMAIL
-========================= */
-
-// Doğrulama sayfasını göster
-exports.getVerify = (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/auth/login');
-    }
-
-    res.render('auth/verify', {
-        pageTitle: 'Verify Account',
-        email: req.session.user.email,
-        sent: false,
-        errorMessage: null
-    });
-};
-
-// Doğrulama kodunu gönder
-exports.sendVerifyCode = async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/auth/login');
-    }
-
-    try {
-        const user = await User.findByPk(req.session.user.id);
-        if (!user) {
-            return res.redirect('/auth/login');
-        }
-
-        const code = String(Math.floor(100000 + Math.random() * 900000));
-        const expires = new Date(Date.now() + 10 * 60 * 1000);
-
-        await user.update({
-            verificationCode: code,
-            verificationExpires: expires
-        });
-
-        console.log('🔐 VERIFICATION CODE:', code); // Hata ayıklama için kodu logla
-        let errorMessage = null;
-        let successMessage = null;
-        if (isEmailConfigured() || isResendConfigured()) {
-            try {
-                await sendVerificationEmail(user.email, code);
-                successMessage = 'Verification code sent to your email.';
-            } catch (err) {
-                console.error('❌ Email Send Failed:', err);
-                errorMessage = 'Email sending failed (Check Console): ' + err.message;
-            }
-        } else {
-            const showCode = String(process.env.SMTP_DEBUG_SHOW_CODE || '').toLowerCase() === 'true';
-            successMessage = showCode ? `Verification code: ${code}` : 'Email service not configured. Please set SMTP variables.';
-        }
-
-        res.render('auth/verify', {
-            pageTitle: 'Verify Account',
-            email: user.email,
-            sent: true,
-            errorMessage,
-            successMessage
-        });
-
-    } catch (error) {
-        console.error('SEND VERIFY CODE ERROR 👉', error);
-        res.render('auth/verify', {
-            pageTitle: 'Verify Account',
-            email: req.session.user.email,
-            sent: false,
-            errorMessage: 'Email Error: ' + error.message // Kullanıcıya detaylı hatayı göster
-        });
-    }
-};
-
-// Kodu doğrula
-exports.confirmVerifyCode = async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/auth/login');
-    }
-
-    try {
-        const { code } = req.body;
-        const user = await User.findByPk(req.session.user.id);
-
-        if (!user || !user.verificationCode || !user.verificationExpires) {
-            return res.render('auth/verify', {
-                pageTitle: 'Verify Account',
-                email: req.session.user.email,
-                sent: true,
-                errorMessage: 'No verification code found.'
-            });
-        }
-
-        if (new Date(user.verificationExpires).getTime() < Date.now()) {
-            return res.render('auth/verify', {
-                pageTitle: 'Verify Account',
-                email: req.session.user.email,
-                sent: true,
-                errorMessage: 'Verification code expired.'
-            });
-        }
-
-        if (String(code) !== String(user.verificationCode)) {
-            return res.render('auth/verify', {
-                pageTitle: 'Verify Account',
-                email: req.session.user.email,
-                sent: true,
-                errorMessage: 'Invalid verification code.'
-            });
-        }
-
-        await user.update({
-            isVerified: true,
-            verificationCode: null,
-            verificationExpires: null
-        });
-
-        req.session.user = user;
-
-        req.session.save(() => {
-            res.redirect('/profile');
-        });
-
-    } catch (error) {
-        console.error('CONFIRM VERIFY ERROR 👉', error);
-        res.render('auth/verify', {
-            pageTitle: 'Verify Account',
-            email: req.session.user.email,
-            sent: true,
-            errorMessage: 'Verification failed.'
-        });
-    }
-};
+/* Verification flow removed per request */

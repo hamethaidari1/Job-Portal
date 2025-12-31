@@ -13,11 +13,6 @@ const requireAuth = async (req, res, next) => {
         return res.redirect('/auth/login');
     }
 
-    // E-posta doğrulama kontrolü
-    if (!user.isVerified) {
-        return res.redirect('/auth/verify');
-    }
-
     res.locals.user = user;
     next();
 };

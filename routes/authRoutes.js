@@ -13,8 +13,5 @@ router.post('/register', authController.postRegister);
 router.post('/google', authController.postGoogleAuth);
 
 router.get('/logout', authController.logout);
-router.get('/verify', authController.getVerify);
-router.post('/verify/send', authController.sendVerifyCode);
-router.post('/verify/confirm', authController.confirmVerifyCode);
 
 module.exports = router;

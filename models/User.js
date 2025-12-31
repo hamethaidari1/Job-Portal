@@ -35,17 +35,10 @@ const User = sequelize.define('User', {
     },
     isVerified: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
         comment: 'E-posta doğrulaması yapıldı mı?'
     },
-    verificationCode: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    verificationExpires: {
-        type: DataTypes.DATE,
-        allowNull: true
-    }
+    // Verification fields removed from use
 }, {
     timestamps: true // createdAt ve updatedAt otomatik oluşturulur
 });
