@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { sendVerificationEmail, isEmailConfigured } = require('../utils/mailer');
+const { sendVerificationEmail, isEmailConfigured, isResendConfigured } = require('../utils/mailer');
 const crypto = require('crypto'); // Crypto modülünü ekle
 
 /* =========================
@@ -243,7 +243,7 @@ exports.sendVerifyCode = async (req, res) => {
         console.log('🔐 VERIFICATION CODE:', code); // Hata ayıklama için kodu logla
         let errorMessage = null;
         let successMessage = null;
-        if (isEmailConfigured()) {
+        if (isEmailConfigured() || isResendConfigured()) {
             try {
                 await sendVerificationEmail(user.email, code);
                 successMessage = 'Verification code sent to your email.';
