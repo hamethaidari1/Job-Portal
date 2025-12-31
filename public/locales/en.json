@@ -148,8 +148,7 @@
         "save": "Save",
         "completed": "Completed",
         "change_photo_hint": "Click the camera icon to change"
-    }
-    ,
+    },
     "profile": {
         "verified": "Your account is verified",
         "incomplete": "Your account is not complete",
@@ -167,6 +166,139 @@
             "skills": "Skills",
             "experience": "Work Experience",
             "cv": "CV (PDF)"
+        }
+    },
+    "jobs": {
+        "common": {
+            "negotiable": "Negotiable",
+            "posted": "Posted:",
+            "view_details": "View Details",
+            "view": "View",
+            "edit": "Edit",
+            "delete": "Delete",
+            "delete_confirm": "Are you sure you want to delete this listing?",
+            "job_types": {
+                "full_time": "Full-time",
+                "part_time": "Part-time",
+                "remote": "Remote",
+                "contract": "Contract",
+                "freelance": "Freelance"
+            },
+            "error_saving": "Error saving job. Please try again."
+        },
+        "index": {
+            "back_home": "Back to Home",
+            "title": "Available Jobs",
+            "post_new_job": "Post New Job",
+            "search_placeholder": "Search by job title, company, or location...",
+            "no_results": "No jobs match your search.",
+            "view_all_jobs": "View all jobs",
+            "no_jobs_title": "No jobs posted yet",
+            "no_jobs_desc": "Be the first one to share an opportunity!",
+            "post_job_now": "Post a Job Now",
+            "login_to_post": "Login to Post a Job"
+        },
+        "dashboard": {
+            "back_to_all": "Back to All Listings",
+            "title": "My Dashboard",
+            "total_active_jobs": "Total active jobs:",
+            "create_new_job": "Create New Listing",
+            "table": {
+                "position": "Position",
+                "location": "Location",
+                "job_type": "Job Type",
+                "date": "Date",
+                "actions": "Actions"
+            },
+            "empty_state": "You haven't added any job listings yet."
+        },
+        "create": {
+            "back_to_dashboard": "Back to Dashboard",
+            "title": "Create New Job",
+            "subtitle": "Fill in job details to find the right candidate",
+            "company_logo": "Company Logo",
+            "logo_preview_alt": "Logo Preview",
+            "logo_recommendation": "Recommended: Square image, PNG or JPG",
+            "job_title_label": "Job Title",
+            "job_title_placeholder": "e.g. Senior Backend Developer",
+            "company_name_label": "Company Name",
+            "company_name_placeholder": "Your company",
+            "location_label": "Location",
+            "location_placeholder": "e.g. Istanbul, Remote",
+            "salary_label": "Salary ($)",
+            "salary_placeholder": "Monthly or Yearly",
+            "job_type_label": "Job Type",
+            "description_label": "Job Description",
+            "description_placeholder": "Responsibilities, requirements, etc.",
+            "submit_button": "Publish Listing"
+        },
+        "edit": {
+            "back_to_dashboard": "Back to Dashboard",
+            "title": "Edit Job Posting",
+            "cancel": "Cancel",
+            "job_title_label": "Job Title",
+            "company_name_label": "Company Name",
+            "location_label": "Location",
+            "job_type_label": "Job Type",
+            "salary_label": "Monthly Salary ($)",
+            "company_logo_label": "Company Logo",
+            "current_logo": "Current Logo",
+            "logo_hint": "Leave empty to keep the current logo.",
+            "description_label": "Job Description",
+            "save_changes": "Save Changes"
+        },
+        "details": {
+            "back_to_listings": "Back to Job Listings",
+            "job_description": "Job Description",
+            "apply_button": "Apply for this position",
+            "summary": "Job Summary",
+            "location": "Location",
+            "job_type": "Job Type",
+            "salary_range": "Salary Range",
+            "date_posted": "Date Posted",
+            "manage_listing": "Manage your listing",
+            "edit": "Edit",
+            "delete": "Delete",
+            "delete_confirm": "Are you sure?"
+        },
+        "list": {
+            "filter_title": "Filter Jobs",
+            "keyword": "Keyword",
+            "keyword_placeholder": "Java, Manager...",
+            "location": "Location",
+            "location_placeholder": "Istanbul, Ankara...",
+            "category": "Category",
+            "all_categories": "All Categories",
+            "filter_button": "Filter",
+            "clear_button": "Clear",
+            "jobs_found": "Jobs Found",
+            "no_results": "No jobs found matching your criteria."
+        },
+        "newpost": {
+            "title": "Post a New Job",
+            "job_title": "Job Title",
+            "company_name": "Company Name",
+            "location": "Location",
+            "salary_optional": "Salary (Optional)",
+            "job_type": "Job Type",
+            "description": "Job Description",
+            "publish_job": "Publish Job"
+        },
+        "post": {
+            "title": "Post a New Job",
+            "job_title": "Job Title",
+            "category": "Category",
+            "location": "Location",
+            "salary_optional": "Salary (Optional)",
+            "description": "Description",
+            "publish_job": "Publish Job"
+        },
+        "show": {
+            "apply_now": "Apply Now",
+            "back_to_jobs": "Back to Jobs",
+            "edit": "Edit",
+            "delete": "Delete",
+            "delete_confirm": "Are you sure you want to delete this job?"
         }
     }
 }

@@ -287,7 +287,11 @@
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand me-4" href="/">
-                İŞBUL.ONLINE<span>.</span>
+                <% if ((typeof lang !== 'undefined' ? lang : 'tr') === 'tr') { %>
+                    İŞBUL.ONLINE<span>.</span>
+                <% } else { %>
+                    UpRemote
+                <% } %>
             </a>
 
             <!-- Toggle Button for Mobile -->

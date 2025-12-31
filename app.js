@@ -31,7 +31,7 @@ app.use(express.json());
 const sessionStore = new SequelizeStore({ db: sequelize });
 
 app.use(session({
-    secret: 'super_secret_key_job_portal',
+    secret: process.env.SESSION_SECRET || 'change_me',
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
@@ -56,6 +56,9 @@ app.use(i18n);
 // Ana Rotalar (Routes)
 // Updated routes
 app.get('/', jobController.getHome); 
+app.get('/healthz', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 app.use('/auth', authRoutes);          
 app.use('/jobs', jobRoutes);
 app.use('/settings', requireAuth, settingsRoutes);           
@@ -109,7 +112,7 @@ if (require.main === module) {
             return sessionStore.sync(); 
         })
         .then(() => {
-            app.listen(PORT, () => {
+            app.listen(PORT, '0.0.0.0', () => {
                 console.log(`✅ Server: http://localhost:${PORT}`);
             });
         })

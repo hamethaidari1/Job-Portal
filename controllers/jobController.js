@@ -60,7 +60,7 @@ exports.getJobs = async (req, res) => {
         res.render('jobs/index', { 
             jobs: jobs || [], 
             searchTerm: searchTerm,
-            pageTitle: searchTerm ? `Search Results for "${searchTerm}"` : 'All Jobs' 
+            pageTitle: searchTerm ? `${res.locals.t('jobs.index.title')} - ${searchTerm}` : res.locals.t('jobs.index.title') 
         });
     } catch (error) {
         console.error("❌ Error in getJobs:", error);
@@ -100,7 +100,7 @@ exports.getUserJobs = async (req, res) => {
         });
 
         res.render('jobs/dashboard', {
-            pageTitle: 'My Dashboard',
+            pageTitle: res.locals.t('jobs.dashboard.title'),
             jobs: jobs
         });
     } catch (error) {
@@ -112,7 +112,7 @@ exports.getUserJobs = async (req, res) => {
 // 5. Yeni iş ilanı formunu göster
 exports.getCreateJob = (req, res) => {
     res.render('jobs/create', { 
-        pageTitle: 'Post a New Job', 
+        pageTitle: res.locals.t('jobs.create.title'), 
         errorMessage: null,
         oldInput: { title: '', companyName: '', location: '', salary: '', description: '' }
     });
@@ -138,8 +138,8 @@ exports.postCreateJob = async (req, res) => {
     } catch (error) {
         console.error("❌ Error in postCreateJob:", error);
         res.render('jobs/create', { 
-            pageTitle: 'Post a New Job', 
-            errorMessage: 'Error saving job. Please try again.',
+            pageTitle: res.locals.t('jobs.create.title'), 
+            errorMessage: res.locals.t('jobs.common.error_saving') || 'Error saving job. Please try again.',
             oldInput: { title, companyName, location, salary, description }
         });
     }
@@ -156,7 +156,7 @@ exports.getEditJob = async (req, res) => {
 
         res.render('jobs/edit', {
             job: job,
-            pageTitle: 'Edit Job',
+            pageTitle: res.locals.t('jobs.edit.title'),
             errorMessage: null
         });
     } catch (error) {

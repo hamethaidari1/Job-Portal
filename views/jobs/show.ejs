@@ -21,15 +21,15 @@
                     <hr class="my-4">
                     
                     <div class="d-flex gap-2 flex-wrap">
-                        <a href="mailto:HR@example.com?subject=Application for <%= job.title %>" class="btn btn-primary btn-lg">Apply Now</a>
-                        <a href="/jobs" class="btn btn-outline-secondary btn-lg">Back to Jobs</a>
+                        <a href="mailto:HR@example.com?subject=Application for <%= job.title %>" class="btn btn-primary btn-lg"><%= t('jobs.show.apply_now') %></a>
+                        <a href="/jobs" class="btn btn-outline-secondary btn-lg"><%= t('jobs.show.back_to_jobs') %></a>
 
                         <% if (user) { %>
                             <div class="ms-auto d-flex gap-2">
-                                <a href="/jobs/<%= job.id %>/edit" class="btn btn-warning btn-lg">Edit</a>
+                                <a href="/jobs/<%= job.id %>/edit" class="btn btn-warning btn-lg"><%= t('jobs.show.edit') %></a>
                                 
-                                <form action="/jobs/<%= job.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this job?');">
-                                    <button type="submit" class="btn btn-danger btn-lg">Delete</button>
+                                <form action="/jobs/<%= job.id %>/delete" method="POST" onsubmit="return confirm('<%= t('jobs.show.delete_confirm') %>');">
+                                    <button type="submit" class="btn btn-danger btn-lg"><%= t('jobs.show.delete') %></button>
                                 </form>
                             </div>
                         <% } %>

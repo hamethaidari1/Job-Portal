@@ -3,7 +3,7 @@
 <div class="container py-5">
     <div class="mb-4">
         <a href="/" class="btn btn-link text-decoration-none text-muted p-0">
-            <i class="bi bi-arrow-left-circle me-1"></i> Back to Job Listings
+            <i class="bi bi-arrow-left-circle me-1"></i> <%= t('jobs.details.back_to_listings') %>
         </a>
     </div>
 
@@ -27,7 +27,7 @@
                 <hr class="text-light">
 
                 <div class="my-4">
-                    <h5 class="fw-bold mb-3">Job Description</h5>
+                    <h5 class="fw-bold mb-3"><%= t('jobs.details.job_description') %></h5>
                     <p class="text-secondary style-description" style="line-height: 1.8; white-space: pre-line;">
                         <%= job.description %>
                     </p>
@@ -35,7 +35,7 @@
 
                 <div class="d-grid mt-4">
                     <button class="btn btn-success btn-lg py-3 fw-bold shadow-sm" style="border-radius: 12px;">
-                        Apply for this position
+                        <%= t('jobs.details.apply_button') %>
                     </button>
                 </div>
             </div>
@@ -43,14 +43,14 @@
 
         <div class="col-lg-4">
             <div class="card shadow-sm border-0 p-4 sticky-top" style="border-radius: 16px; top: 20px;">
-                <h5 class="fw-bold mb-4">Job Summary</h5>
+                <h5 class="fw-bold mb-4"><%= t('jobs.details.summary') %></h5>
                 
                 <div class="d-flex align-items-start mb-3">
                     <div class="bg-light p-2 rounded-3 me-3">
                         <i class="bi bi-geo-alt text-danger fs-5"></i>
                     </div>
                     <div>
-                        <small class="text-muted d-block">Location</small>
+                        <small class="text-muted d-block"><%= t('jobs.details.location') %></small>
                         <span class="fw-bold text-dark"><%= job.location %></span>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                         <i class="bi bi-briefcase text-primary fs-5"></i>
                     </div>
                     <div>
-                        <small class="text-muted d-block">Job Type</small>
+                        <small class="text-muted d-block"><%= t('jobs.details.job_type') %></small>
                         <span class="badge bg-primary bg-opacity-10 text-primary px-3 fw-normal"><%= job.jobType %></span>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                         <i class="bi bi-cash-stack text-success fs-5"></i>
                     </div>
                     <div>
-                        <small class="text-muted d-block">Salary Range</small>
+                        <small class="text-muted d-block"><%= t('jobs.details.salary_range') %></small>
                         <span class="fw-bold text-dark">$<%= job.salary.toLocaleString() %></span>
                     </div>
                 </div>
@@ -80,21 +80,21 @@
                         <i class="bi bi-calendar-event text-info fs-5"></i>
                     </div>
                     <div>
-                        <small class="text-muted d-block">Date Posted</small>
-                        <span class="text-dark small"><%= new Date(job.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></span>
+                        <small class="text-muted d-block"><%= t('jobs.details.date_posted') %></small>
+                        <span class="text-dark small"><%= new Date(job.createdAt).toLocaleDateString((typeof lang !== 'undefined' ? lang : 'tr') === 'tr' ? 'tr-TR' : 'en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></span>
                     </div>
                 </div>
 
                 <% if (isAuthenticated && user && String(job.userId) === String(user.id)) { %>
                     <div class="border-top pt-4">
-                        <p class="small text-muted mb-2 text-center">Manage your listing</p>
+                        <p class="small text-muted mb-2 text-center"><%= t('jobs.details.manage_listing') %></p>
                         <div class="d-flex gap-2">
                             <a href="/jobs/edit/<%= job.id %>" class="btn btn-outline-warning w-100 btn-sm py-2">
-                                <i class="bi bi-pencil-square me-1"></i> Edit
+                                <i class="bi bi-pencil-square me-1"></i> <%= t('jobs.details.edit') %>
                             </a>
-                            <form action="/jobs/delete/<%= job.id %>" method="POST" class="w-100" onsubmit="return confirm('Are you sure?')">
+                            <form action="/jobs/delete/<%= job.id %>" method="POST" class="w-100" onsubmit="return confirm('<%= t('jobs.details.delete_confirm') %>')">
                                 <button type="submit" class="btn btn-outline-danger w-100 btn-sm py-2">
-                                    <i class="bi bi-trash3 me-1"></i> Delete
+                                    <i class="bi bi-trash3 me-1"></i> <%= t('jobs.details.delete') %>
                                 </button>
                             </form>
                         </div>

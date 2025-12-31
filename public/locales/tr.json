@@ -148,8 +148,7 @@
         "save": "Kaydet",
         "completed": "Tamamlandı",
         "change_photo_hint": "Değiştirmek için kamera ikonuna tıklayın"
-    }
-    ,
+    },
     "profile": {
         "verified": "Hesabınız doğrulandı",
         "incomplete": "Hesabınız tamamlanmadı",
@@ -167,6 +166,139 @@
             "skills": "Yetenekler",
             "experience": "İş Deneyimi",
             "cv": "CV (PDF)"
+        }
+    },
+    "jobs": {
+        "common": {
+            "negotiable": "Pazarlık edilebilir",
+            "posted": "Yayınlanma:",
+            "view_details": "Detayları Gör",
+            "view": "Görüntüle",
+            "edit": "Düzenle",
+            "delete": "Sil",
+            "delete_confirm": "Bu ilanı silmek istediğinize emin misiniz?",
+            "job_types": {
+                "full_time": "Tam Zamanlı",
+                "part_time": "Yarı Zamanlı",
+                "remote": "Uzaktan",
+                "contract": "Sözleşmeli",
+                "freelance": "Serbest"
+            },
+            "error_saving": "İlan kaydedilirken hata oluştu. Lütfen tekrar deneyin."
+        },
+        "index": {
+            "back_home": "Ana Sayfaya Dön",
+            "title": "Mevcut İlanlar",
+            "post_new_job": "Yeni İlan Yayınla",
+            "search_placeholder": "Pozisyon, şirket veya konuma göre ara...",
+            "no_results": "Aramanızla eşleşen ilan bulunamadı.",
+            "view_all_jobs": "Tüm ilanları görüntüle",
+            "no_jobs_title": "Henüz ilan yok",
+            "no_jobs_desc": "İlk fırsatı sen paylaş!",
+            "post_job_now": "Hemen İlan Ver",
+            "login_to_post": "İlan vermek için giriş yap"
+        },
+        "dashboard": {
+            "back_to_all": "Tüm İlanlara Dön",
+            "title": "İş Panelim",
+            "total_active_jobs": "Toplam aktif ilan:",
+            "create_new_job": "Yeni İlan Oluştur",
+            "table": {
+                "position": "Pozisyon",
+                "location": "Konum",
+                "job_type": "Çalışma Türü",
+                "date": "Tarih",
+                "actions": "İşlemler"
+            },
+            "empty_state": "Henüz hiç iş ilanı eklemediniz."
+        },
+        "create": {
+            "back_to_dashboard": "Panele Geri Dön",
+            "title": "Yeni İş İlanı Oluştur",
+            "subtitle": "Doğru adayı bulmak için ilan detaylarını doldurun",
+            "company_logo": "Şirket Logosu",
+            "logo_preview_alt": "Logo Önizleme",
+            "logo_recommendation": "Önerilen: Kare görsel, PNG veya JPG",
+            "job_title_label": "Pozisyon Adı",
+            "job_title_placeholder": "Örn: Kıdemli Backend Developer",
+            "company_name_label": "Şirket Adı",
+            "company_name_placeholder": "Şirketiniz",
+            "location_label": "Konum",
+            "location_placeholder": "Örn: İstanbul, Uzaktan",
+            "salary_label": "Maaş ($)",
+            "salary_placeholder": "Aylık veya Yıllık",
+            "job_type_label": "Çalışma Türü",
+            "description_label": "İş Açıklaması",
+            "description_placeholder": "Sorumluluklar, gereksinimler vb...",
+            "submit_button": "İlanı Yayınla"
+        },
+        "edit": {
+            "back_to_dashboard": "Panele Geri Dön",
+            "title": "İlanı Düzenle",
+            "cancel": "İptal",
+            "job_title_label": "Pozisyon Adı",
+            "company_name_label": "Şirket Adı",
+            "location_label": "Konum",
+            "job_type_label": "Çalışma Türü",
+            "salary_label": "Aylık Maaş ($)",
+            "company_logo_label": "Şirket Logosu",
+            "current_logo": "Mevcut Logo",
+            "logo_hint": "Mevcut logoyu korumak için boş bırakın.",
+            "description_label": "İş Açıklaması",
+            "save_changes": "Değişiklikleri Kaydet"
+        },
+        "details": {
+            "back_to_listings": "İlanlara Dön",
+            "job_description": "İş Açıklaması",
+            "apply_button": "Bu pozisyona başvur",
+            "summary": "İş Özeti",
+            "location": "Konum",
+            "job_type": "Çalışma Türü",
+            "salary_range": "Maaş Aralığı",
+            "date_posted": "Yayınlanma Tarihi",
+            "manage_listing": "İlanınızı yönetin",
+            "edit": "Düzenle",
+            "delete": "Sil",
+            "delete_confirm": "Emin misiniz?"
+        },
+        "list": {
+            "filter_title": "İlanları Filtrele",
+            "keyword": "Anahtar Kelime",
+            "keyword_placeholder": "Java, Müdür...",
+            "location": "Konum",
+            "location_placeholder": "İstanbul, Ankara...",
+            "category": "Kategori",
+            "all_categories": "Tüm Kategoriler",
+            "filter_button": "Filtrele",
+            "clear_button": "Temizle",
+            "jobs_found": "İlan Bulundu",
+            "no_results": "Kriterlerinize uygun ilan bulunamadı."
+        },
+        "newpost": {
+            "title": "Yeni İş İlanı Yayınla",
+            "job_title": "Pozisyon Adı",
+            "company_name": "Şirket Adı",
+            "location": "Konum",
+            "salary_optional": "Maaş (İsteğe bağlı)",
+            "job_type": "Çalışma Türü",
+            "description": "İş Açıklaması",
+            "publish_job": "İlanı Yayınla"
+        },
+        "post": {
+            "title": "Yeni İş İlanı Yayınla",
+            "job_title": "Pozisyon Adı",
+            "category": "Kategori",
+            "location": "Konum",
+            "salary_optional": "Maaş (İsteğe bağlı)",
+            "description": "Açıklama",
+            "publish_job": "İlanı Yayınla"
+        },
+        "show": {
+            "apply_now": "Şimdi Başvur",
+            "back_to_jobs": "İlanlara Dön",
+            "edit": "Düzenle",
+            "delete": "Sil",
+            "delete_confirm": "Bu ilanı silmek istediğinize emin misiniz?"
         }
     }
 }

@@ -1,17 +1,17 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card p-4">
-            <h3 class="text-center mb-4"><%= t.post_job %></h3>
+            <h3 class="text-center mb-4"><%= t('jobs.post.title') %></h3>
             
             <form action="/jobs/post" method="POST">
                 <div class="mb-3">
-                    <label class="form-label">Job Title</label>
+                    <label class="form-label"><%= t('jobs.post.job_title') %></label>
                     <input type="text" name="title" class="form-control" required>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Category</label>
+                        <label class="form-label"><%= t('jobs.post.category') %></label>
                         <select name="categoryId" class="form-select" required>
                             <% categories.forEach(cat => { %>
                                 <option value="<%= cat.id %>"><%= cat.name %></option>
@@ -19,22 +19,22 @@
                         </select>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Location</label>
+                        <label class="form-label"><%= t('jobs.post.location') %></label>
                         <input type="text" name="location" class="form-control" required>
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Salary (Optional)</label>
+                    <label class="form-label"><%= t('jobs.post.salary_optional') %></label>
                     <input type="text" name="salary" class="form-control" placeholder="e.g. 15.000 TL">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Description</label>
+                    <label class="form-label"><%= t('jobs.post.description') %></label>
                     <textarea name="description" class="form-control" rows="5" required></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-success w-100">Publish Job</button>
+                <button type="submit" class="btn btn-success w-100"><%= t('jobs.post.publish_job') %></button>
             </form>
         </div>
     </div>

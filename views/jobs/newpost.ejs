@@ -2,48 +2,48 @@
     <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Post a New Job</h4>
+                <h4 class="mb-0"><%= t('jobs.newpost.title') %></h4>
             </div>
             <div class="card-body">
                 <form action="/jobs" method="POST">
                     
                     <div class="mb-3">
-                        <label for="title" class="form-label">Job Title</label>
+                        <label for="title" class="form-label"><%= t('jobs.newpost.job_title') %></label>
                         <input type="text" class="form-control" id="title" name="title" placeholder="e.g. Senior Software Engineer" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="companyName" class="form-label">Company Name</label>
+                        <label for="companyName" class="form-label"><%= t('jobs.newpost.company_name') %></label>
                         <input type="text" class="form-control" id="companyName" name="companyName" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="location" class="form-label">Location</label>
+                        <label for="location" class="form-label"><%= t('jobs.newpost.location') %></label>
                         <input type="text" class="form-control" id="location" name="location" placeholder="e.g. New York / Remote" required>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="salary" class="form-label">Salary (Optional)</label>
+                            <label for="salary" class="form-label"><%= t('jobs.newpost.salary_optional') %></label>
                             <input type="text" class="form-control" id="salary" name="salary" placeholder="e.g. $50k - $70k">
                         </div>
                         <div class="col-md-6">
-                            <label for="jobType" class="form-label">Job Type</label>
+                            <label for="jobType" class="form-label"><%= t('jobs.newpost.job_type') %></label>
                             <select class="form-select" id="jobType" name="jobType">
-                                <option value="Full-time">Full-time</option>
-                                <option value="Part-time">Part-time</option>
-                                <option value="Remote">Remote</option>
-                                <option value="Freelance">Freelance</option>
+                                <option value="Full-time"><%= t('jobs.common.job_types.full_time') %></option>
+                                <option value="Part-time"><%= t('jobs.common.job_types.part_time') %></option>
+                                <option value="Remote"><%= t('jobs.common.job_types.remote') %></option>
+                                <option value="Freelance"><%= t('jobs.common.job_types.freelance') %></option>
                             </select>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Job Description</label>
+                        <label for="description" class="form-label"><%= t('jobs.newpost.description') %></label>
                         <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100">🚀 Publish Job</button>
+                    <button type="submit" class="btn btn-success w-100"><%= t('jobs.newpost.publish_job') %></button>
                 </form>
             </div>
         </div>

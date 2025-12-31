@@ -7,9 +7,10 @@ const dbHost = process.env.DB_HOST || 'localhost';
 
 // Karar mekanizması:
 // 1. Eğer DB_DIALECT 'sqlite' olarak ayarlanmışsa SQLite kullan.
-// 2. Veya, Production ortamındaysak (Render vb.) ve DB_HOST hala 'localhost' ise (yani dış bir veritabanı ayarlanmamışsa),
-//    hata vermemesi için otomatik olarak SQLite'a geç.
-const useSqlite = process.env.DB_DIALECT === 'sqlite' || (isProduction && dbHost === 'localhost');
+// 2. Gerekli MySQL ortam değişkenleri eksikse SQLite'a otomatik geç.
+// 3. Production ortamındaysak ve DB_HOST 'localhost' ise (harici DB yok), SQLite'a geç.
+const hasMysqlEnv = process.env.DB_NAME && process.env.DB_USER && process.env.DB_PASSWORD && process.env.DB_HOST;
+const useSqlite = process.env.DB_DIALECT === 'sqlite' || !hasMysqlEnv || (isProduction && dbHost === 'localhost');
 
 let sequelize;
 
@@ -23,11 +24,11 @@ if (useSqlite) {
 } else {
     console.log('✅ MySQL veritabanı kullanılıyor...');
     sequelize = new Sequelize(
-        process.env.DB_NAME || 'job_portal_updatedl',
-        process.env.DB_USER || 'root',
-        process.env.DB_PASSWORD || 'Hamedrasa1212',
+        process.env.DB_NAME,
+        process.env.DB_USER,
+        process.env.DB_PASSWORD,
         {
-            host: dbHost,
+            host: process.env.DB_HOST,
             dialect: 'mysql',
             port: process.env.DB_PORT || 3306,
             logging: false,

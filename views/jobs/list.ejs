@@ -1,36 +1,36 @@
 <div class="row">
     <div class="col-md-3">
         <div class="card p-3 mb-3">
-            <h5 class="mb-3">Filter Jobs</h5>
+            <h5 class="mb-3"><%= t('jobs.list.filter_title') %></h5>
             <form action="/jobs" method="GET">
                 <div class="mb-3">
-                    <label class="form-label">Keyword</label>
-                    <input type="text" name="keyword" class="form-control" placeholder="Java, Manager..." value="<%= query.keyword || '' %>">
+                    <label class="form-label"><%= t('jobs.list.keyword') %></label>
+                    <input type="text" name="keyword" class="form-control" placeholder="<%= t('jobs.list.keyword_placeholder') %>" value="<%= query.keyword || '' %>">
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label">Location</label>
-                    <input type="text" name="location" class="form-control" placeholder="Istanbul, Ankara..." value="<%= query.location || '' %>">
+                    <label class="form-label"><%= t('jobs.list.location') %></label>
+                    <input type="text" name="location" class="form-control" placeholder="<%= t('jobs.list.location_placeholder') %>" value="<%= query.location || '' %>">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Category</label>
+                    <label class="form-label"><%= t('jobs.list.category') %></label>
                     <select name="categoryId" class="form-select">
-                        <option value="">All Categories</option>
+                        <option value=""><%= t('jobs.list.all_categories') %></option>
                         <% categories.forEach(cat => { %>
                             <option value="<%= cat.id %>" <%= query.categoryId == cat.id ? 'selected' : '' %>><%= cat.name %></option>
                         <% }) %>
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-success w-100">Filter</button>
-                <a href="/jobs" class="btn btn-outline-secondary w-100 mt-2">Clear</a>
+                <button type="submit" class="btn btn-success w-100"><%= t('jobs.list.filter_button') %></button>
+                <a href="/jobs" class="btn btn-outline-secondary w-100 mt-2"><%= t('jobs.list.clear_button') %></a>
             </form>
         </div>
     </div>
 
     <div class="col-md-9">
-        <h3 class="mb-3"><%= jobs.length %> Jobs Found</h3>
+        <h3 class="mb-3"><%= jobs.length %> <%= t('jobs.list.jobs_found') %></h3>
         <% if (jobs.length > 0) { %>
             <% jobs.forEach(job => { %>
                 <div class="card mb-3 shadow-sm border-0">
@@ -42,14 +42,14 @@
                         <h6 class="card-subtitle mb-2 text-muted"><%= job.companyName %> | <%= job.location %></h6>
                         <p class="card-text"><%= job.description.substring(0, 150) %>...</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted"><%= new Date(job.createdAt).toLocaleDateString() %></small>
-                            <a href="/jobs/<%= job.id %>" class="btn btn-outline-success btn-sm"><%= t.view_details %></a>
+                            <small class="text-muted"><%= new Date(job.createdAt).toLocaleDateString((typeof lang !== 'undefined' ? lang : 'tr') === 'tr' ? 'tr-TR' : 'en-US') %></small>
+                            <a href="/jobs/<%= job.id %>" class="btn btn-outline-success btn-sm"><%= t('jobs.common.view_details') %></a>
                         </div>
                     </div>
                 </div>
             <% }) %>
         <% } else { %>
-            <div class="alert alert-warning">No jobs found matching your criteria.</div>
+            <div class="alert alert-warning"><%= t('jobs.list.no_results') %></div>
         <% } %>
     </div>
 </div>
