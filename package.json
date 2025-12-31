@@ -4,7 +4,8 @@
   "description": "Job Portal Project using Express, EJS, Sequelize",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "preinstall": "npm config set legacy-peer-deps true && npm config set engine-strict false && npm config set audit false && npm config set fund false"
   },
   "author": "Khalil",
   "license": "ISC",
