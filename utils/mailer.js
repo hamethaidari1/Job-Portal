@@ -1,26 +1,40 @@
 
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-async function sendVerificationEmail(to, code) {
-  const subject = "Email Doğrulama Kodu";
+const nodemailer = require("nodemailer");
 
-  const html = `
-    <div>
-      <h2>Email Doğrulama</h2>
-      <p>Kodunuz:</p>
-      <h1>${code}</h1>
-    </div>
-  `;
+function isEmailConfigured() {
+  return (
+    !!process.env.SMTP_HOST &&
+    !!process.env.SMTP_USER &&
+    !!process.env.SMTP_PASS
+  );
+}
 
-  const text = `Kodunuz: ${code}`;
+function isResendConfigured() {
+  return !!process.env.RESEND_API_KEY;
+}
 
-  
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error("RESEND_API_KEY bulunamadı");
-  }
+function getTransporter() {
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: String(process.env.SMTP_SECURE || "false").toLowerCase() === "true",
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+}
 
+async function sendWithResend(to, subject, html, text) {
+  const from = process.env.EMAIL_FROM || "onboarding@resend.dev";
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -28,22 +42,49 @@ async function sendVerificationEmail(to, code) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "onboarding@resend.dev",
-      to: to,
-      subject: subject,
-      html: html,
-      text: text,
+      from,
+      to,
+      subject,
+      html,
+      text,
     }),
   });
-
   if (!response.ok) {
     const err = await response.text();
     throw new Error(err);
   }
-
   return await response.json();
+}
+
+async function sendVerificationEmail(to, code) {
+  const subject = "Email Doğrulama Kodu";
+  const html = `
+    <div>
+      <h2>Email Doğrulama</h2>
+      <p>Kodunuz:</p>
+      <h1>${code}</h1>
+    </div>
+  `;
+  const text = `Kodunuz: ${code}`;
+
+  if (isResendConfigured()) {
+    return sendWithResend(to, subject, html, text);
+  }
+  if (isEmailConfigured()) {
+    const transporter = getTransporter();
+    return transporter.sendMail({
+      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      to,
+      subject,
+      html,
+      text,
+    });
+  }
+  throw new Error("Email service not configured");
 }
 
 module.exports = {
   sendVerificationEmail,
+  isEmailConfigured,
+  isResendConfigured,
 };
