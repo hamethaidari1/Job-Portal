@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const { sendVerificationEmail } = require('../utils/mailer');
+const { sendVerificationEmail, isEmailConfigured } = require('../utils/mailer');
 const crypto = require('crypto'); // Crypto modülünü ekle
 
 /* =========================
@@ -241,21 +241,27 @@ exports.sendVerifyCode = async (req, res) => {
         });
 
         console.log('🔐 VERIFICATION CODE:', code); // Hata ayıklama için kodu logla
-
-        let emailErrorMsg = null;
-        try {
-            await sendVerificationEmail(user.email, code);
-        } catch (err) {
-            console.error('❌ Email Send Failed:', err);
-            emailErrorMsg = 'Email sending failed (Check Console): ' + err.message;
+        let errorMessage = null;
+        let successMessage = null;
+        if (isEmailConfigured()) {
+            try {
+                await sendVerificationEmail(user.email, code);
+                successMessage = 'Verification code sent to your email.';
+            } catch (err) {
+                console.error('❌ Email Send Failed:', err);
+                errorMessage = 'Email sending failed (Check Console): ' + err.message;
+            }
+        } else {
+            const showCode = String(process.env.SMTP_DEBUG_SHOW_CODE || '').toLowerCase() === 'true';
+            successMessage = showCode ? `Verification code: ${code}` : 'Email service not configured. Please set SMTP variables.';
         }
 
         res.render('auth/verify', {
             pageTitle: 'Verify Account',
             email: user.email,
-            sent: true, // E-posta başarısız olsa bile formu her zaman göster
-            errorMessage: emailErrorMsg,
-            successMessage: emailErrorMsg ? null : 'Verification code sent to your email.'
+            sent: true,
+            errorMessage,
+            successMessage
         });
 
     } catch (error) {
