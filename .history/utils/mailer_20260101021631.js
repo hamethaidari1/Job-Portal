@@ -1,4 +1,4 @@
-
+// فقط در لوکال
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -16,7 +16,7 @@ async function sendVerificationEmail(to, code) {
 
   const text = `Kodunuz: ${code}`;
 
-  
+  // اگر Resend API Key وجود داشت
   if (!process.env.RESEND_API_KEY) {
     throw new Error("RESEND_API_KEY bulunamadı");
   }
