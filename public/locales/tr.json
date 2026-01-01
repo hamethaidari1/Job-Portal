@@ -298,7 +298,20 @@
             "back_to_jobs": "İlanlara Dön",
             "edit": "Düzenle",
             "delete": "Sil",
-            "delete_confirm": "Bu ilanı silmek istediğinize emin misiniz?"
+            "delete_confirm": "Bu ilanı silmek istediğinize emin misiniz?",
+            "application": {
+                "title": "Bu Pozisyona Başvur",
+                "full_name": "Ad Soyad",
+                "email": "E-posta Adresi",
+                "phone": "Telefon Numarası",
+                "cv": "Özgeçmiş (CV)",
+                "cv_hint": "PDF, DOC veya DOCX (Maks. 5MB)",
+                "cover_letter": "Ön Yazı (İsteğe Bağlı)",
+                "cover_letter_placeholder": "Neden bu pozisyon için uygun olduğunuzu kısaca anlatın...",
+                "submit": "Başvuruyu Gönder",
+                "success_message": "Başvurunuz başarıyla gönderildi!",
+                "error_message": "Başvuru sırasında bir hata oluştu."
+            }
         }
     }
 }

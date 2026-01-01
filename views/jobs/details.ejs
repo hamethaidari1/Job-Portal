@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="d-grid mt-4">
-                    <button class="btn btn-success btn-lg py-3 fw-bold shadow-sm" style="border-radius: 12px;">
+                    <button type="button" class="btn btn-success btn-lg py-3 fw-bold shadow-sm" style="border-radius: 12px;" data-bs-toggle="modal" data-bs-target="#applicationModal">
                         <%= t('jobs.details.apply_button') %>
                     </button>
                 </div>
@@ -103,6 +103,51 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Application Modal -->
+<div class="modal fade" id="applicationModal" tabindex="-1" aria-labelledby="applicationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold" id="applicationModalLabel"><%= t('jobs.application.title') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form action="/jobs/<%= job.id %>/apply" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label fw-bold"><%= t('jobs.application.full_name') %></label>
+                <input type="text" name="fullName" class="form-control" value="<%= user ? (user.Profile ? user.Profile.firstName + ' ' + user.Profile.lastName : '') : '' %>" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold"><%= t('jobs.application.email') %></label>
+                <input type="email" name="email" class="form-control" value="<%= user ? user.email : '' %>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><%= t('jobs.application.phone') %></label>
+                <input type="tel" name="phone" class="form-control" placeholder="+90 555 123 4567" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><%= t('jobs.application.cv') %></label>
+                <input type="file" name="cv" class="form-control" accept=".pdf,.doc,.docx" required>
+                <div class="form-text"><%= t('jobs.application.cv_hint') %></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold"><%= t('jobs.application.cover_letter') %></label>
+                <textarea name="coverLetter" class="form-control" rows="4" placeholder="<%= t('jobs.application.cover_letter_placeholder') %>"></textarea>
+            </div>
+
+            <div class="d-grid mt-4">
+                <button type="submit" class="btn btn-success fw-bold py-2"><%= t('jobs.application.submit') %></button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%- include('../includes/footer') %>

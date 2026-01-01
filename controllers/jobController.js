@@ -2,6 +2,7 @@ const Job = require('../models/Job');
 const { Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 // 1. Ana sayfayı (Home Page) göster
 exports.getHome = async (req, res) => {
@@ -220,5 +221,41 @@ exports.postDeleteJob = async (req, res) => {
     } catch (error) {
         console.error("❌ Error in postDeleteJob:", error);
         res.status(500).send("Error deleting job.");
+    }
+};
+
+// 10. İş Başvurusu (Application) İşlemi
+exports.postApplyJob = async (req, res) => {
+    try {
+        const jobId = req.params.id;
+        const job = await Job.findByPk(jobId);
+        
+        if (!job) {
+            return res.status(404).send('Job not found');
+        }
+
+        const { fullName, email, phone, coverLetter } = req.body;
+        const cvFile = req.file; // Multer ile yüklenen dosya
+
+        console.log('📝 New Application:', { fullName, email, phone, jobTitle: job.title });
+
+        // E-posta gönderimi (Basit metin formatı)
+        // Gerçek uygulamada CV'yi ek (attachment) olarak göndermelisiniz.
+        // Burada şimdilik konsola yazdırıyoruz.
+        
+        // TODO: Send email to job poster (job.userId) or admin
+        
+        // Başvuru başarılı mesajı ile geri dön
+        // Basit bir alert gösterip sayfaya geri dönebiliriz veya flash message kullanabiliriz.
+        res.send(`
+            <script>
+                alert('${res.locals.t("jobs.application.success_message")}');
+                window.location.href = '/jobs/${jobId}';
+            </script>
+        `);
+
+    } catch (error) {
+        console.error("❌ Application Error:", error);
+        res.status(500).send("Application Failed");
     }
 };

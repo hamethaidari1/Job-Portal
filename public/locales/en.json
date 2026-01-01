@@ -298,7 +298,20 @@
             "back_to_jobs": "Back to Jobs",
             "edit": "Edit",
             "delete": "Delete",
-            "delete_confirm": "Are you sure you want to delete this job?"
+            "delete_confirm": "Are you sure you want to delete this job?",
+            "application": {
+                "title": "Apply for this Position",
+                "full_name": "Full Name",
+                "email": "Email Address",
+                "phone": "Phone Number",
+                "cv": "Resume (CV)",
+                "cv_hint": "PDF, DOC or DOCX (Max 5MB)",
+                "cover_letter": "Cover Letter (Optional)",
+                "cover_letter_placeholder": "Briefly explain why you are a good fit...",
+                "submit": "Submit Application",
+                "success_message": "Application submitted successfully!",
+                "error_message": "An error occurred during application."
+            }
         }
     }
 }
