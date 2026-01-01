@@ -17,4 +17,19 @@ router.get('/', (req, res) => {
     }
 });
 
+// Debug Email Route
+const { sendVerificationEmail } = require('../utils/mailer');
+router.get('/debug-email', async (req, res) => {
+    try {
+        const email = req.session.user ? req.session.user.email : process.env.SMTP_USER;
+        if (!email) {
+            return res.send('No email to send to. Login or configure SMTP_USER.');
+        }
+        await sendVerificationEmail(email, '123456');
+        res.send(`✅ Email sent to ${email}. Check your inbox.`);
+    } catch (error) {
+        res.status(500).send(`❌ Error: ${error.message}`);
+    }
+});
+
 module.exports = router;

@@ -24,6 +24,13 @@ function getTransporter() {
     ? String(process.env.SMTP_SECURE).toLowerCase() === "true"
     : port === 465;
 
+  console.log('📧 Config:', {
+    host: process.env.SMTP_HOST,
+    port,
+    secure,
+    user: process.env.SMTP_USER ? '***' : 'missing'
+  });
+
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: port,
@@ -40,6 +47,7 @@ function getTransporter() {
 }
 
 async function sendWithResend(to, subject, html, text) {
+  console.log('📧 Sending with Resend to:', to);
   const from = process.env.EMAIL_FROM || "onboarding@resend.dev";
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -57,12 +65,14 @@ async function sendWithResend(to, subject, html, text) {
   });
   if (!response.ok) {
     const err = await response.text();
+    console.error('❌ Resend Error:', err);
     throw new Error(err);
   }
   return await response.json();
 }
 
 async function sendVerificationEmail(to, code) {
+  console.log('📧 Sending Verification Email to:', to, 'Code:', code);
   const subject = "Email Doğrulama Kodu";
   const html = `
     <div>
@@ -73,18 +83,26 @@ async function sendVerificationEmail(to, code) {
   `;
   const text = `Kodunuz: ${code}`;
 
-  if (isResendConfigured()) {
-    return sendWithResend(to, subject, html, text);
-  }
-  if (isEmailConfigured()) {
-    const transporter = getTransporter();
-    return transporter.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to,
-      subject,
-      html,
-      text,
-    });
+  try {
+    if (isResendConfigured()) {
+      return await sendWithResend(to, subject, html, text);
+    }
+    if (isEmailConfigured()) {
+      const transporter = getTransporter();
+      await transporter.verify(); // Verify connection first
+      console.log('✅ SMTP Connection Verified');
+      
+      return await transporter.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+        to,
+        subject,
+        html,
+        text,
+      });
+    }
+  } catch (error) {
+    console.error('❌ Send Verification Email Error:', error);
+    throw error;
   }
   throw new Error("Email service not configured");
 }
