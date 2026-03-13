@@ -46,9 +46,9 @@
 
     <!-- HERO -->
     <div class="support-hero text-center">
-        <h2 class="fw-bold mb-2">Yardım & Destek Merkezi</h2>
+        <h2 class="fw-bold mb-2">Help & Support Center</h2>
         <p class="mb-0 opacity-75">
-            Sorularınız, önerileriniz ve geri bildirimleriniz bizim için çok değerli.
+            Your questions, suggestions, and feedback are very valuable to us.
         </p>
     </div>
 
@@ -61,11 +61,11 @@
                     <div class="icon-circle me-3">
                         <i class="bi bi-envelope-fill"></i>
                     </div>
-                    <h5 class="fw-bold mb-0">İletişim Bilgileri</h5>
+                    <h5 class="fw-bold mb-0">Contact Information</h5>
                 </div>
 
                 <p class="text-muted small mb-3">
-                    Bizimle aşağıdaki bilgiler üzerinden veya form aracılığıyla iletişime geçebilirsiniz.
+                    You can contact us via the information below or through the form.
                 </p>
 
 
@@ -76,28 +76,28 @@
         <!-- CONTACT FORM -->
         <div class="col-lg-8">
             <div class="glass-card p-4">
-                <h5 class="fw-bold mb-4">Bize Mesaj Gönderin</h5>
+                <h5 class="fw-bold mb-4">Send Us a Message</h5>
 
                 <form id="contactForm">
 
                     <!-- SUBJECT -->
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Konu</label>
+                        <label class="form-label fw-bold">Subject</label>
                         <div class="d-flex gap-4 flex-wrap">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="subject_choice" value="Sorun / Soru" checked>
-                                <label class="form-check-label">Sorun / Soru</label>
+                                <input class="form-check-input" type="radio" name="subject_choice" value="Issue / Question" checked>
+                                <label class="form-check-label">Issue / Question</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="subject_choice" value="Öneri">
-                                <label class="form-check-label">Öneri</label>
+                                <input class="form-check-input" type="radio" name="subject_choice" value="Suggestion">
+                                <label class="form-check-label">Suggestion</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="subject_choice" value="Teşekkür">
-                                <label class="form-check-label">Teşekkür</label>
+                                <input class="form-check-input" type="radio" name="subject_choice" value="Thanks">
+                                <label class="form-check-label">Thanks</label>
                             </div>
                         </div>
-                        <input type="hidden" name="subject" id="subjectInput" value="Sorun / Soru">
+                        <input type="hidden" name="subject" id="subjectInput" value="Issue / Question">
                     </div>
 
                     <!-- NAME & EMAIL -->
@@ -122,12 +122,12 @@
 
                     <!-- ALERTS -->
                     <div class="alert alert-success d-none" id="alertSuccess">
-                        Mesajınız başarıyla gönderildi.
+                        Your message has been sent successfully.
                     </div>
                     <div class="alert alert-danger d-none" id="alertError"></div>
 
                     <button type="submit" id="sendBtn" class="btn btn-success fw-bold px-5">
-                        Gönder
+                        Send
                     </button>
                 </form>
             </div>
@@ -158,20 +158,20 @@
         alertError.classList.add('d-none');
 
         sendBtn.disabled = true;
-        sendBtn.textContent = 'Gönderiliyor...';
+        sendBtn.textContent = 'Sending...';
 
         emailjs.sendForm('service_qez1rw2', 'template_j65tprk', this)
             .then(() => {
                 sendBtn.disabled = false;
-                sendBtn.textContent = 'Gönder';
+                sendBtn.textContent = 'Send';
                 alertSuccess.classList.remove('d-none');
                 form.reset();
-                subjectInput.value = 'Sorun / Soru';
+                subjectInput.value = 'Issue / Question';
             })
             .catch(err => {
                 sendBtn.disabled = false;
-                sendBtn.textContent = 'Gönder';
-                alertError.textContent = 'Gönderim hatası: ' + (err?.text || 'Bilinmeyen hata');
+                sendBtn.textContent = 'Send';
+                alertError.textContent = 'Sending error: ' + (err?.text || 'Unknown error');
                 alertError.classList.remove('d-none');
             });
     });

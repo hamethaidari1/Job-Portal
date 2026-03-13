@@ -4,7 +4,7 @@ const jobController = require('../controllers/jobController');
 const multer = require('multer');
 const path = require('path');
 
-// Dosya depolama ayarları
+// File storage settings
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/');
@@ -39,7 +39,7 @@ const cvStorage = multer.diskStorage({
 });
 const uploadCv = multer({ storage: cvStorage });
 
-// Düzenleme ve Silme Rotaları
+// Edit and Delete Routes
 router.get('/edit/:id', jobController.getEditJob);
 router.post('/edit/:id', upload.single('logo'), jobController.postEditJob);
 router.post('/delete/:id', jobController.postDeleteJob);
@@ -47,7 +47,7 @@ router.post('/delete/:id', jobController.postDeleteJob);
 // Başvuru Rotası
 router.post('/:id/apply', uploadCv.single('cv'), jobController.postApplyJob);
 
-// Detay Görüntüleme Dinamik Rotası (Son rota)
+// Detail View Dynamic Route (Last route)
 router.get('/:id', jobController.getJobDetails);
 
 module.exports = router;

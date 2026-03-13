@@ -21,7 +21,7 @@ const Application = sequelize.define('Application', {
     coverLetter: {
         type: DataTypes.TEXT,
         allowNull: true,
-        comment: 'Ön yazı'
+        comment: 'Cover letter'
     }
 });
 

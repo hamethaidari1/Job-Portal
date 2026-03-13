@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
 
-// Rotalar - Noktadan sonraki fonksiyon adları controller ile birebir aynı olmalıdır
-router.get('/login', authController.getLogin);       // getLogin adının doğru olduğundan emin olun
-router.post('/login', authController.postLogin);     // postLogin adının doğru olduğundan emin olun
+// Routes - Function names after dot must match controller exactly
+router.get('/login', authController.getLogin);       // Ensure getLogin name is correct
+router.post('/login', authController.postLogin);     // Ensure postLogin name is correct
 
 router.get('/register', authController.getRegister); 
 router.post('/register', authController.postRegister);

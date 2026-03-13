@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-require('dotenv').config(); // Ortam değişkenlerini programın başında yükle
+require('dotenv').config(); // Load environment variables at the beginning
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const { sequelize } = require('./models'); 
@@ -15,38 +15,38 @@ const jobController = require('./controllers/jobController');
 
 const app = express();
 
-// Render motoru ayarları (EJS)
+// View engine setup (EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Statik dosyalar
+// Static files
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
-// Yüklemelere doğrudan erişim (public/uploads klasörünün fiziksel olarak mevcut olduğundan emin olun)
+// Direct access to uploads (ensure public/uploads folder physically exists)
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json()); 
 
-// Oturumlar (Session) için veritabanı ayarları
+// Database settings for Sessions
 const sessionStore = new SequelizeStore({ db: sequelize });
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'change_me',
+    secret: process.env.SESSION_SECRET,
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: false, // Normal HTTP (localhost) üzerinde false olmalıdır
+        secure: false, // Must be false on normal HTTP (localhost)
         maxAge: 24 * 60 * 60 * 1000 
     }
 }));
 
-// Global değişkenler (Locals) - Bu bölüm hayati önem taşır
+// Global variables (Locals) - This section is crucial
 app.use((req, res, next) => {
-    // Değişkenlerin her zaman (boş olsa bile) tanımlandığından emin olmak için locals kullanımı
+    // Use locals to ensure variables are always defined (even if empty)
     res.locals.user = req.session.user || null;
-    res.locals.isAuthenticated = !!req.session.isLoggedIn; // Boolean'a dönüştür
-    res.locals.path = req.path; // Adrese göre menüleri etkinleştirmek için
+    res.locals.isAuthenticated = !!req.session.isLoggedIn; // Convert to Boolean
+    res.locals.path = req.path; // To activate menus based on path
     next();
 });
 
@@ -73,7 +73,7 @@ app.get('/support', (req, res) => {
     res.render('help', { pageTitle: 'Help & Support' });
 });
 
-// 404 Sayfası Yönetimi
+// 404 Page Management
 app.use((req, res) => {
     if (req.headers['content-type'] === 'application/json' || req.headers['accept']?.includes('application/json')) {
         return res.status(404).json({ error: 'Not Found' });
@@ -105,7 +105,7 @@ module.exports = app;
 
 // Only start server if run directly
 if (require.main === module) {
-    // Veritabanı senkronizasyonu ve sunucuyu başlatma
+    // Database synchronization and server start
     sequelize.sync({ alter: false })
         .then(() => {
             console.log('✅ Database Synced');

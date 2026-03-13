@@ -28,7 +28,7 @@ const translations = {
 };
 
 module.exports = async (req, res, next) => {
-    // 1. Default to English or existing session language
+    // Priority: Session > Default (en)
     let lang = req.session.lang || 'en';
 
     // 2. Check if user clicked a language link (e.g., ?lang=tr)

@@ -21,7 +21,7 @@ const User = sequelize.define('User', {
         validate: {
             isEmail: true
         },
-        comment: 'Kullanıcının e-posta adresi'
+        comment: 'User email address'
     },
     password: {
         type: DataTypes.STRING,
@@ -40,7 +40,7 @@ const User = sequelize.define('User', {
     },
     // Verification fields removed from use
 }, {
-    timestamps: true // createdAt ve updatedAt otomatik oluşturulur
+    timestamps: true // createdAt and updatedAt are automatically created
 });
 
 module.exports = User;

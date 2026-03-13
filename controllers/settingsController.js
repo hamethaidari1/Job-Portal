@@ -8,7 +8,7 @@ exports.getSettings = async (req, res) => {
 
         const userId = req.session.user.id;
         
-        // Kullanıcıyı profiliyle birlikte getir
+        // Get user with profile
         const user = await User.findByPk(userId, {
             include: [{ model: Profile }]
         });
@@ -17,13 +17,13 @@ exports.getSettings = async (req, res) => {
             return res.redirect('/auth/logout');
         }
 
-        // Profilin var olduğundan emin ol
+        // Ensure profile exists
         let profile = user.Profile;
         if (!profile) {
             profile = await Profile.create({ userId: user.id });
         }
 
-        // Tamamlanma Skorunu Hesapla
+        // Calculate Completion Score
         let completionScore = 0;
         // 1. Name (10%)
         if (profile.firstName && profile.lastName) completionScore += 10;
@@ -94,8 +94,8 @@ exports.updateProfile = async (req, res) => {
 
         await profile.update(updateData);
 
-        // Kullanıcı adını oturumda güncelle (eğer kullanılıyorsa anlık yansıtmak için)
-        // Şimdilik sadece yönlendir
+        // Update user name in session (to reflect instantly if used)
+        // Just redirect for now
         res.redirect('/settings?success=true');
     } catch (error) {
         console.error('Update Profile Error:', error);

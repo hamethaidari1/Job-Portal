@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "dev": "nodemon app.js",
     "preinstall": "npm config set legacy-peer-deps true && npm config set engine-strict false && npm config set audit false && npm config set fund false"
   },
   "author": "Khalil",

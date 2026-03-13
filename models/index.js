@@ -23,27 +23,27 @@ Application.belongsTo(User, { foreignKey: 'userId' });
 Job.hasMany(Application, { foreignKey: 'jobId', onDelete: 'CASCADE' });
 Application.belongsTo(Job, { foreignKey: 'jobId' });
 
-// User -> hasOne Profile (Her kullanıcının bir profili vardır)
+// User -> hasOne Profile (Every user has one profile)
 User.hasOne(Profile, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Profile.belongsTo(User, { foreignKey: 'userId' });
 
 
-// Veritabanı senkronizasyonu (GÜÇLÜ SIFIRLAMA MODU)
+// Database synchronization (STRONG RESET MODE)
 const syncDatabase = async () => {
     try {
-        // 1. Önce Foreign Key kontrolünü kapatıyoruz (Hata almamak için)
+        // 1. First, disable Foreign Key checks (to avoid errors)
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { raw: true });
 
-        // 2. Tabloları zorla silip yeniden oluşturuyoruz
-        console.log('🔄 Tablolar sıfırlanıyor...');
+        // 2. Force drop and recreate tables
+        console.log('🔄 Resetting tables...');
         await sequelize.sync({ force: false }); 
 
-        // 3. Foreign Key kontrolünü tekrar açıyoruz
+        // 3. Re-enable Foreign Key checks
         await sequelize.query('SET FOREIGN_KEY_CHECKS = 1', { raw: true });
 
-        console.log('✅ Veritabanı tabloları başarıyla sıfırlandı ve yeniden oluşturuldu.');
+        console.log('✅ Database tables successfully reset and recreated.');
     } catch (error) {
-        console.error('❌ Veritabanı hatası:', error);
+        console.error('❌ Database error:', error);
     }
 };
 

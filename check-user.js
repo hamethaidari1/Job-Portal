@@ -6,7 +6,7 @@ async function checkUser() {
         await sequelize.authenticate();
         console.log('Database connected.');
 
-        const email = 'hamedhaidari2023@gmail.com';
+        const email = process.env.TEST_USER_EMAIL || 'test@example.com';
         const user = await User.findOne({ where: { email } });
 
         if (user) {

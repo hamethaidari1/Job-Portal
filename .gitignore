@@ -4,3 +4,4 @@ node_modules/
 *.sqlite
 database.sqlite
 npm-debug.log
+*.log

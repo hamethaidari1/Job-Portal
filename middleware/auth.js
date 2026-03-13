@@ -1,11 +1,11 @@
 // middleware/auth.js
 
-// Bu fonksiyon kullanıcının giriş yapıp yapmadığını kontrol eder
+// This function checks if user is logged in
 exports.isAuthenticated = (req, res, next) => {
     if (!req.session.user) {
-        // Eğer giriş yapmamışsa, giriş sayfasına yönlendir
+        // If not logged in, redirect to login page
         return res.redirect('/auth/login');
     }
-    // Eğer giriş yapmışsa, geçişe izin ver
+    // If logged in, allow access
     next();
 };

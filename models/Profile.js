@@ -11,12 +11,12 @@ const Profile = sequelize.define('Profile', {
     firstName: {
         type: DataTypes.STRING,
         allowNull: true,
-        comment: 'Kullanıcının adı'
+        comment: 'User first name'
     },
     lastName: {
         type: DataTypes.STRING,
         allowNull: true,
-        comment: 'Kullanıcının soyadı'
+        comment: 'User last name'
     },
     phone: {
         type: DataTypes.STRING,
@@ -26,7 +26,7 @@ const Profile = sequelize.define('Profile', {
     address: {
         type: DataTypes.TEXT,
         allowNull: true,
-        comment: 'Adres bilgisi'
+        comment: 'Address info'
     },
     location: {
         type: DataTypes.STRING,
@@ -36,17 +36,17 @@ const Profile = sequelize.define('Profile', {
     birthDate: {
         type: DataTypes.DATEONLY,
         allowNull: true,
-        comment: 'Doğum tarihi'
+        comment: 'Birth date'
     },
     skills: {
         type: DataTypes.TEXT, // JSON string olarak tutabiliriz veya virgülle ayrılmış
         allowNull: true,
-        comment: 'Yetenekler (Skills)'
+        comment: 'Skills'
     },
     experience: {
         type: DataTypes.TEXT,
         allowNull: true,
-        comment: 'İş Deneyimi (Experience)'
+        comment: 'Experience'
     },
     profilePicture: {
         type: DataTypes.STRING,

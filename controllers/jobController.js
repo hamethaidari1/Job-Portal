@@ -4,10 +4,10 @@ const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
 
-// 1. Ana sayfayı (Home Page) göster
+// 1. Show Home Page
 exports.getHome = async (req, res) => {
     try {
-        // Kullanıcı giriş yapmamışsa açılış (landing) sayfasını göster
+        // If user not logged in, show landing page
         if (!req.session.user) {
             return res.render('landing', {
                 pageTitle: 'JobPortal - Find the best freelance services',
@@ -18,7 +18,7 @@ exports.getHome = async (req, res) => {
 
         const jobs = await Job.findAll({ 
             order: [['createdAt', 'DESC']],
-            limit: 8 // Ana sayfa için sadece 8 kayıt
+            limit: 8 // Only 8 records for home page
         });
         
         res.render('index', { 
@@ -36,7 +36,7 @@ exports.getHome = async (req, res) => {
     }
 };
 
-// 2. İş listesini ve arama sonuçlarını (Search Results) göster
+// 2. Show job list and search results
 exports.getJobs = async (req, res) => {
     try {
         const searchTerm = req.query.search || '';
@@ -69,7 +69,7 @@ exports.getJobs = async (req, res) => {
     }
 };
 
-// 3. Bir işin tüm detaylarını göster
+// 3. Show full details of a job
 exports.getJobDetails = async (req, res) => {
     try {
         const jobId = req.params.id;
@@ -92,7 +92,7 @@ exports.getJobDetails = async (req, res) => {
     }
 };
 
-// 4. Kişisel paneli (Dashboard) göster
+// 4. Show personal dashboard
 exports.getUserJobs = async (req, res) => {
     try {
         const jobs = await Job.findAll({
@@ -110,7 +110,7 @@ exports.getUserJobs = async (req, res) => {
     }
 };
 
-// 5. Yeni iş ilanı formunu göster
+// 5. Show create job form
 exports.getCreateJob = (req, res) => {
     res.render('jobs/create', { 
         pageTitle: res.locals.t('jobs.create.title'), 
@@ -119,7 +119,7 @@ exports.getCreateJob = (req, res) => {
     });
 };
 
-// 6. Yeni iş kaydet (Görsel yönetimi ile)
+// 6. Save new job (with image management)
 exports.postCreateJob = async (req, res) => {
     const { title, companyName, location, jobType, salary, description } = req.body;
     const companyLogo = req.file ? req.file.filename : null;
@@ -146,7 +146,7 @@ exports.postCreateJob = async (req, res) => {
     }
 };
 
-// 7. Düzenleme formunu göster
+// 7. Show edit form
 exports.getEditJob = async (req, res) => {
     try {
         const job = await Job.findByPk(req.params.id);
@@ -165,7 +165,7 @@ exports.getEditJob = async (req, res) => {
     }
 };
 
-// 8. Düzenlenen değişiklikleri uygula
+// 8. Apply edited changes
 exports.postEditJob = async (req, res) => {
     const jobId = req.params.id;
     const { title, companyName, location, jobType, salary, description } = req.body;

@@ -7,8 +7,8 @@ async function createUser() {
         await sequelize.authenticate();
         console.log('Database connected.');
 
-        const email = 'hamedhaidari2023@gmail.com';
-        const password = 'password123';
+        const email = process.env.TEST_USER_EMAIL || 'test@example.com';
+        const password = process.env.TEST_USER_PASSWORD || 'password123';
         const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
         const firebaseUid = 'manual_' + Date.now();
 

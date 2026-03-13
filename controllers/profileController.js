@@ -1,29 +1,29 @@
 const { User, Profile } = require('../models');
 
 /**
- * Kullanıcı profil sayfasını göster
+ * Show user profile page
  */
 exports.getProfile = async (req, res) => {
     try {
-        // 1. Kullanıcı oturumunu (Session) kontrol et
+        // 1. Check user session
         if (!req.session || !req.session.user) {
             return res.redirect('/auth/login');
         }
 
-        // 2. Kullanıcı bilgilerini ve profili veritabanından çek
+        // 2. Fetch user info and profile from database
         const user = await User.findByPk(req.session.user.id, {
             include: [{ model: Profile }]
         });
 
-        // 3. Kullanıcı veritabanında yoksa (örn. silinmişse)
+        // 3. If user not in database (e.g. deleted)
         if (!user) {
             return res.redirect('/auth/logout');
         }
 
-        // 4. Profil ataması (Kayıt yoksa boş bir nesne ata)
+        // 4. Assign profile (Assign empty object if no record)
         const profile = user.Profile || {};
         
-        // 5. Puan listesini tanımla ve nihai puanı (Tamamlanma Skoru) hesapla
+        // 5. Define score list and calculate final score (Completion Score)
         let completionScore = 0;
         const breakdownList = [
             { key: 'name', score: 10, achieved: !!(profile.firstName && profile.lastName), labelKey: 'profile.breakdown.name' },
@@ -34,17 +34,17 @@ exports.getProfile = async (req, res) => {
             { key: 'cv', score: 25, achieved: !!(profile.cvPath), labelKey: 'profile.breakdown.cv' }
         ];
 
-        // Kazanılan toplam puanı hesapla
+        // Calculate total earned score
         breakdownList.forEach(item => {
             if (item.achieved) completionScore += item.score;
         });
 
-        // 6. EJS'de 500 hatasını önlemek için çeviri fonksiyonunu (t) güvenli hale getir
-        // Çeviri sistemi aktif değilse anahtarı olduğu gibi döndür
+        // 6. Make translation function (t) safe to prevent 500 error in EJS
+        // If translation system not active, return key as is
         const t = (typeof res.locals.t === 'function') ? res.locals.t : ((key) => key);
         const lang = res.locals.lang || 'en';
 
-        // 7. View'a gönderilecek yerel değişkenleri hazırla
+        // 7. Prepare local variables to send to View
         const locals = {
             pageTitle: t('header.profile'),
             user: user,
@@ -55,14 +55,14 @@ exports.getProfile = async (req, res) => {
             lang: lang
         };
 
-        // 8. profile.ejs dosyasını render et
+        // 8. Render profile.ejs
         return res.render('profile', locals);
 
     } catch (error) {
-        // Hata ayıklama için terminale detaylı hatayı yazdır
+        // Print detailed error to terminal for debugging
         console.error('CRITICAL ERROR in getProfile Controller:', error);
         
-        // Kullanıcıya sunucu hatasını göster
+        // Show server error to user
         return res.status(500).send(`
             <div style="padding: 20px; font-family: sans-serif;">
                 <h2 style="color: #d9534f;">Server Error (500)</h2>
@@ -75,7 +75,7 @@ exports.getProfile = async (req, res) => {
 };
 
 /**
- * Profil bilgilerini JSON olarak al (Hata ayıklama veya API için)
+ * Get profile info as JSON (For debugging or API)
  */
 exports.getProfileJson = async (req, res) => {
     try {

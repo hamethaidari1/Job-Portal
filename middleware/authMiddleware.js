@@ -1,7 +1,7 @@
 const { User } = require('../models');
 
 const requireAuth = async (req, res, next) => {
-    // Session kontrolü (Basit simülasyon, Firebase token backend'e post edilmeli)
+    // Session check (Simple simulation, Firebase token should be posted to backend)
     if (!req.session.user) {
         return res.redirect('/auth/login');
     }

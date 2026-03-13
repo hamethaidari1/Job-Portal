@@ -73,15 +73,15 @@ async function sendWithResend(to, subject, html, text) {
 
 async function sendVerificationEmail(to, code) {
   console.log('📧 Sending Verification Email to:', to, 'Code:', code);
-  const subject = "Email Doğrulama Kodu";
+  const subject = "Email Verification Code";
   const html = `
     <div>
-      <h2>Email Doğrulama</h2>
-      <p>Kodunuz:</p>
+      <h2>Email Verification</h2>
+      <p>Your Code:</p>
       <h1>${code}</h1>
     </div>
   `;
-  const text = `Kodunuz: ${code}`;
+  const text = `Your Code: ${code}`;
 
   try {
     if (isResendConfigured()) {

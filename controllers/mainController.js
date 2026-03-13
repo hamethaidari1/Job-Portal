@@ -2,7 +2,7 @@ const { Job, Category } = require('../models');
 
 exports.getHome = async (req, res) => {
     try {
-        // En son eklenen 5 iş ilanını getir
+        // Get last 5 added jobs
         const recentJobs = await Job.findAll({
             limit: 5,
             order: [['createdAt', 'DESC']],

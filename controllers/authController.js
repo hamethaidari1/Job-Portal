@@ -1,11 +1,11 @@
 const { User } = require('../models');
-const crypto = require('crypto'); // Crypto modülünü ekle
+const crypto = require('crypto'); // Add Crypto module
 
 /* =========================
    REGISTER
 ========================= */
 
-// Kayıt formunu göster
+// Show register form
 exports.getRegister = (req, res) => {
     res.render('auth/register', {
         pageTitle: 'Register',
@@ -13,13 +13,13 @@ exports.getRegister = (req, res) => {
     });
 };
 
-// Kayıt işlemini gerçekleştir
+// Handle registration
 exports.postRegister = async (req, res) => {
-    console.log('📝 Register Request Body:', req.body); // Gelen verileri logla
+    console.log('📝 Register Request Body:', req.body); // Log incoming data
     const { email, role, password, confirmPassword } = req.body;
 
     try {
-        // Basit doğrulama
+        // Simple validation
         if (!email || !password) {
             throw new Error('Email and password are required.');
         }
@@ -32,7 +32,7 @@ exports.postRegister = async (req, res) => {
              throw new Error('Passwords do not match.');
         }
 
-        // Kullanıcının varlığını kontrol et
+        // Check if user exists
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
             return res.render('auth/register', {
@@ -41,19 +41,19 @@ exports.postRegister = async (req, res) => {
             });
         }
 
-        // Rol normalizasyonu (Çok önemli)
+        // Role normalization (Very important)
         let normalizedRole = 'job_seeker';
         if (role === 'Employer' || role === 'employer') {
             normalizedRole = 'employer';
         }
 
-        // firebaseUid olarak rastgele bir ID oluştur (Backend'de Firebase devre dışı olduğu için)
+        // Generate random ID for firebaseUid (Since Firebase is disabled in Backend)
         const firebaseUid = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
 
-        // Şifreyi hashle (Basit SHA256 ile)
+        // Hash password (with simple SHA256)
         const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-        // Kullanıcıyı veritabanında oluştur
+        // Create user in database
         const user = await User.create({
             email,
             role: normalizedRole,
@@ -62,7 +62,7 @@ exports.postRegister = async (req, res) => {
             password: hashedPassword
         });
 
-        // Oturuma kaydet
+        // Save to session
         req.session.user = user;
         req.session.isLoggedIn = true;
 
@@ -74,7 +74,7 @@ exports.postRegister = async (req, res) => {
         console.error('REGISTER ERROR 👉', error);
         res.render('auth/register', {
             pageTitle: 'Register',
-            errorMessage: 'Database error: ' + error.message // Hata metnini göster
+            errorMessage: 'Database error: ' + error.message // Show error text
         });
     }
 };
@@ -83,7 +83,7 @@ exports.postRegister = async (req, res) => {
    LOGIN
 ========================= */
 
-// Giriş formunu göster
+// Show login form
 exports.getLogin = (req, res) => {
     res.render('auth/login', {
         pageTitle: 'Login',
@@ -91,7 +91,7 @@ exports.getLogin = (req, res) => {
     });
 };
 
-// Giriş işlemini gerçekleştir
+// Handle login
 exports.postLogin = async (req, res) => {
     const { email, password } = req.body;
 
@@ -104,7 +104,7 @@ exports.postLogin = async (req, res) => {
             });
         }
 
-        // Şifreyi kontrol et
+        // Check password
         if (password) {
              const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
              if (user.password && user.password !== hashedPassword) {
@@ -135,7 +135,7 @@ exports.postLogin = async (req, res) => {
    GOOGLE AUTH
 ========================= */
 
-// Google ile giriş/kayıt işlemini gerçekleştir
+// Handle Google login/register
 exports.postGoogleAuth = async (req, res) => {
     console.log('🔵 Google Auth Request:', req.body);
     try {
@@ -145,20 +145,20 @@ exports.postGoogleAuth = async (req, res) => {
             return res.status(400).json({ error: 'Email and Firebase UID are required.' });
         }
 
-        // Kullanıcıyı bul veya oluştur
+        // Find or create user
         let user = await User.findOne({ where: { email } });
 
         if (!user) {
-            // Yeni kullanıcı oluştur
+            // Create new user
             user = await User.create({
                 email,
-                role: 'job_seeker', // Varsayılan rol
-                isVerified: true, // Google ile geldiği için doğrulanmış sayalım
+                role: 'job_seeker', // Default role
+                isVerified: true, // Assume verified since coming from Google
                 firebaseUid: firebaseUid,
-                password: null // Şifre yok
+                password: null // No password
             });
             
-            // Profil oluştur (İsteğe bağlı)
+            // Create profile (Optional)
             try {
                 const Profile = require('../models/Profile'); // Lazy load
                 await Profile.create({
@@ -170,13 +170,13 @@ exports.postGoogleAuth = async (req, res) => {
                 console.error("Profile creation error:", err);
             }
         } else {
-            // Mevcut kullanıcı ise firebaseUid güncelle (gerekirse)
+            // Update firebaseUid if existing user (if needed)
             if (user.firebaseUid !== firebaseUid) {
                 await user.update({ firebaseUid: firebaseUid });
             }
         }
 
-        // Oturuma kaydet
+        // Save to session
         req.session.user = user;
         req.session.isLoggedIn = true;
 
