@@ -1,4 +1,4 @@
-// database.js dosyasının içeriği
+// Content of database.js
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
